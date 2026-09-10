@@ -9,6 +9,10 @@
       grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr));
     }
   }
+  {%- if section.settings.enable_marquee -%}
+    #shopify-section-{{ section.id }} .wz-featured-marquee__card { width: {{ section.settings.marquee_card_width }}px; }
+    #shopify-section-{{ section.id }} .wz-featured-marquee__track { animation-duration: {{ section.settings.marquee_speed }}s; }
+  {%- endif -%}
 {%- endstyle -%}
 
 <section class="wz-section color-{{ section.settings.color_scheme }}">
@@ -16,11 +20,13 @@
     <h2>{{ section.settings.heading }}</h2>
     {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
   </div>
-  <div class="wz-pgrid wz-pgrid--featured" data-scroll-grid>
-    {%- liquid
-      assign source = section.settings.collection.products | default: collections.all.products
-      assign shown = 0
-    -%}
+
+  {%- liquid
+    assign source = section.settings.collection.products | default: collections.all.products
+    assign shown = 0
+  -%}
+
+  <div class="wz-pgrid wz-pgrid--featured{% if section.settings.enable_marquee %} wz-pgrid--has-marquee{% endif %}" data-scroll-grid>
     {%- for product in source limit: section.settings.product_limit -%}
       {%- render 'wazen-product-card', product: product -%}
       {%- assign shown = shown | plus: 1 -%}
@@ -36,6 +42,20 @@
       {%- endfor -%}
     {%- endif -%}
   </div>
+
+  {%- if section.settings.enable_marquee and shown > 0 -%}
+    <div class="wz-featured-marquee">
+      <div class="wz-featured-marquee__track" data-marquee>
+        {%- for i in (1..2) -%}
+          {%- for product in source limit: section.settings.product_limit -%}
+            <div class="wz-featured-marquee__card" aria-hidden="{% if i == 2 %}true{% else %}false{% endif %}">
+              {%- render 'wazen-product-card', product: product -%}
+            </div>
+          {%- endfor -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
 </section>
 
 {% schema %}
@@ -58,7 +78,10 @@
         { "value": "1", "label": "1 column" },
         { "value": "2", "label": "2 columns" }
       ]
-    }
+    },
+    { "type": "checkbox", "id": "enable_marquee", "label": "Move as a single row on computer", "info": "Replaces the grid with one continuously scrolling row (products enter one side, exit the other) on computer screens. Mobile keeps the grid above.", "default": false },
+    { "type": "range", "id": "marquee_card_width", "min": 220, "max": 340, "step": 10, "default": 280, "label": "Row card width (computer)" },
+    { "type": "range", "id": "marquee_speed", "min": 15, "max": 60, "step": 5, "default": 30, "label": "Row speed (seconds per loop)" }
   ],
   "presets": [{ "name": "Wazen featured products" }]
 }

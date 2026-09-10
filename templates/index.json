@@ -115,7 +115,10 @@
         "collection": "hot-deals",
         "product_limit": 12,
         "columns_desktop": 4,
-        "columns_mobile": "2"
+        "columns_mobile": "2",
+        "enable_marquee": true,
+        "marquee_card_width": 280,
+        "marquee_speed": 30
       }
     },
     "wz_deals": {
