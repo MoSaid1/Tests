@@ -2,6 +2,9 @@
   'use strict';
 
   function initMarquee(track) {
+    if (track.hasAttribute('data-marquee-ready')) return;
+    track.setAttribute('data-marquee-ready', 'true');
+
     var items = Array.prototype.slice.call(track.children);
     var half = Math.floor(items.length / 2);
     if (half < 1) return;
@@ -56,13 +59,22 @@
     start();
   }
 
-  function init() {
-    document.querySelectorAll('[data-marquee]').forEach(initMarquee);
+  function init(scope) {
+    (scope || document).querySelectorAll('[data-marquee]').forEach(initMarquee);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', function () {
+      init();
+    });
   } else {
     init();
   }
+
+  // Shopify theme editor swaps a section's HTML via innerHTML on every
+  // settings change; injected <script> tags don't auto-run, so re-scan
+  // the reloaded section for fresh (not-yet-initialized) marquee tracks.
+  document.addEventListener('shopify:section:load', function (event) {
+    init(event.target);
+  });
 })();
