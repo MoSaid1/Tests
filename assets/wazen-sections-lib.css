@@ -243,3 +243,79 @@
   .wz-app { grid-template-columns: 1fr; }
   .wz-app__media { order: -1; }
 }
+
+/* 24. Benefits bar (slim, no cards) --------------------------------------------- */
+.wz-benefits { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 32px; margin-top: 28px; padding: 20px 0; border-top: 1px solid var(--wz-border-2); border-bottom: 1px solid var(--wz-border-2); }
+.wz-benefits__item { display: flex; align-items: center; gap: 10px; font-size: 13.5px; font-weight: 600; color: var(--wz-body); }
+.wz-benefits__item svg { color: var(--wz-blue); flex: none; }
+
+/* 25. Image hotspots ---------------------------------------------------------------- */
+@keyframes wzPulseRing {
+  0% { transform: scale(0.9); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+.wz-hotspot { position: relative; border-radius: var(--wz-radius-xl); overflow: hidden; margin-top: 8px; }
+.wz-hotspot img { width: 100%; display: block; }
+.wz-hotspot__dot { position: absolute; width: 28px; height: 28px; border-radius: 50%; background: #fff; color: var(--wz-ink); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25); transform: translate(-50%, -50%); }
+.wz-hotspot__dot::after { content: ''; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid rgba(255, 255, 255, 0.7); animation: wzPulseRing 2s ease-out infinite; }
+.wz-hotspot__legend { margin-top: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 16px; }
+.wz-hotspot__legend-item { display: flex; gap: 12px; align-items: flex-start; }
+.wz-hotspot__legend-num { width: 24px; height: 24px; border-radius: 50%; background: var(--wz-ink); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex: none; }
+.wz-hotspot__legend-text strong { display: block; font-size: 14px; }
+.wz-hotspot__legend-text span { font-size: 13px; color: var(--wz-muted); }
+
+/* 26. Split CTA tiles -------------------------------------------------------------- */
+.wz-splitcta { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.wz-splitcta__tile { position: relative; border-radius: var(--wz-radius-xl); overflow: hidden; aspect-ratio: 16 / 11; display: flex; flex-direction: column; justify-content: flex-end; padding: 32px; color: #fff; text-decoration: none; }
+.wz-splitcta__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 400ms ease; }
+.wz-splitcta__tile:hover .wz-splitcta__img { transform: scale(1.06); }
+.wz-splitcta__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 15, 20, 0) 30%, rgba(10, 15, 20, 0.78) 100%); }
+.wz-splitcta__label { position: relative; z-index: 1; }
+.wz-splitcta__title { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; }
+.wz-splitcta__sub { font-size: 13.5px; opacity: 0.85; margin-top: 6px; }
+.wz-splitcta__cta { margin-top: 16px; display: inline-flex; }
+@media screen and (max-width: 749px) {
+  .wz-splitcta { grid-template-columns: 1fr; }
+}
+
+/* 27. Scrolling text marquee ------------------------------------------------------- */
+.wz-mtext { overflow: hidden; }
+.wz-mtext__track { display: flex; align-items: center; width: max-content; }
+.wz-mtext__item { font-size: clamp(28px, 5vw, 56px); font-weight: 800; letter-spacing: -0.02em; color: var(--wz-ink); white-space: nowrap; display: flex; align-items: center; gap: 48px; padding-inline-end: 48px; }
+.wz-mtext__item svg { color: var(--wz-orange); flex: none; }
+
+/* 28. Numbered feature rows (editorial) --------------------------------------------- */
+.wz-numfeat { display: flex; flex-direction: column; margin-top: 8px; }
+.wz-numfeat__row { display: grid; grid-template-columns: 120px 1fr; gap: 24px; padding: 36px 0; border-top: 1px solid var(--wz-border-2); align-items: start; }
+.wz-numfeat__row:last-child { border-bottom: 1px solid var(--wz-border-2); }
+.wz-numfeat__index { font-size: 44px; font-weight: 800; color: var(--wz-border-3); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.wz-numfeat__title { font-size: 19px; font-weight: 600; letter-spacing: -0.015em; }
+.wz-numfeat__text { font-size: 14.5px; color: var(--wz-muted); margin-top: 8px; line-height: 1.7; max-width: 640px; }
+@media screen and (max-width: 640px) {
+  .wz-numfeat__row { grid-template-columns: 1fr; gap: 8px; }
+  .wz-numfeat__index { font-size: 32px; }
+}
+
+/* 29. Brand spotlight banner ---------------------------------------------------------- */
+.wz-brandban { position: relative; border-radius: var(--wz-radius-2xl); overflow: hidden; min-height: 360px; display: flex; align-items: center; padding: clamp(32px, 5vw, 64px); }
+.wz-brandban__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.wz-brandban__scrim { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10, 15, 20, 0.82) 0%, rgba(10, 15, 20, 0.35) 60%, rgba(10, 15, 20, 0) 100%); }
+[dir='rtl'] .wz-brandban__scrim { background: linear-gradient(270deg, rgba(10, 15, 20, 0.82) 0%, rgba(10, 15, 20, 0.35) 60%, rgba(10, 15, 20, 0) 100%); }
+.wz-brandban__content { position: relative; z-index: 1; color: #fff; max-width: 460px; }
+.wz-brandban__logo { height: 32px; margin-bottom: 18px; filter: brightness(0) invert(1); }
+.wz-brandban__title { font-size: clamp(24px, 3.6vw, 34px); font-weight: 600; letter-spacing: -0.03em; margin: 0; }
+.wz-brandban__text { margin-top: 12px; font-size: 15px; opacity: 0.85; line-height: 1.65; }
+.wz-brandban .wz-btn { margin-top: 22px; }
+
+/* 30. Inline newsletter strip ---------------------------------------------------------- */
+.wz-newsline { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; background: #fff; border-radius: var(--wz-radius-lg); box-shadow: var(--wz-shadow-card); padding: 20px 28px; }
+.wz-newsline__text { font-size: 15px; font-weight: 600; }
+.wz-newsline__form { display: flex; gap: 8px; flex: none; }
+.wz-newsline__input { height: 44px; padding: 0 16px; border-radius: var(--wz-radius-pill); border: 1px solid var(--wz-border-3); font-size: 14px; font-family: inherit; min-width: 220px; background: #fff; }
+.wz-newsline__input:focus { outline: 2px solid var(--wz-blue); }
+.wz-newsline .wz-btn { height: 44px; }
+@media screen and (max-width: 640px) {
+  .wz-newsline { flex-direction: column; align-items: stretch; text-align: center; }
+  .wz-newsline__form { flex-direction: column; }
+  .wz-newsline__input { min-width: 0; }
+}

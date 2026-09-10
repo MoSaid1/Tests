@@ -1,0 +1,49 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+<div class="wz-section">
+  <div class="wz-benefits">
+    {%- for block in section.blocks -%}
+      <div class="wz-benefits__item" {{ block.shopify_attributes }}>
+        {%- render 'wazen-icon', icon: block.settings.icon, size: 17 -%}
+        <span>{{ block.settings.text }}</span>
+      </div>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wazen benefits bar",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon", "default": "check",
+          "options": [
+            { "value": "check", "label": "Check" },
+            { "value": "truck", "label": "Delivery" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "star", "label": "Star" }
+          ]
+        },
+        { "type": "text", "id": "text", "label": "Text", "default": "Free returns within 14 days" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wazen benefits bar",
+      "blocks": [
+        { "type": "benefit", "settings": { "icon": "truck", "text": "Nationwide delivery" } },
+        { "type": "benefit", "settings": { "icon": "shield", "text": "Genuine warranty" } },
+        { "type": "benefit", "settings": { "icon": "check", "text": "Free returns within 14 days" } },
+        { "type": "benefit", "settings": { "icon": "lock", "text": "Secure checkout" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

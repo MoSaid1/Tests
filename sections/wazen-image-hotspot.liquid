@@ -1,0 +1,62 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+<section class="wz-section color-{{ section.settings.color_scheme }}">
+  {%- if section.settings.heading != blank -%}
+    <div class="wz-section__head">
+      <h2>{{ section.settings.heading }}</h2>
+      {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+    </div>
+  {%- endif -%}
+  <div class="wz-hotspot">
+    {%- if section.settings.image != blank -%}
+      {{ section.settings.image | image_url: width: 1400 | image_tag: loading: 'lazy', alt: section.settings.heading }}
+    {%- else -%}
+      <div class="wz-placeholder-media" style="width:100%;aspect-ratio:16/9;">{{ 'wazen.media.image' | t }}</div>
+    {%- endif -%}
+    {%- for block in section.blocks -%}
+      <span class="wz-hotspot__dot" style="top:{{ block.settings.y }}%; inset-inline-start:{{ block.settings.x }}%;" {{ block.shopify_attributes }}>{{ forloop.index }}</span>
+    {%- endfor -%}
+  </div>
+  <div class="wz-hotspot__legend">
+    {%- for block in section.blocks -%}
+      <div class="wz-hotspot__legend-item">
+        <span class="wz-hotspot__legend-num">{{ forloop.index }}</span>
+        <span class="wz-hotspot__legend-text"><strong>{{ block.settings.title }}</strong><span>{{ block.settings.text }}</span></span>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wazen image hotspots",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Every detail, explained" },
+    { "type": "text", "id": "subheading", "label": "Subheading" },
+    { "type": "image_picker", "id": "image", "label": "Image" }
+  ],
+  "blocks": [
+    {
+      "type": "point",
+      "name": "Point",
+      "settings": [
+        { "type": "range", "id": "x", "min": 0, "max": 100, "step": 1, "default": 50, "label": "Horizontal position (%)" },
+        { "type": "range", "id": "y", "min": 0, "max": 100, "step": 1, "default": 50, "label": "Vertical position (%)" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Digital display" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Clear touch controls with a child lock." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wazen image hotspots",
+      "blocks": [
+        { "type": "point", "settings": { "x": 30, "y": 25, "title": "Digital display", "text": "Clear touch controls with a child lock." } },
+        { "type": "point", "settings": { "x": 70, "y": 55, "title": "Quiet motor", "text": "Runs at just 42dB, even on a full cycle." } },
+        { "type": "point", "settings": { "x": 40, "y": 80, "title": "Extra-large drum", "text": "Fits a full week of laundry for a family of five." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

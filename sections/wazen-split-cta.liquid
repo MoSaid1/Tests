@@ -1,0 +1,50 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+<div class="wz-section">
+  <div class="wz-splitcta">
+    {%- for block in section.blocks -%}
+      <a href="{{ block.settings.link | default: '#' }}" class="wz-splitcta__tile" {{ block.shopify_attributes }}>
+        {%- if block.settings.image != blank -%}
+          {{ block.settings.image | image_url: width: 900 | image_tag: class: 'wz-splitcta__img', widths: '450,700,900', sizes: '50vw', loading: 'lazy', alt: block.settings.title }}
+        {%- else -%}
+          <div class="wz-splitcta__img wz-placeholder-media">{{ 'wazen.media.image' | t }}</div>
+        {%- endif -%}
+        <div class="wz-splitcta__scrim"></div>
+        <div class="wz-splitcta__label">
+          <div class="wz-splitcta__title">{{ block.settings.title }}</div>
+          {%- if block.settings.subtitle != blank -%}<div class="wz-splitcta__sub">{{ block.settings.subtitle }}</div>{%- endif -%}
+          <span class="wz-btn wz-btn--sm wz-splitcta__cta" style="background:#fff;color:var(--wz-ink);">{{ block.settings.button_label }}</span>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wazen split CTA",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "For your home" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Everything for everyday living" },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wazen split CTA",
+      "blocks": [
+        { "type": "tile", "settings": { "title": "For your home", "subtitle": "Everything for everyday living", "button_label": "Shop home" } },
+        { "type": "tile", "settings": { "title": "For your business", "subtitle": "Bulk pricing for cafes & offices", "button_label": "Shop business" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

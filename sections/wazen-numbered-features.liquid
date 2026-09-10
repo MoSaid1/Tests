@@ -1,0 +1,50 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+<section class="wz-section color-{{ section.settings.color_scheme }}">
+  <div class="wz-section__head">
+    <h2>{{ section.settings.heading }}</h2>
+    {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+  </div>
+  <div class="wz-numfeat">
+    {%- for block in section.blocks -%}
+      <div class="wz-numfeat__row" {{ block.shopify_attributes }}>
+        <div class="wz-numfeat__index">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</div>
+        <div>
+          <div class="wz-numfeat__title">{{ block.settings.title }}</div>
+          <div class="wz-numfeat__text">{{ block.settings.text }}</div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wazen numbered features",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What makes us different" },
+    { "type": "text", "id": "subheading", "label": "Subheading" }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Real, local support" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Our team speaks your language and answers the phone, every time.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wazen numbered features",
+      "blocks": [
+        { "type": "feature", "settings": { "title": "Real, local support", "text": "<p>Our team speaks your language and answers the phone, every time.</p>" } },
+        { "type": "feature", "settings": { "title": "Verified sellers only", "text": "<p>Every product on Wazen ships from an authorized distributor.</p>" } },
+        { "type": "feature", "settings": { "title": "Transparent pricing", "text": "<p>No hidden fees, ever. What you see is what you pay.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

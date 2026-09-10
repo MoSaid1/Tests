@@ -1,0 +1,56 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  {%- assign wz_step_count = section.blocks.size -%}
+  {%- if wz_step_count > 0 -%}
+    {%- assign wz_duration = wz_step_count | times: section.settings.speed -%}
+    #shopify-section-{{ section.id }} .wz-mtext__track {
+      animation: {% if request.locale.text_direction == 'rtl' %}wzMarqueeRtl{% else %}wzMarquee{% endif %} {{ wz_duration }}s linear infinite;
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+<div class="wz-section color-{{ section.settings.color_scheme }}">
+  <div class="wz-mtext">
+    <div class="wz-mtext__track">
+      {%- for i in (1..2) -%}
+        {%- for block in section.blocks -%}
+          <span class="wz-mtext__item" {{ block.shopify_attributes }} aria-hidden="{% if i == 2 %}true{% else %}false{% endif %}">
+            {{ block.settings.text }}
+            {%- render 'wazen-icon', icon: 'star', size: 22 -%}
+          </span>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wazen text marquee",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "range", "id": "speed", "min": 3, "max": 15, "step": 1, "default": 6, "label": "Seconds per phrase" }
+  ],
+  "blocks": [
+    {
+      "type": "phrase",
+      "name": "Phrase",
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Fast delivery" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wazen text marquee",
+      "blocks": [
+        { "type": "phrase", "settings": { "text": "Fast delivery" } },
+        { "type": "phrase", "settings": { "text": "Genuine warranty" } },
+        { "type": "phrase", "settings": { "text": "Easy returns" } },
+        { "type": "phrase", "settings": { "text": "0% installments" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

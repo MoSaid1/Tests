@@ -1,0 +1,37 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+<div class="wz-section">
+  <div class="wz-brandban">
+    {%- if section.settings.background != blank -%}
+      {{ section.settings.background | image_url: width: 1600 | image_tag: class: 'wz-brandban__bg', loading: 'lazy', alt: section.settings.heading }}
+    {%- else -%}
+      <div class="wz-brandban__bg wz-placeholder-media"></div>
+    {%- endif -%}
+    <div class="wz-brandban__scrim"></div>
+    <div class="wz-brandban__content">
+      {%- if section.settings.logo != blank -%}
+        {{ section.settings.logo | image_url: width: 200 | image_tag: class: 'wz-brandban__logo', alt: section.settings.heading }}
+      {%- endif -%}
+      <h2 class="wz-brandban__title">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<p class="wz-brandban__text">{{ section.settings.text }}</p>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: '#' }}" class="wz-btn wz-btn--primary">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wazen brand banner",
+  "settings": [
+    { "type": "image_picker", "id": "background", "label": "Background image" },
+    { "type": "image_picker", "id": "logo", "label": "Brand logo (white/mono)" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Brand of the month" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Discover this month's featured brand and their full range at Wazen.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop the brand" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Wazen brand banner" }]
+}
+{% endschema %}
