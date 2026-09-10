@@ -52,7 +52,7 @@ html.wz-scroll-lock body {
 
 /* Sticky capsule header --------------------------------------------------- */
 .wz-sticky { position: sticky; top: 0; z-index: 40; }
-.wz-header-slot { padding: 6px clamp(10px, 3vw, 32px) 14px; }
+.wz-header-slot { padding: 6px var(--wz-gutter) 14px; }
 .wz-header-capsule {
   max-width: var(--wz-page);
   margin-inline: auto;

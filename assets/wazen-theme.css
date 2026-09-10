@@ -50,7 +50,7 @@
   --wz-shadow-lift: 0 30px 50px -22px rgba(60, 45, 30, 0.3);
 
   --wz-page: 1280px;
-  --wz-gutter: clamp(16px, 4vw, 32px);
+  --wz-gutter: clamp(16px, 3vw, 24px);
   --wz-section-pad: clamp(40px, 7vw, 72px);
 }
 
