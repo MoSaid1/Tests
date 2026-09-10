@@ -164,14 +164,9 @@
 .wz-pcard--v3.wz-pcard--deal .wz-pcard__add { background: var(--wz-orange); color: #fff; }
 .wz-pcard--v3.wz-pcard--deal .wz-pcard__add:not([disabled]):hover { background: var(--wz-orange-dark); }
 
-/* Style 4 — Compact: inset framed image + floating round cart button ----------- */
+/* Style 4 — Compact: flush image + floating round cart button ----------------- */
 .wz-pcard--v4.wz-card { border-radius: var(--wz-radius-md); box-shadow: none; border: none; }
 .wz-pcard--v4.wz-lift:hover { transform: none; box-shadow: none; }
-.wz-pcard--v4 .wz-pcard__media {
-  margin: 10px 10px 0; width: calc(100% - 20px); aspect-ratio: 1 / 1;
-  border-radius: var(--wz-radius-sm); overflow: hidden;
-}
-.wz-pcard--v4 .wz-pcard__wish { top: 20px; inset-inline-end: 20px; width: 28px; height: 28px; }
 .wz-pcard--v4 .wz-pcard__body { padding: 12px 14px 64px; position: relative; }
 .wz-pcard--v4 .wz-pcard__brand { font-size: 10px; letter-spacing: 0.07em; }
 .wz-pcard--v4 .wz-pcard__title { font-size: 13px; margin-top: 5px; min-height: 36px; }
