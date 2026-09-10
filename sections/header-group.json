@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.header.name",
   "type": "header",
@@ -6,12 +15,15 @@
       "type": "header",
       "settings": {
         "menu": "main-menu",
-        "announcement_text": "<p>Free shipping on orders above 15,000 EGP across Cairo &amp; Alexandria</p>",
+        "announcement_text": "<p>Free shipping on orders above 15,000 EGP across Cairo & Alexandria</p>",
         "support_phone": "16123",
         "mega_promo_heading": "Inverter refrigerators up to 22% off",
+        "mega_promo_image": "shopify://shop_images/pc-ar-1-2048x498.webp",
         "mega_promo_link": ""
       }
     }
   },
-  "order": ["header"]
+  "order": [
+    "header"
+  ]
 }
