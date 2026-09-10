@@ -181,8 +181,8 @@
 .wz-pcard--v4 .wz-pcard__stars { font-size: 11.5px; }
 .wz-pcard--v4 .wz-pcard__price-row { grid-area: price; border-top: none; padding-top: 0; margin-top: 0; align-self: end; }
 .wz-pcard--v4 .wz-pcard__price { flex-direction: column; align-items: flex-start; gap: 1px; }
-.wz-pcard--v4 .wz-pcard__price-now { font-size: 17px; }
-.wz-pcard--v4 .wz-pcard__price-old { font-size: 11.5px; }
+.wz-pcard--v4 .wz-pcard__price-now { font-size: 20px; }
+.wz-pcard--v4 .wz-pcard__price-old { font-size: 13.5px; }
 .wz-pcard--v4 .wz-pcard__form { grid-area: add; align-self: end; justify-self: end; margin-top: 0; width: auto; display: inline-block; }
 .wz-pcard--v4 .wz-pcard__form-inner { width: auto; display: inline-block; }
 .wz-pcard--v4 .wz-pcard__add {
