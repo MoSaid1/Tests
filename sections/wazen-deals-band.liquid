@@ -1,7 +1,7 @@
 {{ 'wazen-home.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'wazen-countdown.js' | asset_url }}" defer="defer"></script>
 
-<section class="wz-container wz-deals-wrap">
+<section class="wz-container wz-deals-wrap color-{{ section.settings.color_scheme }}">
   <div class="wz-deals">
     <div class="wz-deals__head">
       <div>
@@ -43,6 +43,7 @@
 {
   "name": "Wazen deals band",
   "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
     { "type": "text", "id": "badge", "label": "Badge text", "default": "Limited offer" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Deals you don't want to miss" },
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Prices valid while stock lasts." },

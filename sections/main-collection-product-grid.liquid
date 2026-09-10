@@ -5,7 +5,7 @@
   assign sort_by = collection.sort_by | default: collection.default_sort_by
 -%}
 
-<div class="wz-container wz-collection-body">
+<div class="wz-container wz-collection-body color-{{ section.settings.color_scheme }}">
   <form id="WzFacets" method="get" action="{{ collection.url }}">
     <div class="wz-collection-layout">
       <aside id="wz-filter-sheet" class="wz-filters" hidden>
@@ -153,6 +153,7 @@
 {
   "name": "t:sections.main-collection-product-grid.name",
   "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
     { "type": "range", "id": "products_per_page", "min": 8, "max": 36, "step": 4, "default": 24, "label": "Products per page" }
   ]
 }

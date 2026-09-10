@@ -1,6 +1,6 @@
 {{ 'wazen-pages.css' | asset_url | stylesheet_tag }}
 
-<div class="wz-container wz-branches">
+<div class="wz-container wz-branches color-{{ section.settings.color_scheme }}">
   <h1 class="wz-collection-head__title">{{ section.settings.heading }}</h1>
   <p class="wz-page-sub">{{ section.settings.subheading }}</p>
 
@@ -47,6 +47,7 @@
 {
   "name": "Wazen branches",
   "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Branches" },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Four showrooms across Cairo, Giza and Alexandria. Every branch holds display stock, and two run their own service centre." },
     { "type": "url", "id": "map_embed_url", "label": "Google Maps embed URL", "info": "Paste the src of a Google Maps embed iframe." }

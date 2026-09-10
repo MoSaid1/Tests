@@ -1,6 +1,6 @@
 {{ 'wazen-home.css' | asset_url | stylesheet_tag }}
 
-<section class="wz-section">
+<section class="wz-section color-{{ section.settings.color_scheme }}">
   {%- if section.settings.heading != blank -%}
     <div class="wz-section__head">
       <h2>{{ section.settings.heading }}</h2>
@@ -25,6 +25,7 @@
 {
   "name": "Wazen intent grid",
   "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Curated for the season" },
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Four edits that change with the weather, not a database dump." }
   ],

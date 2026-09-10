@@ -6,7 +6,7 @@
   }
 {%- endstyle -%}
 
-<section class="wz-hero">
+<section class="wz-hero color-{{ section.settings.color_scheme }}">
   {%- if section.settings.image != blank -%}
     {{ section.settings.image | image_url: width: 2000 | image_tag: class: 'wz-hero__img', widths: '750,1100,1500,2000', sizes: '100vw', alt: section.settings.heading | default: shop.name, loading: 'eager', fetchpriority: 'high' }}
   {%- else -%}
@@ -36,6 +36,7 @@
   "name": "Wazen hero banner",
   "tag": "div",
   "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
     { "type": "image_picker", "id": "image", "label": "Background image" },
     { "type": "range", "id": "height", "min": 480, "max": 960, "step": 20, "default": 860, "label": "Height (px)" },
     { "type": "checkbox", "id": "show_price_card", "label": "Show floating price card", "default": true },

@@ -1,6 +1,6 @@
 {{ 'wazen-pages.css' | asset_url | stylesheet_tag }}
 
-<div class="wz-container wz-brands-page">
+<div class="wz-container wz-brands-page color-{{ section.settings.color_scheme }}">
   <h1 class="wz-collection-head__title">{{ section.settings.heading }}</h1>
   <p class="wz-page-sub">{{ section.settings.subheading }}</p>
 
@@ -24,6 +24,7 @@
 {
   "name": "Wazen brands directory",
   "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "All Brands" },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Fourteen manufacturers, every unit with local warranty and an authorised service path." }
   ],

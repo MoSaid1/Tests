@@ -1,6 +1,6 @@
 {{ 'wazen-home.css' | asset_url | stylesheet_tag }}
 
-<section class="wz-section">
+<section class="wz-section color-{{ section.settings.color_scheme }}">
   <div class="wz-trust-grid">
     {%- for block in section.blocks -%}
       <div class="wz-trust-card" {{ block.shopify_attributes }}>
@@ -15,6 +15,9 @@
 {% schema %}
 {
   "name": "Wazen trust cards",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" }
+  ],
   "blocks": [
     {
       "type": "card",

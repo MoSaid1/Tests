@@ -3,7 +3,7 @@
 {%- assign wz_word_count = article.content | strip_html | split: ' ' | size -%}
 {%- assign wz_read_min = wz_word_count | divided_by: 200 | at_least: 1 -%}
 
-<div class="wz-article">
+<div class="wz-article color-{{ section.settings.color_scheme }}">
   <div class="wz-container wz-breadcrumbs-row">
     <div class="wz-breadcrumbs">
       <a href="{{ routes.root_url }}">{{ 'wazen.nav.home' | t }}</a><span class="wz-breadcrumbs__sep">/</span>
@@ -128,6 +128,7 @@
 {
   "name": "t:sections.main-article.name",
   "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
     { "type": "checkbox", "id": "show_share", "label": "Show share button", "default": true }
   ]
 }

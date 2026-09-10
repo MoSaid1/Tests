@@ -1,7 +1,7 @@
 {{ 'wazen-pages.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'wazen-tabs.js' | asset_url }}" defer="defer"></script>
 
-<div class="wz-container wz-policy">
+<div class="wz-container wz-policy color-{{ section.settings.color_scheme }}">
   <h1 class="wz-collection-head__title">{{ section.settings.heading }}</h1>
   <p class="wz-page-sub">{{ section.settings.subheading }}</p>
 
@@ -37,6 +37,7 @@
 {
   "name": "Wazen shipping & returns",
   "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Shipping & Returns" },
     { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "How delivery, installation and returns work at Wazen." }
   ],

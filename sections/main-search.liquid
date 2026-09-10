@@ -5,6 +5,7 @@
   assign terms = search.terms | escape
 -%}
 
+<div class="color-{{ section.settings.color_scheme }}">
 <div class="wz-container wz-collection-head">
   <h1 class="wz-collection-head__title">
     {%- if terms != blank -%}
@@ -80,11 +81,13 @@
     {%- endpaginate -%}
   {%- endif -%}
 </div>
+</div>
 
 {% schema %}
 {
   "name": "t:sections.main-search.name",
   "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
     { "type": "range", "id": "results_per_page", "min": 8, "max": 36, "step": 4, "default": 24, "label": "Results per page" }
   ]
 }

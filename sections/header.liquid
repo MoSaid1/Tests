@@ -10,7 +10,7 @@
   assign wish_count_default = 0
 -%}
 
-<div class="header-wrapper wz-header-wrapper">
+<div class="header-wrapper wz-header-wrapper color-{{ section.settings.color_scheme }} gradient">
   <div class="wz-announce">
     <div class="wz-container wz-announce__row">
       <div class="wz-announce__msg">
@@ -155,13 +155,18 @@
 
 {%- render 'wazen-search-modal' -%}
 {%- render 'wazen-mobile-drawer', menu: section.settings.menu -%}
-{%- render 'cart-drawer' -%}
 
 {% schema %}
 {
   "name": "t:sections.header.name",
   "class": "section-header",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "link_list",
       "id": "menu",

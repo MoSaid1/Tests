@@ -5,7 +5,7 @@
   assign featured = articles.first
 -%}
 
-<div class="wz-container wz-blog">
+<div class="wz-container wz-blog color-{{ section.settings.color_scheme }}">
   <div class="wz-blog__head">
     <div>
       <h1 class="wz-collection-head__title">{{ blog.title | default: section.settings.heading }}</h1>
@@ -91,6 +91,7 @@
 {
   "name": "t:sections.main-blog.name",
   "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
     { "type": "text", "id": "heading", "label": "Heading fallback", "default": "Wazen guides" },
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Buying guides, comparisons and maintenance advice written by the people who install these appliances every day." },
     { "type": "range", "id": "articles_per_page", "min": 4, "max": 20, "step": 2, "default": 12, "label": "Articles per page" }

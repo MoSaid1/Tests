@@ -5,6 +5,7 @@
     "footer": {
       "type": "footer",
       "settings": {
+        "color_scheme": "scheme-4",
         "tagline": "Egypt's home appliance and electronics retailer since 1998. Authorised dealer with local warranty on every product.",
         "whatsapp_link": "",
         "privacy_url": "",

@@ -1,6 +1,6 @@
 {{ 'wazen-home.css' | asset_url | stylesheet_tag }}
 
-<section class="wz-container wz-newsletter-wrap">
+<section class="wz-container wz-newsletter-wrap color-{{ section.settings.color_scheme }}">
   <div class="wz-newsletter">
     <div>
       <h2 class="wz-newsletter__title">{{ section.settings.heading }}</h2>
@@ -32,6 +32,7 @@
 {
   "name": "Wazen newsletter",
   "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Stay updated with Wazen" },
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Get the latest product updates, offers, and tips straight to your inbox." },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Stay Updated" }

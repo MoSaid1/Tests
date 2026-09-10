@@ -2,7 +2,7 @@
 {{ 'wazen-wishlist.css' | asset_url | stylesheet_tag }}
 <script src="{{ 'wazen-wishlist-page.js' | asset_url }}" defer="defer"></script>
 
-<div class="wz-container wz-wishlist-page">
+<div class="wz-container wz-wishlist-page color-{{ section.settings.color_scheme }}">
   <h1 class="wz-collection-head__title">{{ 'wazen.wishlist.title' | t }}</h1>
   <p class="wz-wishlist-page__sub" id="wz-wishlist-sub"></p>
 
@@ -31,6 +31,8 @@
 {% schema %}
 {
   "name": "Wazen wishlist",
-  "settings": []
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" }
+  ]
 }
 {% endschema %}

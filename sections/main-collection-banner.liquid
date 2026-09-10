@@ -1,6 +1,6 @@
 {{ 'wazen-collection.css' | asset_url | stylesheet_tag }}
 
-<div class="wz-container wz-collection-head">
+<div class="wz-container wz-collection-head color-{{ section.settings.color_scheme }}">
   <div class="wz-breadcrumbs">
     <a href="{{ routes.root_url }}">{{ 'wazen.nav.home' | t }}</a>
     <span class="wz-breadcrumbs__sep">/</span>
@@ -29,6 +29,12 @@
 {
   "name": "t:sections.main-collection-banner.name",
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
     {
       "type": "checkbox",
       "id": "show_description",

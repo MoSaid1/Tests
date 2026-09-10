@@ -1,6 +1,6 @@
 {{ 'wazen-footer.css' | asset_url | stylesheet_tag }}
 
-<footer class="wz-footer">
+<footer class="wz-footer color-{{ section.settings.color_scheme }}">
   <div class="wz-container wz-footer__top">
     <div class="wz-footer__brand">
       <div class="wz-footer__logo">
@@ -64,6 +64,12 @@
   "name": "t:sections.footer.name",
   "max_blocks": 6,
   "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-4"
+    },
     {
       "type": "textarea",
       "id": "tagline",

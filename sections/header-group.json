@@ -5,6 +5,7 @@
     "header": {
       "type": "header",
       "settings": {
+        "color_scheme": "scheme-1",
         "menu": "main-menu",
         "announcement_text": "<p>Free shipping on orders above 15,000 EGP across Cairo &amp; Alexandria</p>",
         "support_phone": "16123",
