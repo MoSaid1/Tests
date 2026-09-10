@@ -165,8 +165,8 @@
 .wz-pcard--v3.wz-pcard--deal .wz-pcard__add:not([disabled]):hover { background: var(--wz-orange-dark); }
 
 /* Style 4 — Compact: inset framed image + floating round cart button ----------- */
-.wz-pcard--v4.wz-card { border-radius: var(--wz-radius-md); box-shadow: none; border-color: var(--wz-border-3); }
-.wz-pcard--v4.wz-lift:hover { transform: none; box-shadow: var(--wz-shadow-card); }
+.wz-pcard--v4.wz-card { border-radius: var(--wz-radius-md); box-shadow: none; border: none; }
+.wz-pcard--v4.wz-lift:hover { transform: none; box-shadow: none; }
 .wz-pcard--v4 .wz-pcard__media {
   margin: 10px 10px 0; width: calc(100% - 20px); aspect-ratio: 1 / 1;
   border-radius: var(--wz-radius-sm); overflow: hidden;
