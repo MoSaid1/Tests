@@ -78,9 +78,6 @@
           <span class="wz-pcard__price-old">{{ compare_at | money }}</span>
         {%- endif -%}
       </div>
-      {%- if has_discount -%}
-        <span class="wz-pcard__savings">{{ 'wazen.product.save' | t }} {{ savings | money }}</span>
-      {%- endif -%}
     </div>
 
     <product-form class="wz-pcard__form">

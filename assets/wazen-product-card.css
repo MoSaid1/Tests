@@ -68,16 +68,11 @@
 .wz-pcard__rating-count { font-variant-numeric: tabular-nums; }
 
 /* Price ------------------------------------------------------------------------ */
-.wz-pcard__price-row { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--wz-border-2); display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.wz-pcard__price-row { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--wz-border-2); display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
 .wz-pcard__price { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; }
 .wz-pcard__price-now { font-size: 19.5px; font-weight: 700; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; white-space: nowrap; color: var(--wz-ink); }
 .wz-pcard--deal .wz-pcard__price-now { color: var(--wz-orange-dark); font-weight: 700; font-size: 21px; }
 .wz-pcard__price-old { font-size: 12.5px; color: var(--wz-line); text-decoration: line-through; font-variant-numeric: tabular-nums; }
-.wz-pcard__savings {
-  font-size: 11px; font-weight: 700; color: var(--wz-green); background: var(--wz-green-tint);
-  padding: 3px 8px; border-radius: var(--wz-radius-pill); white-space: nowrap;
-}
-.wz-pcard--deal .wz-pcard__savings { color: var(--wz-orange-dark); background: var(--wz-orange-tint); }
 
 /* Add to cart -------------------------------------------------------------------- */
 .wz-pcard__form { margin-top: 16px; display: block; }
