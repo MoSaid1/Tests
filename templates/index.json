@@ -12,6 +12,7 @@
     "wz_hero": {
       "type": "wazen-hero",
       "settings": {
+        "color_scheme": "",
         "image": "shopify://shop_images/pc-ar-1-2048x498.webp",
         "height": 860,
         "show_price_card": true,
@@ -100,72 +101,19 @@
         "c8"
       ],
       "settings": {
+        "color_scheme": "",
         "card_size": 240,
         "speed": 40
-      }
-    },
-    "wz_intents": {
-      "type": "wazen-intent-grid",
-      "blocks": {
-        "i1": {
-          "type": "intent",
-          "settings": {
-            "fallback_color": "#0a2a47",
-            "kicker": "Beat the heat",
-            "title": "Summer Essentials",
-            "description": "Air conditioners, fans & coolers",
-            "link": ""
-          }
-        },
-        "i2": {
-          "type": "intent",
-          "settings": {
-            "fallback_color": "#123a5e",
-            "kicker": "Cook better",
-            "title": "Kitchen Essentials",
-            "description": "Cookers, air fryers, blenders",
-            "link": ""
-          }
-        },
-        "i3": {
-          "type": "intent",
-          "settings": {
-            "fallback_color": "#0657ab",
-            "kicker": "Connected home",
-            "title": "Smart Living",
-            "description": "Smart TVs & connected appliances",
-            "link": ""
-          }
-        },
-        "i4": {
-          "type": "intent",
-          "settings": {
-            "fallback_color": "#04447f",
-            "kicker": "Spotless",
-            "title": "Home Cleaning",
-            "description": "Vacuum cleaners & more",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "i1",
-        "i2",
-        "i3",
-        "i4"
-      ],
-      "settings": {
-        "heading": "Curated for the season",
-        "subheading": "Four edits that change with the weather, not a database dump."
       }
     },
     "wz_featured": {
       "type": "wazen-featured-products",
       "settings": {
+        "color_scheme": "",
         "heading": "Featured products",
         "subheading": "Best-selling appliances this month.",
-        "collection": "",
-        "product_limit": 8,
+        "collection": "hot-deals",
+        "product_limit": 12,
         "columns_desktop": 4,
         "columns_mobile": "2"
       }
@@ -173,6 +121,7 @@
     "wz_deals": {
       "type": "wazen-deals-band",
       "settings": {
+        "color_scheme": "",
         "badge": "Limited offer",
         "heading": "Deals you don't want to miss",
         "subheading": "Prices valid while stock lasts.",
@@ -300,6 +249,7 @@
         "b14"
       ],
       "settings": {
+        "color_scheme": "",
         "heading": "Authorised brand partner",
         "subheading": "Fourteen manufacturers, every unit with local warranty."
       }
@@ -346,11 +296,70 @@
         "t3",
         "t4"
       ],
-      "settings": {}
+      "settings": {
+        "color_scheme": ""
+      }
+    },
+    "wz_intents": {
+      "type": "wazen-intent-grid",
+      "blocks": {
+        "i1": {
+          "type": "intent",
+          "settings": {
+            "fallback_color": "#0a2a47",
+            "kicker": "Beat the heat",
+            "title": "Summer Essentials",
+            "description": "Air conditioners, fans & coolers",
+            "link": ""
+          }
+        },
+        "i2": {
+          "type": "intent",
+          "settings": {
+            "fallback_color": "#123a5e",
+            "kicker": "Cook better",
+            "title": "Kitchen Essentials",
+            "description": "Cookers, air fryers, blenders",
+            "link": ""
+          }
+        },
+        "i3": {
+          "type": "intent",
+          "settings": {
+            "fallback_color": "#0657ab",
+            "kicker": "Connected home",
+            "title": "Smart Living",
+            "description": "Smart TVs & connected appliances",
+            "link": ""
+          }
+        },
+        "i4": {
+          "type": "intent",
+          "settings": {
+            "fallback_color": "#04447f",
+            "kicker": "Spotless",
+            "title": "Home Cleaning",
+            "description": "Vacuum cleaners & more",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "i1",
+        "i2",
+        "i3",
+        "i4"
+      ],
+      "settings": {
+        "color_scheme": "",
+        "heading": "Curated for the season",
+        "subheading": "Four edits that change with the weather, not a database dump."
+      }
     },
     "wz_newsletter": {
       "type": "wazen-newsletter",
       "settings": {
+        "color_scheme": "",
         "heading": "Stay updated with Wazen",
         "subheading": "Get the latest product updates, offers, and tips straight to your inbox.",
         "button_label": "Stay Updated"
@@ -360,11 +369,11 @@
   "order": [
     "wz_hero",
     "wz_catstrip",
-    "wz_intents",
     "wz_featured",
     "wz_deals",
     "wz_brands",
     "wz_trust",
+    "wz_intents",
     "wz_newsletter"
   ]
 }
