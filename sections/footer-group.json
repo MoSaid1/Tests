@@ -1,32 +1,55 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
     "footer": {
       "type": "footer",
+      "blocks": {
+        "col-shop": {
+          "type": "link_column",
+          "settings": {
+            "title": "Shop",
+            "menu": "shop-footer"
+          }
+        },
+        "col-service": {
+          "type": "link_column",
+          "settings": {
+            "title": "Customer Service",
+            "menu": "customer-service-footer"
+          }
+        },
+        "col-company": {
+          "type": "link_column",
+          "settings": {
+            "title": "Company",
+            "menu": "company-footer"
+          }
+        }
+      },
+      "block_order": [
+        "col-shop",
+        "col-service",
+        "col-company"
+      ],
       "settings": {
-        "color_scheme": "scheme-4",
         "tagline": "Egypt's home appliance and electronics retailer since 1998. Authorised dealer with local warranty on every product.",
         "whatsapp_link": "",
         "privacy_url": "",
         "terms_url": ""
-      },
-      "blocks": {
-        "col-shop": {
-          "type": "link_column",
-          "settings": { "title": "Shop", "menu": "shop-footer" }
-        },
-        "col-service": {
-          "type": "link_column",
-          "settings": { "title": "Customer Service", "menu": "customer-service-footer" }
-        },
-        "col-company": {
-          "type": "link_column",
-          "settings": { "title": "Company", "menu": "company-footer" }
-        }
-      },
-      "block_order": ["col-shop", "col-service", "col-company"]
+      }
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }
