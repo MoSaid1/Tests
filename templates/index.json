@@ -114,10 +114,10 @@
         "subheading": "Best-selling appliances this month.",
         "collection": "hot-deals",
         "product_limit": 12,
-        "columns_desktop": 4,
+        "columns_desktop": 5,
         "columns_mobile": "2",
         "enable_marquee": true,
-        "marquee_card_width": 280,
+        "marquee_card_width": 250,
         "marquee_speed": 30
       }
     },
@@ -128,8 +128,8 @@
         "badge": "Limited offer",
         "heading": "Deals you don't want to miss",
         "subheading": "Prices valid while stock lasts.",
-        "deadline": "",
-        "collection": "",
+        "deadline": "2026-09-14T00:00:00",
+        "collection": "hot-deals",
         "product_limit": 4
       }
     },
