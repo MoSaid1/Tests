@@ -17,23 +17,35 @@
     assign savings = compare_at | minus: price
     assign off_pct = savings | times: 100.0 | divided_by: compare_at | round
   endif
+  assign is_sold_out = true
+  if variant.available
+    assign is_sold_out = false
+  endif
   assign rating = product.metafields.reviews.rating.value
   assign rating_count = product.metafields.reviews.rating_count.value
+  assign rating_rounded = rating | round
 -%}
-<div class="wz-pcard wz-pcard--{{ card_variant }} wz-card wz-lift" data-product-card>
-  <a href="{{ product.url }}" class="wz-pcard__media">
+<div class="wz-pcard wz-pcard--{{ card_variant }} wz-card wz-lift{% if is_sold_out %} wz-pcard--soldout{% endif %}" data-product-card>
+  <a href="{{ product.url }}" class="wz-pcard__media" tabindex="-1">
     {%- if product.featured_image -%}
       {{
         product.featured_image
         | image_url: width: 700
         | image_tag: class: 'wz-pcard__img', widths: '350,500,700', sizes: '(min-width: 990px) 300px, 45vw', alt: product.featured_image.alt | default: product.title, loading: 'lazy'
       }}
+      {%- if product.media.size > 1 and product.media[1].media_type == 'image' -%}
+        {{ product.media[1] | image_url: width: 700 | image_tag: class: 'wz-pcard__img wz-pcard__img--alt', widths: '350,500,700', sizes: '(min-width: 990px) 300px, 45vw', alt: product.title, loading: 'lazy' }}
+      {%- endif -%}
     {%- else -%}
       <div class="wz-pcard__img wz-placeholder-media">{{ 'wazen.media.product_image' | t }}</div>
     {%- endif -%}
-    {%- if has_discount -%}
-      <span class="wz-badge wz-badge--sale wz-pcard__badge">-{{ off_pct }}%</span>
-    {%- endif -%}
+    <div class="wz-pcard__badges">
+      {%- if is_sold_out -%}
+        <span class="wz-badge wz-pcard__badge wz-pcard__badge--soldout">{{ 'products.product.sold_out' | t }}</span>
+      {%- elsif has_discount -%}
+        <span class="wz-badge wz-badge--sale wz-pcard__badge">-{{ off_pct }}%</span>
+      {%- endif -%}
+    </div>
   </a>
   <button
     type="button"
@@ -47,44 +59,49 @@
   </button>
 
   <div class="wz-pcard__body">
-    {%- if settings.show_vendor and product.vendor != blank -%}
+    {%- if product.vendor != blank -%}
       <div class="wz-pcard__brand">{{ product.vendor }}</div>
     {%- endif -%}
     <a href="{{ product.url }}" class="wz-pcard__title">{{ product.title }}</a>
 
     {%- if show_rating and rating != blank -%}
       <div class="wz-pcard__rating">
-        <span class="wz-pcard__stars">{%- render 'wazen-icon', icon: 'star', size: 12 -%}</span>
-        <span>{{ rating }} ({{ rating_count | default: 0 }})</span>
+        <span class="wz-pcard__stars" style="--wz-rating: {{ rating | times: 20 }}%;" aria-hidden="true">★★★★★</span>
+        <span class="wz-pcard__rating-count">{{ rating }} ({{ rating_count | default: 0 }})</span>
       </div>
     {%- endif -%}
 
-    <div class="wz-pcard__price">
-      <span class="wz-pcard__price-now">{{ price | money }}</span>
+    <div class="wz-pcard__price-row">
+      <div class="wz-pcard__price">
+        <span class="wz-pcard__price-now">{{ price | money }}</span>
+        {%- if has_discount -%}
+          <span class="wz-pcard__price-old">{{ compare_at | money }}</span>
+        {%- endif -%}
+      </div>
       {%- if has_discount -%}
-        <span class="wz-pcard__price-old">{{ compare_at | money }}</span>
+        <span class="wz-pcard__savings">{{ 'wazen.product.save' | t }} {{ savings | money }}</span>
       {%- endif -%}
     </div>
-    {%- if has_discount -%}
-      <div class="wz-pcard__savings">{{ 'wazen.product.save' | t }} {{ savings | money }}</div>
-    {%- endif -%}
 
     <product-form class="wz-pcard__form">
       <div class="product-form__error-message-wrapper" role="alert" hidden>
         <span class="product-form__error-message"></span>
       </div>
       {%- form 'product', product, class: 'wz-pcard__form-inner', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
-        <input type="hidden" name="id" value="{{ variant.id }}" class="product-variant-id" {% if variant.available == false or variant == null %}disabled{% endif %}>
+        <input type="hidden" name="id" value="{{ variant.id }}" class="product-variant-id" {% if is_sold_out or variant == null %}disabled{% endif %}>
         <button
           type="submit"
           name="add"
           class="wz-btn wz-btn--block {% if card_variant == 'deal' %}wz-btn--primary{% else %}wz-btn--outline{% endif %} wz-pcard__add"
-          {% if variant.available == false or variant == null %}disabled{% endif %}
+          {% if is_sold_out or variant == null %}disabled{% endif %}
         >
+          {%- unless is_sold_out or variant == null -%}
+            {%- render 'wazen-icon', icon: 'cart', size: 15 -%}
+          {%- endunless -%}
           <span>
             {%- if variant == null -%}
               {{ 'products.product.unavailable' | t }}
-            {%- elsif variant.available == false -%}
+            {%- elsif is_sold_out -%}
               {{ 'products.product.sold_out' | t }}
             {%- else -%}
               {{ 'products.product.add_to_cart' | t }}
