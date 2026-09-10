@@ -239,6 +239,53 @@ html.wz-scroll-lock body {
 .wz-search-modal__muted { font-size: 13.5px; color: var(--wz-faint); }
 .wz-search-modal__suggestions { margin-top: 14px; }
 .wz-predictive { width: 100%; border-radius: var(--wz-radius-md); }
+
+/* Restyle Dawn's predictive-search result markup to match the Wazen look */
+.wz-predictive.predictive-search {
+  background: #fff;
+  border: 1px solid var(--wz-border);
+  box-shadow: var(--wz-shadow-menu);
+  padding: 22px 4px 14px;
+}
+.wz-predictive .predictive-search__results-groups-wrapper { border-bottom: none; padding-bottom: 0; gap: 32px; }
+.wz-predictive .predictive-search__heading {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: #8d97a1;
+  border: none; margin: 0 18px; padding: 0 0 4px;
+}
+.wz-predictive .predictive-search__results-list { display: flex; flex-direction: column; gap: 2px; margin-top: 10px; padding: 0 8px; }
+.wz-predictive .predictive-search__list-item { list-style: none; }
+.wz-predictive .predictive-search__item {
+  display: flex; align-items: center; gap: 16px; padding: 10px; border-radius: var(--wz-radius-md);
+  color: var(--wz-ink); text-decoration: none;
+}
+.wz-predictive .predictive-search__item:hover,
+.wz-predictive .predictive-search__item:focus { background: var(--wz-surface); }
+.wz-predictive .predictive-search__item-content--centered { display: flex; align-items: center; }
+.wz-predictive .predictive-search__item-heading {
+  font-size: 14.5px; font-weight: 500; margin: 0; color: var(--wz-ink);
+}
+.wz-predictive .predictive-search__item--link-with-thumbnail .predictive-search__item-heading { font-weight: 500; }
+.wz-predictive .predictive-search__item-vendor {
+  font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--wz-blue); margin-bottom: 3px;
+}
+.wz-predictive .predictive-search__image {
+  width: 56px; height: 56px; flex: none; border-radius: var(--wz-radius-md); object-fit: cover; background: var(--wz-surface-2);
+}
+.wz-predictive .predictive-search__item .price { font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; color: var(--wz-ink); margin-top: 4px; }
+.wz-predictive .predictive-search__item .price .price-item--regular { color: var(--wz-ink); }
+.wz-predictive .predictive-search__item .price s.price-item { color: var(--wz-line); font-weight: 400; font-size: 13px; margin-inline-end: 6px; }
+.wz-predictive .predictive-search__item .price .price-item--sale { color: var(--wz-ink); font-weight: 600; }
+.wz-predictive .predictive-search__item .price__badge-sale,
+.wz-predictive .predictive-search__item .price__badge-sold-out { display: none; }
+.wz-predictive .predictive-search__pages-wrapper { margin-top: 20px; }
+.wz-predictive .predictive-search__search-for-button {
+  margin-top: 14px; padding: 0 18px; border-top: 1px solid var(--wz-border-2); padding-top: 12px;
+}
+.wz-predictive .predictive-search__item--term {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 4px;
+  font-size: 14px; font-weight: 600; color: var(--wz-blue); text-decoration: none;
+}
+.wz-predictive .predictive-search__loading-state { margin: 20px auto; }
 @media screen and (max-width: 749px) {
   .wz-search-modal__panels { grid-template-columns: 1fr; }
 }
