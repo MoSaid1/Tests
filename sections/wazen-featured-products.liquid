@@ -1,7 +1,9 @@
 {{ 'wazen-home.css' | asset_url | stylesheet_tag }}
-{%- if section.settings.enable_marquee -%}
-  <script src="{{ 'wazen-marquee.js' | asset_url }}" defer="defer"></script>
-{%- endif -%}
+
+{%- liquid
+  assign source = section.settings.collection.products | default: collections.all.products
+  assign shown = 0
+-%}
 
 {%- style -%}
   #shopify-section-{{ section.id }} .wz-pgrid--featured {
@@ -13,7 +15,14 @@
     }
   }
   {%- if section.settings.enable_marquee -%}
+    {%- assign wz_step_count = source.size | at_most: section.settings.product_limit -%}
     #shopify-section-{{ section.id }} .wz-featured-marquee__card { width: {{ section.settings.marquee_card_width }}px; }
+    {%- if wz_step_count > 0 -%}
+      {%- assign wz_duration = wz_step_count | times: section.settings.marquee_speed -%}
+      #shopify-section-{{ section.id }} .wz-featured-marquee__track {
+        animation: {% if request.locale.text_direction == 'rtl' %}wzMarqueeRtl{% else %}wzMarquee{% endif %} {{ wz_duration }}s steps({{ wz_step_count }}) infinite;
+      }
+    {%- endif -%}
   {%- endif -%}
 {%- endstyle -%}
 
@@ -22,11 +31,6 @@
     <h2>{{ section.settings.heading }}</h2>
     {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
   </div>
-
-  {%- liquid
-    assign source = section.settings.collection.products | default: collections.all.products
-    assign shown = 0
-  -%}
 
   <div class="wz-pgrid wz-pgrid--featured{% if section.settings.enable_marquee %} wz-pgrid--has-marquee{% endif %}" data-scroll-grid>
     {%- for product in source limit: section.settings.product_limit -%}
@@ -47,7 +51,7 @@
 
   {%- if section.settings.enable_marquee and shown > 0 -%}
     <div class="wz-featured-marquee">
-      <div class="wz-featured-marquee__track" data-marquee data-marquee-interval="{{ section.settings.marquee_speed }}">
+      <div class="wz-featured-marquee__track">
         {%- for i in (1..2) -%}
           {%- for product in source limit: section.settings.product_limit -%}
             <div class="wz-featured-marquee__card" aria-hidden="{% if i == 2 %}true{% else %}false{% endif %}">

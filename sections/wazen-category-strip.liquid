@@ -1,12 +1,18 @@
 {{ 'wazen-home.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'wazen-marquee.js' | asset_url }}" defer="defer"></script>
 
 {%- style -%}
   #shopify-section-{{ section.id }} .wz-catstrip__card { width: {{ section.settings.card_size }}px; }
+  {%- assign wz_step_count = section.blocks.size -%}
+  {%- if wz_step_count > 0 -%}
+    {%- assign wz_duration = wz_step_count | times: section.settings.speed -%}
+    #shopify-section-{{ section.id }} .wz-catstrip__track {
+      animation: {% if request.locale.text_direction == 'rtl' %}wzMarqueeRtl{% else %}wzMarquee{% endif %} {{ wz_duration }}s steps({{ wz_step_count }}) infinite;
+    }
+  {%- endif -%}
 {%- endstyle -%}
 
 <section class="wz-catstrip color-{{ section.settings.color_scheme }}">
-  <div class="wz-catstrip__track" data-marquee data-marquee-interval="{{ section.settings.speed }}">
+  <div class="wz-catstrip__track">
     {%- for i in (1..2) -%}
       {%- for block in section.blocks -%}
         <a

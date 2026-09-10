@@ -58,6 +58,20 @@
   .wz-featured-marquee { display: block; }
 }
 
+/* Both marquees animate purely via CSS (animation + steps() is set per-section
+   inline, since it depends on item count and locale direction). Pause on
+   hover and respect reduced-motion here, since that's shared behavior. */
+.wz-catstrip:hover .wz-catstrip__track,
+.wz-featured-marquee:hover .wz-featured-marquee__track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .wz-catstrip__track,
+  .wz-featured-marquee__track {
+    animation: none !important;
+  }
+}
+
 /* Deals band ----------------------------------------------------------------- */
 .wz-deals-wrap { margin-top: 72px; }
 .wz-deals { background: var(--wz-navy); border-radius: var(--wz-radius-2xl); padding: clamp(32px, 5vw, 56px) clamp(18px, 3.5vw, 40px); }
