@@ -33,6 +33,13 @@
                 autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false"
               >
               <input type="hidden" name="options[prefix]" value="last">
+              <button
+                type="reset"
+                class="reset__button field__button wz-search-modal__reset{% if search.terms == blank %} hidden{% endif %}"
+                aria-label="{{ 'general.search.reset' | t }}"
+              >
+                {%- render 'wazen-icon', icon: 'close', size: 14 -%}
+              </button>
             </div>
             <button type="button" class="wz-btn wz-btn--ghost wz-btn--sm" data-search-close>{{ 'wazen.general.esc' | t }}</button>
             {%- if settings.predictive_search_enabled -%}

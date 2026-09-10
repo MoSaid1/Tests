@@ -220,8 +220,14 @@ html.wz-scroll-lock body {
 .wz-search-modal__bar { display: flex; align-items: center; gap: 12px; border: 1.5px solid var(--wz-blue); border-radius: var(--wz-radius-md); padding-inline: 16px; height: 56px; background: #fff; }
 .wz-search-modal__icon { display: flex; color: var(--wz-blue); flex: none; }
 .wz-search-modal__form, .wz-search-modal__form-inner { display: contents; }
-.wz-search-modal__field { flex: 1; }
-.wz-search-modal__input { width: 100%; border: none; outline: none; font-size: 17px; height: 54px; background: transparent; font-family: inherit; }
+.wz-search-modal__field { flex: 1; position: relative; display: flex; align-items: center; }
+.wz-search-modal__input { width: 100%; border: none; outline: none; font-size: 17px; height: 54px; background: transparent; font-family: inherit; padding-inline-end: 32px; }
+.wz-search-modal__reset {
+  position: absolute; inset-inline-end: 4px; width: 28px; height: 28px; border-radius: 50%;
+  border: none; background: var(--wz-surface); color: var(--wz-muted); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; padding: 0;
+}
+.wz-search-modal__reset.hidden { display: none; }
 .wz-search-modal__panels { display: grid; grid-template-columns: 230px 1fr; gap: 36px; margin-top: 28px; }
 .wz-search-modal__label { font-size: 11px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: #8d97a1; }
 .wz-search-modal__recent { display: flex; flex-direction: column; gap: 11px; margin-top: 14px; }
