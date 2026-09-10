@@ -103,7 +103,7 @@
       "settings": {
         "color_scheme": "",
         "card_size": 240,
-        "speed": 2.8
+        "speed": 40
       }
     },
     "wz_featured": {
@@ -117,8 +117,8 @@
         "columns_desktop": 5,
         "columns_mobile": "2",
         "enable_marquee": true,
-        "marquee_card_width": 250,
-        "marquee_speed": 2.8
+        "marquee_card_width": 260,
+        "marquee_speed": 30
       }
     },
     "wz_deals": {
