@@ -1,0 +1,59 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+<section class="wz-section color-{{ section.settings.color_scheme }}">
+  {%- if section.settings.heading != blank -%}
+    <div class="wz-section__head">
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+  {%- endif -%}
+  <div class="wz-catshow">
+    {%- for block in section.blocks -%}
+      <a
+        href="{{ block.settings.collection.url | default: block.settings.link }}"
+        class="wz-catshow__tile"
+        {{ block.shopify_attributes }}
+      >
+        {%- if block.settings.collection != blank and block.settings.collection.image -%}
+          {{ block.settings.collection.image | image_url: width: 900 | image_tag: class: 'wz-catshow__img', widths: '450,700,900', sizes: '(min-width: 990px) 33vw, 100vw', loading: 'lazy', alt: block.settings.collection.title }}
+        {%- elsif block.settings.image != blank -%}
+          {{ block.settings.image | image_url: width: 900 | image_tag: class: 'wz-catshow__img', widths: '450,700,900', sizes: '(min-width: 990px) 33vw, 100vw', loading: 'lazy', alt: block.settings.title }}
+        {%- else -%}
+          <div class="wz-catshow__img wz-placeholder-media">{{ 'wazen.media.image' | t }}</div>
+        {%- endif -%}
+        <div class="wz-catshow__scrim"></div>
+        <div class="wz-catshow__label">
+          <div class="wz-catshow__name">{{ block.settings.collection.title | default: block.settings.title }}</div>
+          <div class="wz-catshow__cta">{{ 'wazen.general.view_all' | t }}</div>
+        </div>
+      </a>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wazen category showcase",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shop by category" }
+  ],
+  "blocks": [
+    {
+      "type": "tile",
+      "name": "Tile",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Image (used if no collection image)" },
+        { "type": "text", "id": "title", "label": "Fallback label", "default": "Category" },
+        { "type": "url", "id": "link", "label": "Link (used if no collection)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wazen category showcase",
+      "blocks": [ { "type": "tile" }, { "type": "tile" }, { "type": "tile" } ]
+    }
+  ]
+}
+{% endschema %}

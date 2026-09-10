@@ -1,0 +1,55 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+<section class="wz-section color-{{ section.settings.color_scheme }}">
+  {%- if section.settings.heading != blank -%}
+    <div class="wz-section__head">
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+  {%- endif -%}
+  <div class="wz-locator">
+    <div class="wz-locator__map">
+      {%- if section.settings.map_embed_url != blank -%}
+        <iframe src="{{ section.settings.map_embed_url }}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="{{ section.settings.heading | default: 'Map' }}"></iframe>
+      {%- else -%}
+        <div class="wz-placeholder-media" style="width:100%;height:100%;">{{ 'wazen.media.image' | t }}</div>
+      {%- endif -%}
+    </div>
+    <div class="wz-locator__list">
+      {%- for block in section.blocks -%}
+        <div class="wz-locator__item" {{ block.shopify_attributes }}>
+          <div class="wz-locator__item__name">{%- render 'wazen-icon', icon: 'pin', size: 16 -%} {{ block.settings.name }}</div>
+          {%- if block.settings.address != blank -%}<div class="wz-locator__item__addr">{{ block.settings.address }}</div>{%- endif -%}
+          {%- if block.settings.phone != blank -%}<a href="tel:{{ block.settings.phone }}" class="wz-locator__item__phone">{{ block.settings.phone }}</a>{%- endif -%}
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wazen store locator",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Visit a branch near you" },
+    { "type": "text", "id": "map_embed_url", "label": "Google Maps embed URL", "info": "Paste the src URL from Google Maps' Embed a map option." }
+  ],
+  "blocks": [
+    {
+      "type": "branch",
+      "name": "Branch",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Branch name", "default": "Nasr City" },
+        { "type": "text", "id": "address", "label": "Address" },
+        { "type": "text", "id": "phone", "label": "Phone" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wazen store locator",
+      "blocks": [ { "type": "branch" }, { "type": "branch" }, { "type": "branch" } ]
+    }
+  ]
+}
+{% endschema %}

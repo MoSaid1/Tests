@@ -1,0 +1,70 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+<section class="wz-section color-{{ section.settings.color_scheme }}">
+  <div class="wz-section__head">
+    <h2>{{ section.settings.heading }}</h2>
+    {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+  </div>
+  <div class="wz-pricing">
+    {%- for block in section.blocks -%}
+      <div class="wz-price-card{% if block.settings.featured %} wz-price-card--featured{% endif %}" {{ block.shopify_attributes }}>
+        {%- if block.settings.badge != blank -%}<span class="wz-price-card__badge">{{ block.settings.badge }}</span>{%- endif -%}
+        <div class="wz-price-card__title">{{ block.settings.title }}</div>
+        <div>
+          <span class="wz-price-card__price">{{ block.settings.price }}</span>
+          {%- if block.settings.period != blank -%}<span class="wz-price-card__period">{{ block.settings.period }}</span>{%- endif -%}
+        </div>
+        {%- if block.settings.features != blank -%}
+          <ul class="wz-price-card__list">
+            {%- assign features = block.settings.features | newline_to_br | split: '<br />' -%}
+            {%- for feature in features -%}
+              {%- if feature != blank -%}
+                <li>{%- render 'wazen-icon', icon: 'check', size: 16 -%}<span>{{ feature | strip }}</span></li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+        {%- if block.settings.button_label != blank -%}
+          <a href="{{ block.settings.button_link | default: '#' }}" class="wz-btn {% if block.settings.featured %}wz-btn--primary{% else %}wz-btn--outline{% endif %}">{{ block.settings.button_label }}</a>
+        {%- endif -%}
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wazen pricing tiers",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Extended care plans" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Protect your purchase beyond the manufacturer warranty." }
+  ],
+  "blocks": [
+    {
+      "type": "tier",
+      "name": "Tier",
+      "settings": [
+        { "type": "text", "id": "badge", "label": "Badge (optional)" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Standard" },
+        { "type": "text", "id": "price", "label": "Price", "default": "500 EGP" },
+        { "type": "text", "id": "period", "label": "Period", "default": "/ year" },
+        { "type": "textarea", "id": "features", "label": "Features (one per line)", "default": "1 year extra coverage\nFree call-out visits\nOriginal parts only" },
+        { "type": "checkbox", "id": "featured", "label": "Highlight this tier", "default": false },
+        { "type": "text", "id": "button_label", "label": "Button label", "default": "Choose plan" },
+        { "type": "url", "id": "button_link", "label": "Button link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wazen pricing tiers",
+      "blocks": [
+        { "type": "tier", "settings": { "title": "Standard", "price": "500 EGP", "period": "/ year", "features": "1 year extra coverage\nFree call-out visits\nOriginal parts only" } },
+        { "type": "tier", "settings": { "title": "Plus", "price": "900 EGP", "period": "/ year", "featured": true, "badge": "Most popular", "features": "2 years extra coverage\nFree call-out visits\nOriginal parts only\nPriority support line" } },
+        { "type": "tier", "settings": { "title": "Total", "price": "1400 EGP", "period": "/ year", "features": "3 years extra coverage\nFree call-out visits\nOriginal parts only\nPriority support line\nAnnual maintenance visit" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

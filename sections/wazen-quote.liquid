@@ -1,0 +1,24 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+<div class="wz-section color-{{ section.settings.color_scheme }}">
+  <div class="wz-quote">
+    <div class="wz-quote__mark" aria-hidden="true">&ldquo;</div>
+    <p class="wz-quote__text">{{ section.settings.quote }}</p>
+    {%- if section.settings.name != blank -%}
+      <div class="wz-quote__cite"><strong>{{ section.settings.name }}</strong>{% if section.settings.role != blank %}, {{ section.settings.role }}{% endif %}</div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wazen quote",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "textarea", "id": "quote", "label": "Quote", "default": "We built Wazen so every home in Egypt could get appliances they can actually trust." },
+    { "type": "text", "id": "name", "label": "Name", "default": "Wazen founders" },
+    { "type": "text", "id": "role", "label": "Role / title" }
+  ],
+  "presets": [{ "name": "Wazen quote" }]
+}
+{% endschema %}

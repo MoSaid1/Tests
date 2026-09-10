@@ -93,3 +93,90 @@
 @media (prefers-reduced-motion: reduce) {
   .wz-logomarquee__track { animation: none !important; }
 }
+
+/* 9. Photo gallery (mixed-size grid) --------------------------------------- */
+.wz-gallery { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 180px; gap: 16px; margin-top: 32px; }
+.wz-gallery__item { border-radius: var(--wz-radius-lg); overflow: hidden; position: relative; }
+.wz-gallery__item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wz-gallery__item--wide { grid-column: span 2; }
+.wz-gallery__item--tall { grid-row: span 2; }
+.wz-gallery__caption { position: absolute; inset-inline-start: 14px; bottom: 12px; color: #fff; font-size: 13px; font-weight: 600; text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5); }
+@media screen and (max-width: 749px) {
+  .wz-gallery { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 140px; }
+}
+
+/* 10. Video feature (embed + text) ------------------------------------------ */
+.wz-vfeat { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.wz-vfeat__media { order: 1; border-radius: var(--wz-radius-xl); overflow: hidden; aspect-ratio: 16 / 9; background: #000; }
+.wz-vfeat__media iframe, .wz-vfeat__media video { width: 100%; height: 100%; display: block; }
+.wz-vfeat__content { order: 2; }
+.wz-vfeat--rev .wz-vfeat__media { order: 2; }
+.wz-vfeat--rev .wz-vfeat__content { order: 1; }
+@media screen and (max-width: 749px) {
+  .wz-vfeat { grid-template-columns: 1fr; gap: 24px; }
+  .wz-vfeat__media, .wz-vfeat--rev .wz-vfeat__media { order: 1; }
+  .wz-vfeat__content, .wz-vfeat--rev .wz-vfeat__content { order: 2; }
+}
+
+/* 11. Pricing / plan tiers ---------------------------------------------------- */
+.wz-pricing { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 24px; margin-top: 36px; align-items: start; }
+.wz-price-card { background: #fff; border-radius: var(--wz-radius-lg); box-shadow: var(--wz-shadow-card); padding: 32px 28px; }
+.wz-price-card--featured { background: var(--wz-navy); color: #fff; box-shadow: var(--wz-shadow-lift); }
+.wz-price-card__badge { display: inline-block; background: var(--wz-orange); color: #fff; font-size: 11px; font-weight: 700; padding: 4px 10px; border-radius: 999px; letter-spacing: 0.05em; text-transform: uppercase; }
+.wz-price-card__title { font-size: 18px; font-weight: 600; margin-top: 14px; }
+.wz-price-card__price { font-size: 32px; font-weight: 800; margin-top: 10px; letter-spacing: -0.02em; }
+.wz-price-card__period { font-size: 13px; opacity: 0.65; font-weight: 500; }
+.wz-price-card__list { list-style: none; padding: 0; margin: 20px 0 0; display: flex; flex-direction: column; gap: 10px; font-size: 14px; }
+.wz-price-card__list li { display: flex; gap: 8px; align-items: flex-start; }
+.wz-price-card__list svg { flex: none; margin-top: 3px; color: var(--wz-blue); }
+.wz-price-card--featured .wz-price-card__list svg { color: var(--wz-orange); }
+.wz-price-card .wz-btn { margin-top: 24px; width: 100%; }
+
+/* 12. Countdown banner (standalone promo) ------------------------------------ */
+.wz-countban { background: var(--wz-navy); border-radius: var(--wz-radius-2xl); padding: clamp(36px, 5vw, 64px) clamp(20px, 4vw, 56px); text-align: center; color: #fff; }
+.wz-countban__badge { display: inline-block; background: var(--wz-orange); color: #fff; font-size: 12px; font-weight: 700; padding: 5px 14px; border-radius: 999px; letter-spacing: 0.05em; text-transform: uppercase; }
+.wz-countban__title { font-size: clamp(24px, 3.8vw, 36px); font-weight: 600; letter-spacing: -0.03em; margin: 16px 0 0; }
+.wz-countban__sub { color: #a9bacb; margin: 8px 0 0; font-size: 15.5px; }
+.wz-countban .wz-countdown { justify-content: center; margin-top: 26px; }
+.wz-countban .wz-countdown__cell { background: var(--wz-navy-2); }
+.wz-countban .wz-btn { margin-top: 26px; }
+
+/* 13. Category showcase (large editorial tiles) ------------------------------ */
+.wz-catshow { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 24px; margin-top: 36px; }
+.wz-catshow__tile { position: relative; border-radius: var(--wz-radius-xl); overflow: hidden; aspect-ratio: 4 / 5; display: flex; align-items: flex-end; color: #fff; text-decoration: none; }
+.wz-catshow__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 400ms ease; }
+.wz-catshow__tile:hover .wz-catshow__img { transform: scale(1.06); }
+.wz-catshow__scrim { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(10, 15, 20, 0) 40%, rgba(10, 15, 20, 0.82) 100%); }
+.wz-catshow__label { position: relative; z-index: 1; padding: 26px; }
+.wz-catshow__name { font-size: 22px; font-weight: 600; letter-spacing: -0.02em; }
+.wz-catshow__cta { font-size: 13px; margin-top: 6px; opacity: 0.85; }
+
+/* 14. Team grid --------------------------------------------------------------- */
+.wz-team-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 24px; margin-top: 36px; }
+.wz-team-card { text-align: center; }
+.wz-team-card__photo { aspect-ratio: 1 / 1; border-radius: var(--wz-radius-lg); overflow: hidden; background: var(--wz-surface-2); }
+.wz-team-card__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wz-team-card__name { font-size: 15.5px; font-weight: 600; margin-top: 14px; }
+.wz-team-card__role { font-size: 13px; color: var(--wz-muted); margin-top: 2px; }
+
+/* 15. Store locator (map + branch list) --------------------------------------- */
+.wz-locator { display: grid; grid-template-columns: 1fr 1fr; border-radius: var(--wz-radius-xl); overflow: hidden; box-shadow: var(--wz-shadow-card); margin-top: 8px; }
+.wz-locator__map { aspect-ratio: 1 / 1; background: var(--wz-surface-2); }
+.wz-locator__map iframe { width: 100%; height: 100%; border: 0; display: block; }
+.wz-locator__list { background: #fff; padding: 28px; display: flex; flex-direction: column; gap: 18px; overflow-y: auto; max-height: 520px; }
+.wz-locator__item { padding-bottom: 16px; border-bottom: 1px solid var(--wz-border-2); }
+.wz-locator__item:last-child { border-bottom: none; padding-bottom: 0; }
+.wz-locator__item__name { font-size: 15px; font-weight: 600; }
+.wz-locator__item__addr { font-size: 13.5px; color: var(--wz-muted); margin-top: 4px; line-height: 1.6; }
+.wz-locator__item__phone { font-size: 13px; color: var(--wz-blue); margin-top: 6px; display: inline-block; text-decoration: none; }
+@media screen and (max-width: 749px) {
+  .wz-locator { grid-template-columns: 1fr; }
+  .wz-locator__map { aspect-ratio: 16 / 9; }
+}
+
+/* 16. Quote spotlight ----------------------------------------------------------- */
+.wz-quote { max-width: 760px; margin: 0 auto; text-align: center; }
+.wz-quote__mark { font-size: 64px; line-height: 1; color: var(--wz-blue-tint); font-family: Georgia, serif; }
+.wz-quote__text { font-size: clamp(20px, 3vw, 28px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.5; margin-top: -20px; }
+.wz-quote__cite { margin-top: 20px; font-size: 14px; color: var(--wz-muted); }
+.wz-quote__cite strong { color: var(--wz-ink); }
