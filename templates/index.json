@@ -165,7 +165,9 @@
         "heading": "Featured products",
         "subheading": "Best-selling appliances this month.",
         "collection": "",
-        "product_limit": 8
+        "product_limit": 8,
+        "columns_desktop": 4,
+        "columns_mobile": "2"
       }
     },
     "wz_deals": {

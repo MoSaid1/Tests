@@ -1,11 +1,22 @@
 {{ 'wazen-home.css' | asset_url | stylesheet_tag }}
 
+{%- style -%}
+  #shopify-section-{{ section.id }} .wz-pgrid--featured {
+    grid-template-columns: repeat({{ section.settings.columns_mobile }}, minmax(0, 1fr));
+  }
+  @media screen and (min-width: 750px) {
+    #shopify-section-{{ section.id }} .wz-pgrid--featured {
+      grid-template-columns: repeat({{ section.settings.columns_desktop }}, minmax(0, 1fr));
+    }
+  }
+{%- endstyle -%}
+
 <section class="wz-section color-{{ section.settings.color_scheme }}">
   <div class="wz-section__head">
     <h2>{{ section.settings.heading }}</h2>
     {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
   </div>
-  <div class="wz-pgrid" data-scroll-grid>
+  <div class="wz-pgrid wz-pgrid--featured" data-scroll-grid>
     {%- liquid
       assign source = section.settings.collection.products | default: collections.all.products
       assign shown = 0
@@ -35,7 +46,19 @@
     { "type": "text", "id": "heading", "label": "Heading", "default": "Featured products" },
     { "type": "text", "id": "subheading", "label": "Subheading", "default": "Best-selling appliances this month." },
     { "type": "collection", "id": "collection", "label": "Collection" },
-    { "type": "range", "id": "product_limit", "min": 4, "max": 12, "step": 1, "default": 8, "label": "Products to show" }
+    { "type": "range", "id": "product_limit", "min": 4, "max": 12, "step": 1, "default": 8, "label": "Products to show" },
+    { "type": "header", "content": "Layout" },
+    { "type": "range", "id": "columns_desktop", "min": 2, "max": 5, "step": 1, "default": 4, "label": "Columns on computer" },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "default": "2",
+      "options": [
+        { "value": "1", "label": "1 column" },
+        { "value": "2", "label": "2 columns" }
+      ]
+    }
   ],
   "presets": [{ "name": "Wazen featured products" }]
 }
