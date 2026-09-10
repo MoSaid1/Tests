@@ -1,0 +1,99 @@
+{{ 'wazen-blog.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign articles = blog.articles
+  assign featured = articles.first
+-%}
+
+<div class="wz-container wz-blog">
+  <div class="wz-blog__head">
+    <div>
+      <h1 class="wz-collection-head__title">{{ blog.title | default: section.settings.heading }}</h1>
+      <p class="wz-blog__sub">{{ section.settings.subheading }}</p>
+    </div>
+    {%- form 'search', role: 'search' -%}
+      <input type="hidden" name="type" value="article">
+      <div class="wz-blog__search">
+        {%- render 'wazen-icon', icon: 'search', size: 15 -%}
+        <input type="search" name="q" placeholder="{{ 'wazen.blog.search' | t }}" class="wz-blog__search-input">
+      </div>
+    {%- endform -%}
+  </div>
+
+  {%- if blog.all_tags.size > 0 -%}
+    <div class="wz-blog__tags">
+      <a href="{{ blog.url }}" class="wz-chip{% unless current_tags %} is-active{% endunless %}">{{ 'wazen.blog.all' | t }}</a>
+      {%- for tag in blog.all_tags -%}
+        <a href="{{ blog.url }}/tagged/{{ tag | handle }}" class="wz-chip{% if current_tags contains tag %} is-active{% endif %}">{{ tag }}</a>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  {%- if featured and current_tags == blank and current_page == 1 -%}
+    <a href="{{ featured.url }}" class="wz-blog__featured wz-lift">
+      <div class="wz-blog__featured-media">
+        {%- if featured.image -%}
+          {{ featured.image | image_url: width: 1200 | image_tag: alt: featured.title, sizes: '(min-width: 750px) 50vw, 100vw', widths: '600,900,1200' }}
+        {%- else -%}
+          <div class="wz-placeholder-media" style="height:100%;">{{ 'wazen.media.article_image' | t }}</div>
+        {%- endif -%}
+      </div>
+      <div class="wz-blog__featured-body">
+        <div class="wz-blog__meta-row">
+          <span class="wz-badge" style="background:var(--wz-orange-tint); color:var(--wz-orange-dark);">{{ 'wazen.blog.featured' | t }}</span>
+          {%- assign wz_word_count = featured.content | strip_html | split: ' ' | size -%}
+          {%- assign wz_read_min = wz_word_count | divided_by: 200 | at_least: 1 -%}
+          <span class="wz-blog__meta-text">{{ featured.tags.first | default: blog.title }} · {{ wz_read_min }} {{ 'wazen.blog.min_read' | t }}</span>
+        </div>
+        <h2 class="wz-blog__featured-title">{{ featured.title }}</h2>
+        <p class="wz-blog__featured-excerpt">{{ featured.excerpt | default: featured.content | strip_html | truncatewords: 32 }}</p>
+        <div class="wz-blog__meta-text">{{ featured.published_at | date: '%d %b %Y' }} {% if featured.author != blank %}· {{ featured.author }}{% endif %}</div>
+      </div>
+    </a>
+  {%- endif -%}
+
+  <div class="wz-blog__grid">
+    {%- paginate articles by section.settings.articles_per_page -%}
+      {%- for article in articles -%}
+        {%- if forloop.index == 1 and featured and current_tags == blank and current_page == 1 -%}
+          {%- continue -%}
+        {%- endif -%}
+        <a href="{{ article.url }}" class="wz-blog__card wz-card wz-lift">
+          <div class="wz-blog__card-media">
+            {%- if article.image -%}
+              {{ article.image | image_url: width: 600 | image_tag: alt: article.title, widths: '300,450,600' }}
+            {%- else -%}
+              <div class="wz-placeholder-media" style="height:100%;">{{ 'wazen.media.article_image' | t }}</div>
+            {%- endif -%}
+          </div>
+          <div class="wz-blog__card-body">
+            <div class="wz-blog__card-cat">{{ article.tags.first | default: blog.title }}</div>
+            <div class="wz-blog__card-title">{{ article.title }}</div>
+            <div class="wz-blog__card-date">{{ article.published_at | date: '%d %b %Y' }}</div>
+          </div>
+        </a>
+      {%- endfor -%}
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="wz-pagination" aria-label="{{ 'general.pagination.label' | t }}" style="grid-column:1/-1;">
+          {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" class="wz-pill-btn">{{ 'general.pagination.previous' | t }}</a>{%- endif -%}
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}<a href="{{ part.url }}" class="wz-pill-btn">{{ part.title }}</a>{%- else -%}<span class="wz-pill-btn is-active">{{ part.title }}</span>{%- endif -%}
+          {%- endfor -%}
+          {%- if paginate.next -%}<a href="{{ paginate.next.url }}" class="wz-pill-btn">{{ 'general.pagination.next' | t }}</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-blog.name",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading fallback", "default": "Wazen guides" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Buying guides, comparisons and maintenance advice written by the people who install these appliances every day." },
+    { "type": "range", "id": "articles_per_page", "min": 4, "max": 20, "step": 2, "default": 12, "label": "Articles per page" }
+  ]
+}
+{% endschema %}

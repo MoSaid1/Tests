@@ -1,0 +1,92 @@
+{{ 'wazen-pages.css' | asset_url | stylesheet_tag }}
+
+<div class="wz-about">
+  <div class="wz-container wz-about__hero">
+    <div>
+      <div class="wz-kicker">{{ 'wazen.about.kicker' | t }}</div>
+      <h1 class="wz-about__title">{{ section.settings.heading }}</h1>
+      <p class="wz-about__lede">{{ section.settings.intro }}</p>
+    </div>
+    <div class="wz-about__media">
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 900 | image_tag: alt: section.settings.heading, widths: '450,700,900' }}
+      {%- else -%}
+        <div class="wz-placeholder-media" style="height:100%;">{{ 'wazen.media.showroom_photo' | t }}</div>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="wz-container wz-about__stats">
+    <div class="wz-stat-card"><div class="wz-stat-card__num">{{ section.settings.stat_1_num }}</div><div class="wz-stat-card__label">{{ section.settings.stat_1_label }}</div></div>
+    <div class="wz-stat-card"><div class="wz-stat-card__num">{{ section.settings.stat_2_num }}</div><div class="wz-stat-card__label">{{ section.settings.stat_2_label }}</div></div>
+    <div class="wz-stat-card"><div class="wz-stat-card__num">{{ section.settings.stat_3_num }}</div><div class="wz-stat-card__label">{{ section.settings.stat_3_label }}</div></div>
+    <div class="wz-stat-card"><div class="wz-stat-card__num">{{ section.settings.stat_4_num }}</div><div class="wz-stat-card__label">{{ section.settings.stat_4_label }}</div></div>
+  </div>
+
+  <div class="wz-container wz-about__values-wrap">
+    <h2 class="wz-about__section-title">{{ 'wazen.about.values_title' | t }}</h2>
+    <div class="wz-about__values">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'value' -%}
+          <div class="wz-value-card" {{ block.shopify_attributes }}>
+            <div class="wz-value-card__title">{{ block.settings.title }}</div>
+            <p class="wz-value-card__text">{{ block.settings.text }}</p>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+
+  <div class="wz-container wz-about__cta-wrap">
+    <div class="wz-cta-band">
+      <div>
+        <h2 class="wz-cta-band__title">{{ section.settings.cta_heading }}</h2>
+        <p class="wz-cta-band__text">{{ section.settings.cta_text }}</p>
+      </div>
+      <div class="wz-cta-band__actions">
+        <a href="{{ section.settings.cta_branches_url | default: '/pages/branches' }}" class="wz-btn" style="background:#fff; color:var(--wz-navy);">{{ 'wazen.about.find_branch' | t }}</a>
+        <a href="{{ section.settings.cta_contact_url | default: '/pages/contact' }}" class="wz-btn wz-btn--outline-invert">{{ 'wazen.nav.contact' | t }}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wazen about",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Appliances sold the way we'd want them sold to us." },
+    { "type": "textarea", "id": "intro", "label": "Intro", "default": "Wazen started in 1998 as a single showroom in Nasr City. Today we are an authorised dealer for fourteen manufacturers, carrying more than 900 products with local warranty, our own delivery fleet and two service centres." },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "stat_1_num", "default": "1998", "label": "Stat 1 number" },
+    { "type": "text", "id": "stat_1_label", "default": "First showroom opened", "label": "Stat 1 label" },
+    { "type": "text", "id": "stat_2_num", "default": "900+", "label": "Stat 2 number" },
+    { "type": "text", "id": "stat_2_label", "default": "Products in the catalogue", "label": "Stat 2 label" },
+    { "type": "text", "id": "stat_3_num", "default": "14", "label": "Stat 3 number" },
+    { "type": "text", "id": "stat_3_label", "default": "Authorised brand partners", "label": "Stat 3 label" },
+    { "type": "text", "id": "stat_4_num", "default": "4", "label": "Stat 4 number" },
+    { "type": "text", "id": "stat_4_label", "default": "Branches and 2 service centres", "label": "Stat 4 label" },
+    { "type": "text", "id": "cta_heading", "default": "Come see the appliances in person", "label": "CTA heading" },
+    { "type": "text", "id": "cta_text", "default": "Four showrooms with display stock, or call 16123 and we'll walk you through it.", "label": "CTA text" },
+    { "type": "url", "id": "cta_branches_url", "label": "CTA branches link" },
+    { "type": "url", "id": "cta_contact_url", "label": "CTA contact link" }
+  ],
+  "blocks": [
+    {
+      "type": "value",
+      "name": "Value",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Real warranty" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Every unit is registered with the manufacturer's agent under your order number." }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "value", "settings": { "title": "Real warranty", "text": "Every unit is registered with the manufacturer's agent under your order number. No grey imports, no voided claims." } },
+      { "type": "value", "settings": { "title": "Our own delivery", "text": "Our fleet delivers inside Cairo and Alexandria within 48 hours, installs the unit and takes the old one away." } },
+      { "type": "value", "settings": { "title": "Advice before the sale", "text": "Our staff size the appliance to your room and your bill, and will tell you when the cheaper model is the right one." } }
+    ]
+  }
+}
+{% endschema %}

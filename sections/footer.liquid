@@ -1,0 +1,107 @@
+{{ 'wazen-footer.css' | asset_url | stylesheet_tag }}
+
+<footer class="wz-footer">
+  <div class="wz-container wz-footer__top">
+    <div class="wz-footer__brand">
+      <div class="wz-footer__logo">
+        {%- if settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 200 | image_tag: alt: shop.name, height: 28 }}
+        {%- else -%}
+          {{ 'wazen-logo.svg' | inline_asset_content }}
+        {%- endif -%}
+      </div>
+      <p class="wz-footer__tagline">
+        {%- if section.settings.tagline != blank -%}
+          {{ section.settings.tagline }}
+        {%- else -%}
+          {{ 'wazen.footer.tagline' | t }}
+        {%- endif -%}
+      </p>
+      <div class="wz-footer__social">
+        {%- if settings.social_facebook_link != blank -%}<a href="{{ settings.social_facebook_link }}" class="wz-footer__social-link" aria-label="Facebook">f</a>{%- endif -%}
+        {%- if settings.social_instagram_link != blank -%}<a href="{{ settings.social_instagram_link }}" class="wz-footer__social-link" aria-label="Instagram">ig</a>{%- endif -%}
+        {%- if settings.social_youtube_link != blank -%}<a href="{{ settings.social_youtube_link }}" class="wz-footer__social-link" aria-label="YouTube">yt</a>{%- endif -%}
+        {%- if section.settings.whatsapp_link != blank -%}<a href="{{ section.settings.whatsapp_link }}" class="wz-footer__social-link" aria-label="WhatsApp">wa</a>{%- endif -%}
+      </div>
+    </div>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'link_column' -%}
+        <div class="wz-footer__col" {{ block.shopify_attributes }}>
+          <div class="wz-footer__col-title">{{ block.settings.title }}</div>
+          <div class="wz-footer__col-links">
+            {%- if block.settings.menu != blank -%}
+              {%- for link in block.settings.menu.links -%}
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="wz-footer__bottom-line">
+    <div class="wz-container wz-footer__bottom">
+      {%- assign wz_copyright_year = 'now' | date: '%Y' -%}
+      <span>{{ 'wazen.footer.copyright' | t: year: wz_copyright_year }}</span>
+      <div class="wz-footer__bottom-links">
+        <a href="{{ section.settings.privacy_url | default: '#' }}">{{ 'wazen.footer.privacy' | t }}</a>
+        <a href="{{ section.settings.terms_url | default: '#' }}">{{ 'wazen.footer.terms' | t }}</a>
+      </div>
+      <div class="wz-footer__payments">
+        <span>VISA</span>
+        <span>MC</span>
+        <span>MEEZA</span>
+        <span>COD</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "t:sections.footer.name",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Egypt's home appliance and electronics retailer since 1998. Authorised dealer with local warranty on every product."
+    },
+    {
+      "type": "url",
+      "id": "whatsapp_link",
+      "label": "WhatsApp link"
+    },
+    {
+      "type": "url",
+      "id": "privacy_url",
+      "label": "Privacy policy link"
+    },
+    {
+      "type": "url",
+      "id": "terms_url",
+      "label": "Terms & conditions link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "link_column",
+      "name": "Link column",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Column title", "default": "Shop" },
+        { "type": "link_list", "id": "menu", "label": "Menu" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "link_column", "settings": { "title": "Shop" } },
+      { "type": "link_column", "settings": { "title": "Customer Service" } },
+      { "type": "link_column", "settings": { "title": "Company" } }
+    ]
+  }
+}
+{% endschema %}

@@ -1,0 +1,4 @@
+{
+  "sections": { "main": { "type": "wazen-brands-directory", "settings": {} } },
+  "order": ["main"]
+}

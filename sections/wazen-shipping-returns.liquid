@@ -1,0 +1,71 @@
+{{ 'wazen-pages.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'wazen-tabs.js' | asset_url }}" defer="defer"></script>
+
+<div class="wz-container wz-policy">
+  <h1 class="wz-collection-head__title">{{ section.settings.heading }}</h1>
+  <p class="wz-page-sub">{{ section.settings.subheading }}</p>
+
+  <div class="wz-policy__tabs" data-tabbar>
+    <button type="button" class="wz-pdp__tab is-active" data-tab-target="ship">{{ 'wazen.policy.shipping_tab' | t }}</button>
+    <button type="button" class="wz-pdp__tab" data-tab-target="returns">{{ 'wazen.policy.returns_tab' | t }}</button>
+  </div>
+
+  <div class="wz-policy__panel is-active" data-tab-panel="ship">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'shipping_group' -%}
+        <div class="wz-policy-card" {{ block.shopify_attributes }}>
+          <div class="wz-policy-card__heading">{{ block.settings.heading }}</div>
+          <div class="wz-policy-card__items">{{ block.settings.items }}</div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="wz-policy__panel" data-tab-panel="returns">
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'return_group' -%}
+        <div class="wz-policy-card" {{ block.shopify_attributes }}>
+          <div class="wz-policy-card__heading">{{ block.settings.heading }}</div>
+          <div class="wz-policy-card__items">{{ block.settings.items }}</div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wazen shipping & returns",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Shipping & Returns" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "How delivery, installation and returns work at Wazen." }
+  ],
+  "blocks": [
+    {
+      "type": "shipping_group",
+      "name": "Shipping group",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Delivery times" },
+        { "type": "richtext", "id": "items", "label": "Items" }
+      ]
+    },
+    {
+      "type": "return_group",
+      "name": "Returns group",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Eligibility" },
+        { "type": "richtext", "id": "items", "label": "Items" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "shipping_group", "settings": { "heading": "Delivery times", "items": "<p>Cairo & Alexandria: within 48 hours.</p><p>Other governorates: 3–5 working days.</p><p>Free above 15,000 EGP; a flat fee otherwise.</p>" } },
+      { "type": "shipping_group", "settings": { "heading": "Installation", "items": "<p>Included free on refrigerators, washing machines, air conditioners, cookers and dishwashers.</p><p>Old-unit removal included on major appliances.</p>" } },
+      { "type": "shipping_group", "settings": { "heading": "Tracking your order", "items": "<p>Sign in to My Account for live status.</p><p>SMS updates are sent at each delivery milestone.</p>" } },
+      { "type": "return_group", "settings": { "heading": "Eligibility", "items": "<p>Unopened units: 14 days from delivery.</p><p>Opened major appliances: reported defects only, within 48 hours.</p>" } },
+      { "type": "return_group", "settings": { "heading": "How to start a return", "items": "<p>Contact 16123 or email service@wazen.eg with your order number.</p><p>Our team schedules a pickup — no need to visit a branch.</p>" } }
+    ]
+  }
+}
+{% endschema %}

@@ -1,0 +1,41 @@
+{{ 'wazen-home.css' | asset_url | stylesheet_tag }}
+
+<section class="wz-section">
+  <div class="wz-section__head">
+    <h2>{{ section.settings.heading }}</h2>
+    {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+  </div>
+  <div class="wz-pgrid" data-scroll-grid>
+    {%- liquid
+      assign source = section.settings.collection.products | default: collections.all.products
+      assign shown = 0
+    -%}
+    {%- for product in source limit: section.settings.product_limit -%}
+      {%- render 'wazen-product-card', product: product -%}
+      {%- assign shown = shown | plus: 1 -%}
+    {%- endfor -%}
+    {%- if shown == 0 -%}
+      {%- for i in (1..4) -%}
+        <div class="wz-card wz-pcard">
+          <div class="wz-pcard__media wz-placeholder-media">{{ 'wazen.media.product_image' | t }}</div>
+          <div class="wz-pcard__body">
+            <div class="wz-pcard__title">{{ 'onboarding.product_title' | t }}</div>
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wazen featured products",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Featured products" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Best-selling appliances this month." },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "product_limit", "min": 4, "max": 12, "step": 1, "default": 8, "label": "Products to show" }
+  ],
+  "presets": [{ "name": "Wazen featured products" }]
+}
+{% endschema %}

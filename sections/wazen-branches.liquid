@@ -1,0 +1,78 @@
+{{ 'wazen-pages.css' | asset_url | stylesheet_tag }}
+
+<div class="wz-container wz-branches">
+  <h1 class="wz-collection-head__title">{{ section.settings.heading }}</h1>
+  <p class="wz-page-sub">{{ section.settings.subheading }}</p>
+
+  <div class="wz-branches__layout">
+    <div class="wz-branches__list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'branch' -%}
+          <div class="wz-branch-card wz-lift" {{ block.shopify_attributes }}>
+            <div class="wz-branch-card__head">
+              <div>
+                <div class="wz-branch-card__name">{{ block.settings.name }}</div>
+                <div class="wz-branch-card__area">{{ block.settings.area }}</div>
+              </div>
+              {%- if block.settings.tag != blank -%}
+                <span class="wz-badge wz-badge--soft">{{ block.settings.tag }}</span>
+              {%- endif -%}
+            </div>
+            <div class="wz-branch-card__details">
+              <div><span>{{ 'wazen.branches.address' | t }}</span><span>{{ block.settings.address }}</span></div>
+              <div><span>{{ 'wazen.branches.phone' | t }}</span><span class="wz-mono">{{ block.settings.phone }}</span></div>
+              <div><span>{{ 'wazen.branches.hours' | t }}</span><span>{{ block.settings.hours }}</span></div>
+            </div>
+            <div class="wz-branch-card__actions">
+              <a href="{{ block.settings.map_url | default: '#' }}" class="wz-btn wz-btn--primary wz-btn--sm" target="_blank" rel="noopener">{{ 'wazen.branches.directions' | t }}</a>
+              <a href="tel:{{ block.settings.phone }}" class="wz-btn wz-btn--ghost wz-btn--sm">{{ 'wazen.branches.call' | t }}</a>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+    <div class="wz-branches__map">
+      {%- if section.settings.map_embed_url != blank -%}
+        <iframe src="{{ section.settings.map_embed_url }}" class="wz-branches__map-frame" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      {%- else -%}
+        <div class="wz-branches__map-placeholder">
+          <span>{{ 'wazen.branches.map_placeholder' | t }}</span>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wazen branches",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Branches" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Four showrooms across Cairo, Giza and Alexandria. Every branch holds display stock, and two run their own service centre." },
+    { "type": "url", "id": "map_embed_url", "label": "Google Maps embed URL", "info": "Paste the src of a Google Maps embed iframe." }
+  ],
+  "blocks": [
+    {
+      "type": "branch",
+      "name": "Branch",
+      "settings": [
+        { "type": "text", "id": "name", "label": "Name", "default": "Nasr City" },
+        { "type": "text", "id": "area", "label": "Area", "default": "Cairo" },
+        { "type": "text", "id": "tag", "label": "Tag", "default": "Flagship" },
+        { "type": "text", "id": "address", "label": "Address", "default": "12 Abbas El Akkad St." },
+        { "type": "text", "id": "phone", "label": "Phone", "default": "16123" },
+        { "type": "text", "id": "hours", "label": "Hours", "default": "Daily 9:00 — 23:00" },
+        { "type": "url", "id": "map_url", "label": "Directions link" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "branch", "settings": { "name": "Nasr City", "area": "Cairo", "tag": "Flagship" } },
+      { "type": "branch", "settings": { "name": "Maadi", "area": "Cairo", "tag": "Service centre" } },
+      { "type": "branch", "settings": { "name": "6th of October", "area": "Giza", "tag": "" } },
+      { "type": "branch", "settings": { "name": "Smouha", "area": "Alexandria", "tag": "Service centre" } }
+    ]
+  }
+}
+{% endschema %}

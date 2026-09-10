@@ -1,0 +1,55 @@
+{{ 'wazen-home.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'wazen-countdown.js' | asset_url }}" defer="defer"></script>
+
+<section class="wz-container wz-deals-wrap">
+  <div class="wz-deals">
+    <div class="wz-deals__head">
+      <div>
+        <span class="wz-badge" style="background:var(--wz-orange); color:#fff;">{{ section.settings.badge }}</span>
+        <h2 class="wz-deals__title">{{ section.settings.heading }}</h2>
+        <p class="wz-deals__sub">{{ section.settings.subheading }}</p>
+      </div>
+      {%- if section.settings.deadline != blank -%}
+        <div class="wz-countdown" data-countdown="{{ section.settings.deadline }}">
+          <div class="wz-countdown__cell"><span data-cd="d">00</span><small>{{ 'wazen.deals.days' | t }}</small></div>
+          <div class="wz-countdown__cell"><span data-cd="h">00</span><small>{{ 'wazen.deals.hours' | t }}</small></div>
+          <div class="wz-countdown__cell"><span data-cd="m">00</span><small>{{ 'wazen.deals.minutes' | t }}</small></div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    <div class="wz-pgrid">
+      {%- liquid
+        assign source = section.settings.collection.products
+        assign shown = 0
+      -%}
+      {%- for product in source limit: section.settings.product_limit -%}
+        {%- render 'wazen-product-card', product: product, card_variant: 'deal', show_rating: false -%}
+        {%- assign shown = shown | plus: 1 -%}
+      {%- endfor -%}
+      {%- if shown == 0 -%}
+        {%- for i in (1..4) -%}
+          <div class="wz-card wz-pcard wz-pcard--deal">
+            <div class="wz-pcard__media wz-placeholder-media">{{ 'wazen.media.product_image' | t }}</div>
+            <div class="wz-pcard__body"><div class="wz-pcard__title">{{ 'onboarding.product_title' | t }}</div></div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wazen deals band",
+  "settings": [
+    { "type": "text", "id": "badge", "label": "Badge text", "default": "Limited offer" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Deals you don't want to miss" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Prices valid while stock lasts." },
+    { "type": "text", "id": "deadline", "label": "Countdown end (e.g. 2026-09-14T00:00:00)", "info": "Leave blank to hide the countdown." },
+    { "type": "collection", "id": "collection", "label": "Deals collection" },
+    { "type": "range", "id": "product_limit", "min": 4, "max": 8, "step": 1, "default": 4, "label": "Products to show" }
+  ],
+  "presets": [{ "name": "Wazen deals band" }]
+}
+{% endschema %}

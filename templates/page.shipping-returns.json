@@ -1,0 +1,4 @@
+{
+  "sections": { "main": { "type": "wazen-shipping-returns", "settings": {} } },
+  "order": ["main"]
+}

@@ -1,0 +1,98 @@
+{%- comment -%}
+  Renders a Wazen product card.
+  Accepts:
+    - product (required)
+    - card_variant: 'default' | 'deal' (deal = bold orange price, used on the dark deals band)
+    - show_rating: boolean, default true
+{%- endcomment -%}
+{%- liquid
+  assign card_variant = card_variant | default: 'default'
+  assign show_rating = show_rating | default: true
+  assign variant = product.selected_or_first_available_variant
+  assign compare_at = variant.compare_at_price
+  assign price = variant.price
+  assign has_discount = false
+  if compare_at > price
+    assign has_discount = true
+    assign savings = compare_at | minus: price
+    assign off_pct = savings | times: 100.0 | divided_by: compare_at | round
+  endif
+  assign rating = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count.value
+-%}
+<div class="wz-pcard wz-pcard--{{ card_variant }} wz-card wz-lift" data-product-card>
+  <a href="{{ product.url }}" class="wz-pcard__media">
+    {%- if product.featured_image -%}
+      {{
+        product.featured_image
+        | image_url: width: 700
+        | image_tag: class: 'wz-pcard__img', widths: '350,500,700', sizes: '(min-width: 990px) 300px, 45vw', alt: product.featured_image.alt | default: product.title, loading: 'lazy'
+      }}
+    {%- else -%}
+      <div class="wz-pcard__img wz-placeholder-media">{{ 'wazen.media.product_image' | t }}</div>
+    {%- endif -%}
+    {%- if has_discount -%}
+      <span class="wz-badge wz-badge--sale wz-pcard__badge">-{{ off_pct }}%</span>
+    {%- endif -%}
+  </a>
+  <button
+    type="button"
+    class="wz-pcard__wish"
+    data-wishlist-toggle
+    data-product-handle="{{ product.handle }}"
+    aria-label="{{ 'wazen.product.wishlist_add' | t }}"
+    aria-pressed="false"
+  >
+    {%- render 'wazen-icon', icon: 'heart', size: 16 -%}
+  </button>
+
+  <div class="wz-pcard__body">
+    {%- if settings.show_vendor and product.vendor != blank -%}
+      <div class="wz-pcard__brand">{{ product.vendor }}</div>
+    {%- endif -%}
+    <a href="{{ product.url }}" class="wz-pcard__title">{{ product.title }}</a>
+
+    {%- if show_rating and rating != blank -%}
+      <div class="wz-pcard__rating">
+        <span class="wz-pcard__stars">{%- render 'wazen-icon', icon: 'star', size: 12 -%}</span>
+        <span>{{ rating }} ({{ rating_count | default: 0 }})</span>
+      </div>
+    {%- endif -%}
+
+    <div class="wz-pcard__price">
+      <span class="wz-pcard__price-now">{{ price | money }}</span>
+      {%- if has_discount -%}
+        <span class="wz-pcard__price-old">{{ compare_at | money }}</span>
+      {%- endif -%}
+    </div>
+    {%- if has_discount -%}
+      <div class="wz-pcard__savings">{{ 'wazen.product.save' | t }} {{ savings | money }}</div>
+    {%- endif -%}
+
+    <product-form class="wz-pcard__form">
+      <div class="product-form__error-message-wrapper" role="alert" hidden>
+        <span class="product-form__error-message"></span>
+      </div>
+      {%- form 'product', product, class: 'wz-pcard__form-inner', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+        <input type="hidden" name="id" value="{{ variant.id }}" class="product-variant-id" {% if variant.available == false or variant == null %}disabled{% endif %}>
+        <button
+          type="submit"
+          name="add"
+          class="wz-btn wz-btn--block {% if card_variant == 'deal' %}wz-btn--primary{% else %}wz-btn--outline{% endif %} wz-pcard__add"
+          {% if variant.available == false or variant == null %}disabled{% endif %}
+        >
+          <span>
+            {%- if variant == null -%}
+              {{ 'products.product.unavailable' | t }}
+            {%- elsif variant.available == false -%}
+              {{ 'products.product.sold_out' | t }}
+            {%- else -%}
+              {{ 'products.product.add_to_cart' | t }}
+            {%- endif -%}
+          </span>
+          {%- render 'loading-spinner' -%}
+        </button>
+      {%- endform -%}
+    </product-form>
+  </div>
+</div>

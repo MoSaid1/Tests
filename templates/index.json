@@ -1,0 +1,95 @@
+{
+  "sections": {
+    "wz_hero": {
+      "type": "wazen-hero",
+      "settings": {
+        "height": 860,
+        "show_price_card": true,
+        "price_kicker": "Ariston · 1.5 HP Split Air Conditioner",
+        "price_now": "24,000 EGP",
+        "price_compare": "26,675",
+        "price_badge": "-10%"
+      }
+    },
+    "wz_catstrip": {
+      "type": "wazen-category-strip",
+      "blocks": {
+        "c1": { "type": "category", "settings": { "title": "Refrigerators" } },
+        "c2": { "type": "category", "settings": { "title": "Washing Machines" } },
+        "c3": { "type": "category", "settings": { "title": "Air Conditioners" } },
+        "c4": { "type": "category", "settings": { "title": "Televisions" } },
+        "c5": { "type": "category", "settings": { "title": "Cookers" } },
+        "c6": { "type": "category", "settings": { "title": "Dishwashers" } },
+        "c7": { "type": "category", "settings": { "title": "Small Appliances" } },
+        "c8": { "type": "category", "settings": { "title": "Personal Care" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4", "c5", "c6", "c7", "c8"]
+    },
+    "wz_intents": {
+      "type": "wazen-intent-grid",
+      "blocks": {
+        "i1": { "type": "intent", "settings": { "kicker": "Beat the heat", "title": "Summer Essentials", "description": "Air conditioners, fans & coolers", "fallback_color": "#0A2A47" } },
+        "i2": { "type": "intent", "settings": { "kicker": "Cook better", "title": "Kitchen Essentials", "description": "Cookers, air fryers, blenders", "fallback_color": "#123A5E" } },
+        "i3": { "type": "intent", "settings": { "kicker": "Connected home", "title": "Smart Living", "description": "Smart TVs & connected appliances", "fallback_color": "#0657AB" } },
+        "i4": { "type": "intent", "settings": { "kicker": "Spotless", "title": "Home Cleaning", "description": "Vacuum cleaners & more", "fallback_color": "#04447F" } }
+      },
+      "block_order": ["i1", "i2", "i3", "i4"]
+    },
+    "wz_featured": {
+      "type": "wazen-featured-products",
+      "settings": {
+        "heading": "Featured products",
+        "subheading": "Best-selling appliances this month.",
+        "product_limit": 8
+      }
+    },
+    "wz_deals": {
+      "type": "wazen-deals-band",
+      "settings": {
+        "badge": "Limited offer",
+        "heading": "Deals you don't want to miss",
+        "subheading": "Prices valid while stock lasts.",
+        "product_limit": 4
+      }
+    },
+    "wz_brands": {
+      "type": "wazen-brands",
+      "blocks": {
+        "b1": { "type": "brand", "settings": { "name": "Ariston" } },
+        "b2": { "type": "brand", "settings": { "name": "LG" } },
+        "b3": { "type": "brand", "settings": { "name": "Midea" } },
+        "b4": { "type": "brand", "settings": { "name": "Haier" } },
+        "b5": { "type": "brand", "settings": { "name": "Toshiba" } },
+        "b6": { "type": "brand", "settings": { "name": "Beko" } },
+        "b7": { "type": "brand", "settings": { "name": "Fresh" } },
+        "b8": { "type": "brand", "settings": { "name": "Unionaire" } },
+        "b9": { "type": "brand", "settings": { "name": "Sharp" } },
+        "b10": { "type": "brand", "settings": { "name": "Brown" } },
+        "b11": { "type": "brand", "settings": { "name": "Bosch" } },
+        "b12": { "type": "brand", "settings": { "name": "Kenwood" } },
+        "b13": { "type": "brand", "settings": { "name": "Hoover" } },
+        "b14": { "type": "brand", "settings": { "name": "Black+Decker" } }
+      },
+      "block_order": ["b1", "b2", "b3", "b4", "b5", "b6", "b7", "b8", "b9", "b10", "b11", "b12", "b13", "b14"]
+    },
+    "wz_trust": {
+      "type": "wazen-trust",
+      "blocks": {
+        "t1": { "type": "card", "settings": { "icon": "truck", "title": "Fast delivery", "text": "We deliver faster than you expect" } },
+        "t2": { "type": "card", "settings": { "icon": "card", "title": "Flexible payment", "text": "Flexible payment options your way" } },
+        "t3": { "type": "card", "settings": { "icon": "shield", "title": "Warranty", "text": "Real warranty on every product" } },
+        "t4": { "type": "card", "settings": { "icon": "headset", "title": "24/7 support", "text": "Always here to support you anytime" } }
+      },
+      "block_order": ["t1", "t2", "t3", "t4"]
+    },
+    "wz_newsletter": {
+      "type": "wazen-newsletter",
+      "settings": {
+        "heading": "Stay updated with Wazen",
+        "subheading": "Get the latest product updates, offers, and tips straight to your inbox.",
+        "button_label": "Stay Updated"
+      }
+    }
+  },
+  "order": ["wz_hero", "wz_catstrip", "wz_intents", "wz_featured", "wz_deals", "wz_brands", "wz_trust", "wz_newsletter"]
+}

@@ -1,0 +1,44 @@
+{%- comment -%}
+  Mobile navigation drawer (slides in from the inline-start edge).
+  Usage: {% render 'wazen-mobile-drawer', menu: section.settings.menu %}
+{%- endcomment -%}
+<div id="wz-mobile-drawer" class="wz-drawer menu-drawer" hidden>
+  <div class="wz-drawer__overlay" data-drawer-close></div>
+  <div class="wz-drawer__panel" role="dialog" aria-modal="true" aria-label="{{ 'wazen.nav.menu' | t }}">
+    <div class="wz-drawer__head">
+      {%- if settings.logo != blank -%}
+        {{ settings.logo | image_url: width: 200 | image_tag: class: 'wz-drawer__logo', alt: shop.name, height: 30 }}
+      {%- else -%}
+        {{ 'wazen-logo.svg' | inline_asset_content }}
+      {%- endif -%}
+      <button type="button" class="wz-icon-btn" data-drawer-close aria-label="{{ 'accessibility.close' | t }}">
+        {%- render 'wazen-icon', icon: 'close' -%}
+      </button>
+    </div>
+    <div class="wz-drawer__body">
+      <div class="wz-drawer__section-label">{{ 'wazen.nav.categories' | t }}</div>
+      {%- for link in menu.links -%}
+        <a href="{{ link.url }}" class="wz-drawer__link">
+          <span>{{ link.title }}</span>
+          {%- if link.links.size > 0 -%}{%- render 'wazen-icon', icon: 'chevron-end' -%}{%- endif -%}
+        </a>
+        {%- if link.links.size > 0 -%}
+          <div class="wz-drawer__sublist">
+            {%- for child in link.links -%}
+              <a href="{{ child.url }}" class="wz-drawer__sublink">{{ child.title }}</a>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      {%- else -%}
+        <a href="{{ routes.root_url }}" class="wz-drawer__link"><span>{{ 'wazen.nav.home' | t }}</span></a>
+      {%- endfor -%}
+
+      <div class="wz-drawer__section-label wz-mt">{{ 'wazen.nav.more' | t }}</div>
+      <a href="{{ routes.all_products_collection_url }}" class="wz-drawer__link"><span>{{ 'wazen.nav.brands' | t }}</span></a>
+      <a href="/pages/faq" class="wz-drawer__link"><span>{{ 'wazen.nav.faq' | t }}</span></a>
+      <a href="/pages/shipping-returns" class="wz-drawer__link"><span>{{ 'wazen.nav.shipping_returns' | t }}</span></a>
+
+      <div class="wz-drawer__support">{{ 'wazen.header.support' | t }} {{ section.settings.support_phone | default: '16123' }}</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,159 @@
+{{ 'wazen-collection.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'wazen-collection.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign sort_by = collection.sort_by | default: collection.default_sort_by
+-%}
+
+<div class="wz-container wz-collection-body">
+  <form id="WzFacets" method="get" action="{{ collection.url }}">
+    <div class="wz-collection-layout">
+      <aside id="wz-filter-sheet" class="wz-filters" hidden>
+        <div class="wz-drawer__overlay wz-filters__overlay" data-filter-close></div>
+        <div class="wz-filters__panel">
+          <div class="wz-filters__sheet-handle" aria-hidden="true"></div>
+          <div class="wz-filters__head">
+            <span class="wz-filters__title">{{ 'wazen.collection.filters' | t }}</span>
+            <button type="button" class="wz-icon-btn wz-filters__mobile-close" data-filter-close aria-label="{{ 'accessibility.close' | t }}">
+              {%- render 'wazen-icon', icon: 'close' -%}
+            </button>
+            <a href="{{ collection.url }}" class="wz-filters__clear">{{ 'wazen.collection.clear_all' | t }}</a>
+          </div>
+
+          {%- assign has_active = false -%}
+          <div class="wz-filters__active">
+            {%- for filter in collection.filters -%}
+              {%- for value in filter.active_values -%}
+                {%- assign has_active = true -%}
+                <a href="{{ value.url_to_remove }}" class="wz-chip wz-chip--active">{{ value.label }} <span>✕</span></a>
+              {%- endfor -%}
+            {%- endfor -%}
+          </div>
+
+          {%- for filter in collection.filters -%}
+            {%- if filter.type == 'price_range' -%}
+              <div class="wz-filters__group">
+                <div class="wz-filters__group-title">{{ filter.label }}</div>
+                <div class="wz-filters__price-row">
+                  <input
+                    type="number"
+                    name="{{ filter.min_value.param_name }}"
+                    value="{{ filter.min_value.value }}"
+                    placeholder="{{ filter.range_min | money_without_currency | round }}"
+                    class="wz-input wz-filters__price-input"
+                    min="0"
+                  >
+                  <input
+                    type="number"
+                    name="{{ filter.max_value.param_name }}"
+                    value="{{ filter.max_value.value }}"
+                    placeholder="{{ filter.range_max | money_without_currency | round }}"
+                    class="wz-input wz-filters__price-input"
+                    min="0"
+                  >
+                </div>
+              </div>
+            {%- elsif filter.values.size > 0 -%}
+              <div class="wz-filters__group">
+                <div class="wz-filters__group-title">{{ filter.label }}</div>
+                <div class="wz-filters__options">
+                  {%- for value in filter.values -%}
+                    <label class="wz-filters__option{% if value.count == 0 and value.active == false %} is-disabled{% endif %}">
+                      <input
+                        type="checkbox"
+                        name="{{ value.param_name }}"
+                        value="{{ value.value }}"
+                        {% if value.active %}checked{% endif %}
+                        {% if value.count == 0 and value.active == false %}disabled{% endif %}
+                      >
+                      <span class="wz-filters__option-label">{{ value.label }}</span>
+                      <span class="wz-filters__option-count">{{ value.count }}</span>
+                    </label>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+
+          <button type="submit" class="wz-btn wz-btn--primary wz-btn--block wz-filters__apply">{{ 'wazen.collection.apply' | t }}</button>
+        </div>
+      </aside>
+
+      <div class="wz-collection-main">
+        <button type="button" id="wz-filter-open" class="wz-filters__mobile-trigger">
+          {%- render 'wazen-icon', icon: 'filter' -%}
+          <span>{{ 'wazen.collection.filters' | t }}</span>
+        </button>
+
+        {%- paginate collection.products by section.settings.products_per_page -%}
+          <div class="wz-collection-toolbar">
+            {%- liquid
+              assign wz_page_from = paginate.current_offset | plus: 1
+              assign wz_page_to = paginate.current_offset | plus: paginate.page_size
+              if wz_page_to > paginate.items
+                assign wz_page_to = paginate.items
+              endif
+            -%}
+            <div class="wz-collection-toolbar__count">
+              {{ 'wazen.collection.showing' | t: from: wz_page_from, to: wz_page_to, total: paginate.items }}
+            </div>
+            <div class="wz-collection-toolbar__controls">
+              <label class="wz-collection-toolbar__sort">
+                <span>{{ 'wazen.collection.sort' | t }}</span>
+                <select name="sort_by" class="wz-select wz-select--sort" id="wz-sort-select">
+                  {%- for option in collection.sort_options -%}
+                    <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
+                  {%- endfor -%}
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="wz-pgrid wz-pgrid--collection">
+            {%- for product in collection.products -%}
+              {%- render 'wazen-product-card', product: product -%}
+            {%- else -%}
+              <div class="wz-empty-state">
+                <div class="wz-empty-state__icon">{%- render 'wazen-icon', icon: 'filter', size: 24 -%}</div>
+                <div class="wz-empty-state__title">{{ 'wazen.collection.empty_title' | t }}</div>
+                <div class="wz-empty-state__text">{{ 'wazen.collection.empty_text' | t }}</div>
+                <a href="{{ collection.url }}" class="wz-btn wz-btn--outline">{{ 'wazen.collection.clear_all' | t }}</a>
+              </div>
+            {%- endfor -%}
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            <nav class="wz-pagination" aria-label="{{ 'general.pagination.label' | t }}">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}" class="wz-pill-btn">{{ 'general.pagination.previous' | t }}</a>
+              {%- endif -%}
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <a href="{{ part.url }}" class="wz-pill-btn">{{ part.title }}</a>
+                {%- else -%}
+                  {%- if part.title == '&hellip;' -%}
+                    <span class="wz-pagination__ellipsis">…</span>
+                  {%- else -%}
+                    <span class="wz-pill-btn is-active">{{ part.title }}</span>
+                  {%- endif -%}
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}" class="wz-pill-btn">{{ 'general.pagination.next' | t }}</a>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- endpaginate -%}
+      </div>
+    </div>
+  </form>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-collection-product-grid.name",
+  "settings": [
+    { "type": "range", "id": "products_per_page", "min": 8, "max": 36, "step": 4, "default": 24, "label": "Products per page" }
+  ]
+}
+{% endschema %}

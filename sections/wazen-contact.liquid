@@ -1,0 +1,80 @@
+{{ 'wazen-pages.css' | asset_url | stylesheet_tag }}
+
+<div class="wz-container wz-contact">
+  <h1 class="wz-collection-head__title">{{ section.settings.heading }}</h1>
+  <p class="wz-page-sub">{{ section.settings.subheading }}</p>
+
+  <div class="wz-contact__layout">
+    <div class="wz-card wz-contact__form-card">
+      <div class="wz-contact__form-title">{{ 'wazen.contact.form_title' | t }}</div>
+      {%- form 'contact', id: 'ContactForm' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="wz-newsletter__msg wz-newsletter__msg--ok">{{ 'wazen.contact.success' | t }}</p>
+        {%- endif -%}
+        <div class="wz-contact__grid">
+          <label class="wz-field"><span class="wz-field__label">{{ 'wazen.contact.name' | t }}</span>
+            <input type="text" name="contact[name]" class="wz-input" value="{{ form.name }}" placeholder="{{ 'wazen.contact.name_placeholder' | t }}" required>
+          </label>
+          <label class="wz-field"><span class="wz-field__label">{{ 'wazen.contact.phone' | t }}</span>
+            <input type="tel" name="contact[phone]" class="wz-input" value="{{ form.phone }}" placeholder="{{ 'wazen.contact.phone_placeholder' | t }}">
+          </label>
+          <label class="wz-field"><span class="wz-field__label">{{ 'wazen.contact.email' | t }}</span>
+            <input type="email" name="contact[email]" class="wz-input" value="{{ form.email }}" placeholder="{{ 'wazen.contact.email_placeholder' | t }}" required>
+          </label>
+          <label class="wz-field"><span class="wz-field__label">{{ 'wazen.contact.subject' | t }}</span>
+            <select name="contact[subject]" class="wz-select">
+              <option>{{ 'wazen.contact.subject_product' | t }}</option>
+              <option>{{ 'wazen.contact.subject_order' | t }}</option>
+              <option>{{ 'wazen.contact.subject_warranty' | t }}</option>
+              <option>{{ 'wazen.contact.subject_service' | t }}</option>
+              <option>{{ 'wazen.contact.subject_other' | t }}</option>
+            </select>
+          </label>
+          <label class="wz-field" style="grid-column:1/-1;"><span class="wz-field__label">{{ 'wazen.contact.message' | t }}</span>
+            <textarea name="contact[body]" class="wz-textarea" rows="6" placeholder="{{ 'wazen.contact.message_placeholder' | t }}" required>{{ form.body }}</textarea>
+          </label>
+        </div>
+        <div class="wz-contact__submit-row">
+          <button type="submit" class="wz-btn wz-btn--primary">{{ 'wazen.contact.send' | t }}</button>
+          <span class="wz-contact__submit-note">{{ 'wazen.contact.reply_time' | t }}</span>
+        </div>
+      {%- endform -%}
+    </div>
+
+    <div class="wz-contact__side">
+      <div class="wz-contact__callcard">
+        <div class="wz-contact__callcard-kicker">{{ 'wazen.contact.call_us' | t }}</div>
+        <div class="wz-contact__callcard-num">{{ section.settings.phone }}</div>
+        <div class="wz-contact__callcard-hours">{{ section.settings.hours }}</div>
+        {%- if section.settings.whatsapp_url != blank -%}
+          <a href="{{ section.settings.whatsapp_url }}" class="wz-btn" style="width:100%; margin-top:20px; background:var(--wz-orange); color:#fff;">{{ 'wazen.contact.whatsapp' | t }}</a>
+        {%- endif -%}
+      </div>
+      <div class="wz-card wz-contact__mini">
+        <div class="wz-contact__mini-title">{{ 'wazen.contact.email_title' | t }}</div>
+        <div class="wz-contact__mini-row"><a href="mailto:{{ section.settings.sales_email }}">{{ section.settings.sales_email }}</a><div>{{ 'wazen.contact.sales_email_note' | t }}</div></div>
+        <div class="wz-contact__mini-row"><a href="mailto:{{ section.settings.service_email }}">{{ section.settings.service_email }}</a><div>{{ 'wazen.contact.service_email_note' | t }}</div></div>
+      </div>
+      <div class="wz-card wz-contact__mini">
+        <div class="wz-contact__mini-title">{{ 'wazen.contact.visit_title' | t }}</div>
+        <p class="wz-contact__mini-text">{{ 'wazen.contact.visit_text' | t }}</p>
+        <a href="/pages/branches" class="wz-contact__mini-link">{{ 'wazen.contact.see_branches' | t }}{%- render 'wazen-icon', icon: 'arrow-end' -%}</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wazen contact",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Contact us" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Sales, delivery scheduling, warranty claims and service requests — all in one place." },
+    { "type": "text", "id": "phone", "label": "Phone", "default": "16123" },
+    { "type": "text", "id": "hours", "label": "Hours", "default": "Daily 9:00 — 23:00, including Fridays" },
+    { "type": "url", "id": "whatsapp_url", "label": "WhatsApp link" },
+    { "type": "text", "id": "sales_email", "label": "Sales email", "default": "sales@wazen.eg" },
+    { "type": "text", "id": "service_email", "label": "Service email", "default": "service@wazen.eg" }
+  ]
+}
+{% endschema %}

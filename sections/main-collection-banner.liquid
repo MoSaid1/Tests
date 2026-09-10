@@ -1,0 +1,40 @@
+{{ 'wazen-collection.css' | asset_url | stylesheet_tag }}
+
+<div class="wz-container wz-collection-head">
+  <div class="wz-breadcrumbs">
+    <a href="{{ routes.root_url }}">{{ 'wazen.nav.home' | t }}</a>
+    <span class="wz-breadcrumbs__sep">/</span>
+    {%- if collection.metafields.wazen.parent_title != blank -%}
+      <span>{{ collection.metafields.wazen.parent_title }}</span>
+      <span class="wz-breadcrumbs__sep">/</span>
+    {%- endif -%}
+    <span class="wz-breadcrumbs__current">{{ collection.title }}</span>
+  </div>
+
+  <div class="wz-collection-head__row">
+    <div>
+      <h1 class="wz-collection-head__title">{{ collection.title }}</h1>
+      {%- if section.settings.show_description and collection.description != blank -%}
+        <div class="wz-collection-head__desc">{{ collection.description }}</div>
+      {%- endif -%}
+    </div>
+    <div class="wz-collection-head__count">
+      <div class="wz-collection-head__count-num">{{ collection.products_count | default: collection.all_products_count }}</div>
+      <div class="wz-collection-head__count-label">{{ 'wazen.collection.products' | t }}</div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-collection-banner.name",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_description",
+      "default": true,
+      "label": "Show collection description"
+    }
+  ]
+}
+{% endschema %}

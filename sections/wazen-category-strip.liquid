@@ -1,0 +1,62 @@
+{{ 'wazen-home.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .wz-catstrip__card { width: {{ section.settings.card_size }}px; }
+  #shopify-section-{{ section.id }} .wz-catstrip__track { animation-duration: {{ section.settings.speed }}s; }
+{%- endstyle -%}
+
+<section class="wz-catstrip">
+  <div class="wz-catstrip__track" data-marquee>
+    {%- for i in (1..2) -%}
+      {%- for block in section.blocks -%}
+        <a
+          href="{{ block.settings.collection.url | default: block.settings.link }}"
+          class="wz-catstrip__card"
+          {{ block.shopify_attributes }}
+          aria-hidden="{% if i == 2 %}true{% else %}false{% endif %}"
+          tabindex="{% if i == 2 %}-1{% endif %}"
+        >
+          {%- if block.settings.collection != blank and block.settings.collection.image -%}
+            {{ block.settings.collection.image | image_url: width: 500 | image_tag: class: 'wz-catstrip__img', alt: block.settings.collection.title }}
+          {%- elsif block.settings.image != blank -%}
+            {{ block.settings.image | image_url: width: 500 | image_tag: class: 'wz-catstrip__img', alt: block.settings.title }}
+          {%- else -%}
+            <div class="wz-catstrip__img wz-placeholder-media">{{ block.settings.title }}</div>
+          {%- endif -%}
+        </a>
+      {%- endfor -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wazen category strip",
+  "tag": "div",
+  "settings": [
+    { "type": "range", "id": "card_size", "min": 160, "max": 300, "step": 10, "default": 240, "label": "Card size (px)" },
+    { "type": "range", "id": "speed", "min": 20, "max": 90, "step": 5, "default": 40, "label": "Scroll speed (seconds per loop)" }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Category",
+      "settings": [
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Image (used if no collection image)" },
+        { "type": "text", "id": "title", "label": "Fallback label", "default": "Category" },
+        { "type": "url", "id": "link", "label": "Link (used if no collection)" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wazen category strip",
+      "blocks": [
+        { "type": "category" }, { "type": "category" }, { "type": "category" },
+        { "type": "category" }, { "type": "category" }, { "type": "category" }
+      ]
+    }
+  ]
+}
+{% endschema %}

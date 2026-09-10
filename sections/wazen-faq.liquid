@@ -1,0 +1,67 @@
+{{ 'wazen-pages.css' | asset_url | stylesheet_tag }}
+
+<div class="wz-container wz-faq">
+  <h1 class="wz-collection-head__title">{{ section.settings.heading }}</h1>
+  <p class="wz-page-sub">{{ section.settings.subheading }}</p>
+
+  <div class="wz-faq__list">
+    {%- assign wz_num = 0 -%}
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'question' -%}
+        {%- assign wz_num = wz_num | plus: 1 -%}
+        <details class="wz-faq__item" {{ block.shopify_attributes }}>
+          <summary class="wz-faq__q">
+            <span class="wz-faq__num">{{ wz_num }}</span>
+            <span class="wz-faq__q-text">{{ block.settings.question }}</span>
+            <span class="wz-faq__chevron">{%- render 'wazen-icon', icon: 'chevron-down' -%}</span>
+          </summary>
+          <div class="wz-faq__a">{{ block.settings.answer }}</div>
+        </details>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+
+  <div class="wz-faq__help">
+    <div>
+      <div class="wz-faq__help-title">{{ section.settings.help_heading }}</div>
+      <p class="wz-faq__help-text">{{ section.settings.help_text }}</p>
+    </div>
+    <a href="{{ section.settings.help_link | default: '/pages/contact' }}" class="wz-faq__help-cta">{{ section.settings.help_cta }}</a>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Wazen FAQ",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently asked questions" },
+    { "type": "textarea", "id": "subheading", "label": "Subheading", "default": "Delivery, warranty, payment and returns — the questions we hear most." },
+    { "type": "text", "id": "help_heading", "label": "Help heading", "default": "Still need help?" },
+    { "type": "textarea", "id": "help_text", "label": "Help text", "default": "Our team can walk you through sizing, warranty or an existing order." },
+    { "type": "text", "id": "help_cta", "label": "Help CTA label", "default": "Contact us" },
+    { "type": "url", "id": "help_link", "label": "Help CTA link" }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Question" },
+        { "type": "richtext", "id": "answer", "label": "Answer" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "question", "settings": { "question": "How fast is delivery inside Cairo and Alexandria?", "answer": "<p>Standard delivery is within 48 hours, free on orders above 15,000 EGP. Installation and old-unit removal are included on major appliances.</p>" } },
+      { "type": "question", "settings": { "question": "Do you deliver outside Cairo and Alexandria?", "answer": "<p>Yes — other governorates ship within 3–5 working days through our courier partners.</p>" } },
+      { "type": "question", "settings": { "question": "Is the warranty valid with the manufacturer directly?", "answer": "<p>Every unit is registered with the local agent under your order number, so warranty claims go through the manufacturer's official service network — no grey imports.</p>" } },
+      { "type": "question", "settings": { "question": "Can I pay in instalments?", "answer": "<p>Yes, 6, 12 or 18-month instalments are available with 0% interest through participating banks at checkout.</p>" } },
+      { "type": "question", "settings": { "question": "What is your return policy?", "answer": "<p>Unopened units can be returned within 14 days. See our Shipping & Returns page for full details.</p>" } },
+      { "type": "question", "settings": { "question": "Do you offer cash on delivery?", "answer": "<p>Yes, cash on delivery is available alongside card payment and instalments.</p>" } },
+      { "type": "question", "settings": { "question": "Can I see products in person before buying?", "answer": "<p>Yes — all four branches carry display stock, and staff can help you compare models on the spot.</p>" } },
+      { "type": "question", "settings": { "question": "How do I track my order?", "answer": "<p>Sign in to My Account to see live status and an estimated delivery window for every order.</p>" } }
+    ]
+  }
+}
+{% endschema %}

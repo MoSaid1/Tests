@@ -1,0 +1,49 @@
+{{ 'wazen-home.css' | asset_url | stylesheet_tag }}
+
+<section class="wz-section">
+  <div class="wz-trust-grid">
+    {%- for block in section.blocks -%}
+      <div class="wz-trust-card" {{ block.shopify_attributes }}>
+        <div class="wz-trust-card__icon">{%- render 'wazen-icon', icon: block.settings.icon, size: 24 -%}</div>
+        <div class="wz-trust-card__title">{{ block.settings.title }}</div>
+        <div class="wz-trust-card__text">{{ block.settings.text }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wazen trust cards",
+  "blocks": [
+    {
+      "type": "card",
+      "name": "Card",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon", "default": "truck",
+          "options": [
+            { "value": "truck", "label": "Delivery" },
+            { "value": "card", "label": "Payment" },
+            { "value": "shield", "label": "Warranty" },
+            { "value": "headset", "label": "Support" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Fast delivery" },
+        { "type": "text", "id": "text", "label": "Text", "default": "We deliver faster than you expect" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wazen trust cards",
+      "blocks": [
+        { "type": "card", "settings": { "icon": "truck", "title": "Fast delivery", "text": "We deliver faster than you expect" } },
+        { "type": "card", "settings": { "icon": "card", "title": "Flexible payment", "text": "Flexible payment options your way" } },
+        { "type": "card", "settings": { "icon": "shield", "title": "Warranty", "text": "Real warranty on every product" } },
+        { "type": "card", "settings": { "icon": "headset", "title": "24/7 support", "text": "Always here to support you anytime" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

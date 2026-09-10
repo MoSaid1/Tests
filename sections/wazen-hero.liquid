@@ -1,0 +1,49 @@
+{{ 'wazen-home.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #shopify-section-{{ section.id }} .wz-hero {
+    min-height: min(90vh, {{ section.settings.height }}px);
+  }
+{%- endstyle -%}
+
+<section class="wz-hero">
+  {%- if section.settings.image != blank -%}
+    {{ section.settings.image | image_url: width: 2000 | image_tag: class: 'wz-hero__img', widths: '750,1100,1500,2000', sizes: '100vw', alt: section.settings.heading | default: shop.name, loading: 'eager', fetchpriority: 'high' }}
+  {%- else -%}
+    <div class="wz-hero__img wz-placeholder-media">{{ 'wazen.media.campaign_image' | t }}</div>
+  {%- endif -%}
+
+  {%- if section.settings.show_price_card -%}
+    <div class="wz-hero__inner wz-container">
+      <div class="wz-hero__price-card">
+        <div class="wz-hero__price-kicker">{{ section.settings.price_kicker }}</div>
+        <div class="wz-hero__price-row">
+          <span class="wz-hero__price-now">{{ section.settings.price_now }}</span>
+          {%- if section.settings.price_compare != blank -%}
+            <span class="wz-hero__price-old">{{ section.settings.price_compare }}</span>
+          {%- endif -%}
+          {%- if section.settings.price_badge != blank -%}
+            <span class="wz-badge wz-badge--sale">{{ section.settings.price_badge }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+{% schema %}
+{
+  "name": "Wazen hero banner",
+  "tag": "div",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background image" },
+    { "type": "range", "id": "height", "min": 480, "max": 960, "step": 20, "default": 860, "label": "Height (px)" },
+    { "type": "checkbox", "id": "show_price_card", "label": "Show floating price card", "default": true },
+    { "type": "text", "id": "price_kicker", "label": "Price card label", "default": "Ariston · 1.5 HP Split Air Conditioner" },
+    { "type": "text", "id": "price_now", "label": "Current price", "default": "24,000 EGP" },
+    { "type": "text", "id": "price_compare", "label": "Compare-at price", "default": "26,675" },
+    { "type": "text", "id": "price_badge", "label": "Badge text", "default": "-10%" }
+  ],
+  "presets": [{ "name": "Wazen hero banner" }]
+}
+{% endschema %}

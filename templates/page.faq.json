@@ -1,0 +1,4 @@
+{
+  "sections": { "main": { "type": "wazen-faq", "settings": {} } },
+  "order": ["main"]
+}

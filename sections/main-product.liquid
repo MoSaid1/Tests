@@ -1,0 +1,323 @@
+{%- liquid
+  assign product_form_id = 'product-form-' | append: section.id
+  assign variant = product.selected_or_first_available_variant
+  assign compare_at = variant.compare_at_price
+  assign price = variant.price
+  assign has_discount = false
+  if compare_at > price
+    assign has_discount = true
+    assign savings = compare_at | minus: price
+    assign off_pct = savings | times: 100.0 | divided_by: compare_at | round
+  endif
+  assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src'
+  assign rating = product.metafields.reviews.rating.value
+  assign rating_count = product.metafields.reviews.rating_count.value
+-%}
+
+{{ 'wazen-product.css' | asset_url | stylesheet_tag }}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'component-slider.css' | asset_url | stylesheet_tag }}
+{{ 'component-deferred-media.css' | asset_url | stylesheet_tag }}
+{%- unless product.has_only_default_variant -%}
+  {{ 'component-product-variant-picker.css' | asset_url | stylesheet_tag }}
+{%- endunless -%}
+<script src="{{ 'product-info.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'media-gallery.js' | asset_url }}" defer="defer"></script>
+<script src="{{ 'product-modal.js' | asset_url }}" defer="defer"></script>
+
+<product-info
+  id="MainProduct-{{ section.id }}"
+  data-section="{{ section.id }}"
+  data-product-id="{{ product.id }}"
+  data-update-url="true"
+  data-url="{{ product.url }}"
+>
+  <div class="wz-container wz-pdp">
+    <div class="wz-breadcrumbs">
+      <a href="{{ routes.root_url }}">{{ 'wazen.nav.home' | t }}</a><span class="wz-breadcrumbs__sep">/</span>
+      {%- if product.collections.first -%}
+        <a href="{{ product.collections.first.url }}">{{ product.collections.first.title }}</a><span class="wz-breadcrumbs__sep">/</span>
+      {%- endif -%}
+      <span class="wz-breadcrumbs__current">{{ product.title }}</span>
+    </div>
+
+    <div class="wz-pdp__grid">
+      <div class="wz-pdp__media">
+        {%- render 'product-media-gallery', variant_images: variant_images -%}
+        {%- render 'product-media-modal', product: product, variant_images: variant_images -%}
+      </div>
+
+      <div class="wz-pdp__buybox">
+        {%- if settings.show_vendor and product.vendor != blank -%}
+          <div class="wz-pdp__brand">{{ product.vendor }}</div>
+        {%- endif -%}
+        <h1 class="wz-pdp__title">{{ product.title }}</h1>
+
+        <div class="wz-pdp__meta">
+          {%- if rating != blank -%}
+            <div class="wz-pdp__rating">
+              <span class="wz-pcard__stars">{%- render 'wazen-icon', icon: 'star', size: 14 -%}</span>
+              <span>{{ rating }} · {{ 'wazen.product.reviews_count' | t: count: rating_count }}</span>
+            </div>
+            <span class="wz-pdp__meta-sep">|</span>
+          {%- endif -%}
+          {%- if product.selected_or_first_available_variant.sku != blank -%}
+            <span id="Sku-{{ section.id }}" class="wz-pdp__sku wz-mono">{{ 'wazen.product.sku' | t }}: {{ product.selected_or_first_available_variant.sku }}</span>
+          {%- else -%}
+            <span id="Sku-{{ section.id }}" class="wz-pdp__sku wz-mono hidden"></span>
+          {%- endif -%}
+          <span id="Inventory-{{ section.id }}" class="wz-pdp__stock{% if variant.available == false %} wz-pdp__stock--out{% endif %}">
+            <span class="wz-pdp__stock-dot"></span>{% if variant.available %}{{ 'wazen.product.in_stock' | t }}{% else %}{{ 'wazen.product.out_of_stock' | t }}{% endif %}
+          </span>
+        </div>
+
+        <div class="wz-pdp__price-block">
+          <div class="wz-pdp__price-row" id="price-{{ section.id }}">
+            <span class="wz-pdp__price-now">{{ price | money }}</span>
+            {%- if has_discount -%}
+              <span class="wz-pdp__price-old">{{ compare_at | money }}</span>
+              <span class="wz-badge wz-badge--sale wz-pdp__save-badge">{{ 'wazen.product.save' | t }} {{ savings | money }}</span>
+            {%- endif -%}
+          </div>
+          {%- if section.settings.show_installments -%}
+            <div class="wz-pdp__installments">
+              {{ 'wazen.product.installments_html' | t: count: section.settings.installment_months, amount: price | divided_by: section.settings.installment_months | money }}
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- render 'wazen-variant-picker', product: product, product_form_id: product_form_id -%}
+
+        <div class="wz-pdp__actions">
+          <quantity-input class="wz-qty">
+            <button type="button" class="wz-qty__btn" name="minus" aria-label="{{ 'products.product.quantity.decrease' | t: product: product.title | escape }}">
+              {%- render 'wazen-icon', icon: 'minus' -%}
+            </button>
+            <input type="number" class="wz-qty__input" id="Quantity-{{ section.id }}" name="quantity" value="1" min="1" form="{{ product_form_id }}">
+            <button type="button" class="wz-qty__btn" name="plus" aria-label="{{ 'products.product.quantity.increase' | t: product: product.title | escape }}">
+              {%- render 'wazen-icon', icon: 'plus' -%}
+            </button>
+          </quantity-input>
+
+          <product-form class="wz-pdp__form">
+            <div class="product-form__error-message-wrapper" role="alert" hidden>
+              <span class="product-form__error-message"></span>
+            </div>
+            {%- form 'product', product, id: product_form_id, class: 'wz-pdp__form-inner', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+              <input type="hidden" name="id" value="{{ variant.id }}" class="product-variant-id" {% if variant.available == false or variant == null %}disabled{% endif %}>
+              <button
+                id="ProductSubmitButton-{{ section.id }}"
+                type="submit"
+                name="add"
+                class="wz-btn wz-btn--primary wz-pdp__add"
+                {% if variant.available == false or variant == null %}disabled{% endif %}
+              >
+                <span>
+                  {%- if variant == null -%}{{ 'products.product.unavailable' | t }}
+                  {%- elsif variant.available == false -%}{{ 'products.product.sold_out' | t }}
+                  {%- else -%}{{ 'products.product.add_to_cart' | t }}
+                  {%- endif -%}
+                </span>
+                {%- render 'loading-spinner' -%}
+              </button>
+            {%- endform -%}
+          </product-form>
+
+          <form method="post" action="{{ routes.cart_add_url }}" class="wz-pdp__buynow-form">
+            <input type="hidden" name="id" value="{{ variant.id }}">
+            <input type="hidden" name="quantity" value="1" data-buynow-qty>
+            <input type="hidden" name="return_to" value="{{ routes.checkout_url }}">
+            <button type="submit" class="wz-btn wz-btn--dark wz-pdp__buynow" {% if variant.available == false or variant == null %}disabled{% endif %}>
+              {{ 'wazen.product.buy_now' | t }}
+            </button>
+          </form>
+
+          <button
+            type="button"
+            class="wz-btn wz-btn--icon wz-pdp__wish"
+            data-wishlist-toggle
+            data-product-handle="{{ product.handle }}"
+            aria-label="{{ 'wazen.product.wishlist_add' | t }}"
+            aria-pressed="false"
+          >
+            {%- render 'wazen-icon', icon: 'heart' -%}
+          </button>
+        </div>
+
+        {%- if section.settings.trust_1_title != blank or section.settings.trust_2_title != blank -%}
+          <div class="wz-pdp__trust">
+            {%- for i in (1..4) -%}
+              {%- liquid
+                case i
+                  when 1
+                    assign t_title = section.settings.trust_1_title
+                    assign t_text = section.settings.trust_1_text
+                  when 2
+                    assign t_title = section.settings.trust_2_title
+                    assign t_text = section.settings.trust_2_text
+                  when 3
+                    assign t_title = section.settings.trust_3_title
+                    assign t_text = section.settings.trust_3_text
+                  when 4
+                    assign t_title = section.settings.trust_4_title
+                    assign t_text = section.settings.trust_4_text
+                endcase
+              -%}
+              {%- if t_title != blank -%}
+                <div class="wz-pdp__trust-card">
+                  <div class="wz-pdp__trust-title">{{ t_title }}</div>
+                  <div class="wz-pdp__trust-text">{{ t_text }}</div>
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="wz-pdp__tabs" role="tablist">
+      <button type="button" class="wz-pdp__tab is-active" data-tab-target="desc" role="tab" aria-selected="true">{{ 'wazen.product.description' | t }}</button>
+      <button type="button" class="wz-pdp__tab" data-tab-target="specs" role="tab" aria-selected="false">{{ 'wazen.product.specifications' | t }}</button>
+      <button type="button" class="wz-pdp__tab" data-tab-target="warranty" role="tab" aria-selected="false">{{ 'wazen.product.warranty_delivery' | t }}</button>
+      {%- if rating != blank -%}
+        <button type="button" class="wz-pdp__tab" data-tab-target="reviews" role="tab" aria-selected="false">{{ 'wazen.product.reviews_count' | t: count: rating_count }}</button>
+      {%- endif -%}
+    </div>
+
+    <div class="wz-pdp__panels">
+      <div class="wz-pdp__panel wz-pdp__panel--prose is-active" data-tab-panel="desc">
+        {{ product.description }}
+      </div>
+      <div class="wz-pdp__panel" data-tab-panel="specs">
+        {%- assign spec_json = product.metafields.custom.specifications.value -%}
+        {%- if spec_json != blank -%}
+          <div class="wz-spec-table">
+            {%- for row in spec_json -%}
+              <div class="wz-spec-table__row">
+                <div class="wz-spec-table__key">{{ row.k }}</div>
+                <div class="wz-spec-table__val">{{ row.v }}</div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- else -%}
+          <div class="wz-spec-table">
+            {%- if product.type != blank -%}
+              <div class="wz-spec-table__row"><div class="wz-spec-table__key">{{ 'wazen.product.type_label' | t }}</div><div class="wz-spec-table__val">{{ product.type }}</div></div>
+            {%- endif -%}
+            {%- if product.vendor != blank -%}
+              <div class="wz-spec-table__row"><div class="wz-spec-table__key">{{ 'wazen.product.vendor_label' | t }}</div><div class="wz-spec-table__val">{{ product.vendor }}</div></div>
+            {%- endif -%}
+            {%- for option in product.options_with_values -%}
+              <div class="wz-spec-table__row"><div class="wz-spec-table__key">{{ option.name }}</div><div class="wz-spec-table__val">{{ option.selected_value }}</div></div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+      <div class="wz-pdp__panel wz-pdp__panel--prose" data-tab-panel="warranty">
+        {%- if section.settings.warranty_text != blank -%}
+          {{ section.settings.warranty_text }}
+        {%- else -%}
+          <p>{{ 'wazen.product.warranty_delivery' | t }}</p>
+        {%- endif -%}
+      </div>
+      {%- if rating != blank -%}
+        <div class="wz-pdp__panel" data-tab-panel="reviews">
+          <div class="wz-pdp__review-summary">
+            <div class="wz-pdp__review-score">
+              <div class="wz-pdp__review-score-num">{{ rating }}</div>
+              <div class="wz-pcard__stars">{%- render 'wazen-icon', icon: 'star', size: 14 -%}</div>
+              <div class="wz-pdp__review-score-count">{{ 'wazen.product.reviews_count' | t: count: rating_count }}</div>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- assign related_products = product.collections.first.products | where_not: 'id', product.id -%}
+    {%- if related_products.size > 0 -%}
+      <div class="wz-pdp__related">
+        <div class="wz-pdp__related-head">
+          <h2>{{ 'wazen.product.customers_also_viewed' | t }}</h2>
+          {%- if product.collections.first -%}
+            <a href="{{ product.collections.first.url }}">{{ 'wazen.product.see_all' | t: category: product.collections.first.title }}</a>
+          {%- endif -%}
+        </div>
+        <div class="wz-pgrid">
+          {%- for related in related_products limit: 4 -%}
+            {%- render 'wazen-product-card', product: related, show_rating: false -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</product-info>
+
+<script src="{{ 'wazen-product.js' | asset_url }}" defer="defer"></script>
+
+{% schema %}
+{
+  "name": "t:sections.main-product.name",
+  "settings": [
+    { "type": "header", "content": "Gallery" },
+    {
+      "type": "select", "id": "gallery_layout", "default": "thumbnail", "label": "Gallery layout",
+      "options": [
+        { "value": "stacked", "label": "Stacked" },
+        { "value": "columns", "label": "Columns" },
+        { "value": "thumbnail", "label": "Thumbnails below" },
+        { "value": "thumbnail_slider", "label": "Thumbnail slider" }
+      ]
+    },
+    {
+      "type": "select", "id": "media_size", "default": "medium", "label": "Media size",
+      "options": [
+        { "value": "small", "label": "Small" },
+        { "value": "medium", "label": "Medium" },
+        { "value": "large", "label": "Large" }
+      ]
+    },
+    {
+      "type": "select", "id": "media_fit", "default": "contain", "label": "Media fit",
+      "options": [
+        { "value": "contain", "label": "Contain" },
+        { "value": "cover", "label": "Cover" }
+      ]
+    },
+    {
+      "type": "select", "id": "mobile_thumbnails", "default": "show", "label": "Mobile thumbnails",
+      "options": [
+        { "value": "show", "label": "Show" },
+        { "value": "hide", "label": "Hide" },
+        { "value": "columns", "label": "Columns" }
+      ]
+    },
+    { "type": "checkbox", "id": "hide_variants", "label": "Hide other variant media after selecting a variant", "default": false },
+    { "type": "checkbox", "id": "enable_sticky_info", "label": "Enable sticky buy box on desktop", "default": true },
+    { "type": "checkbox", "id": "constrain_to_viewport", "label": "Constrain media to viewport height", "default": true },
+    { "type": "checkbox", "id": "enable_video_looping", "label": "Enable video looping", "default": false },
+    {
+      "type": "select", "id": "image_zoom", "default": "lightbox", "label": "Image zoom",
+      "options": [
+        { "value": "lightbox", "label": "Open lightbox" },
+        { "value": "hover", "label": "Zoom on hover" },
+        { "value": "none", "label": "None" }
+      ]
+    },
+    { "type": "color_scheme", "id": "color_scheme", "default": "scheme-2", "label": "Zoom modal color scheme" },
+    { "type": "header", "content": "Buy box" },
+    { "type": "checkbox", "id": "show_installments", "label": "Show installment line", "default": true },
+    { "type": "range", "id": "installment_months", "min": 3, "max": 24, "step": 1, "default": 12, "label": "Installment months" },
+    { "type": "richtext", "id": "warranty_text", "label": "Warranty & delivery text" },
+    { "type": "header", "content": "Trust mini-cards" },
+    { "type": "text", "id": "trust_1_title", "label": "Card 1 title", "default": "Delivery in 48 hours" },
+    { "type": "text", "id": "trust_1_text", "label": "Card 1 text", "default": "Free above 15,000 EGP" },
+    { "type": "text", "id": "trust_2_title", "label": "Card 2 title", "default": "5-year compressor warranty" },
+    { "type": "text", "id": "trust_2_text", "label": "Card 2 text", "default": "Local agent warranty" },
+    { "type": "text", "id": "trust_3_title", "label": "Card 3 title", "default": "Free installation" },
+    { "type": "text", "id": "trust_3_text", "label": "Card 3 text", "default": "Cairo & Alexandria" },
+    { "type": "text", "id": "trust_4_title", "label": "Card 4 title", "default": "14-day returns" },
+    { "type": "text", "id": "trust_4_text", "label": "Card 4 text", "default": "Unopened units" }
+  ]
+}
+{% endschema %}

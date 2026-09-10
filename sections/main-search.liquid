@@ -1,0 +1,91 @@
+{{ 'wazen-collection.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign sort_by = search.sort_by | default: search.default_sort_by
+  assign terms = search.terms | escape
+-%}
+
+<div class="wz-container wz-collection-head">
+  <h1 class="wz-collection-head__title">
+    {%- if terms != blank -%}
+      {{ 'wazen.search.results_for' | t: terms: terms }}
+    {%- else -%}
+      {{ 'general.search.search' | t }}
+    {%- endif -%}
+  </h1>
+  {%- form 'search', role: 'search' -%}
+    <div class="wz-search-page__bar">
+      <span class="wz-search-modal__icon">{%- render 'wazen-icon', icon: 'search', size: 17 -%}</span>
+      <input type="search" name="q" value="{{ terms }}" placeholder="{{ 'wazen.header.search_placeholder' | t }}" class="wz-search-page__input">
+      <input type="hidden" name="options[prefix]" value="last">
+      <button type="submit" class="wz-btn wz-btn--primary wz-btn--sm">{{ 'general.search.search' | t }}</button>
+    </div>
+  {%- endform -%}
+</div>
+
+<div class="wz-container wz-collection-body">
+  {%- if search.performed and search.results_count == 0 -%}
+    <div class="wz-empty-state">
+      <div class="wz-empty-state__icon">{%- render 'wazen-icon', icon: 'search', size: 24 -%}</div>
+      <div class="wz-empty-state__title">{{ 'wazen.search.no_results_title' | t: terms: terms }}</div>
+      <div class="wz-empty-state__text">{{ 'wazen.search.no_results_text' | t }}</div>
+      <a href="{{ routes.root_url }}" class="wz-btn wz-btn--outline">{{ 'general.continue_shopping' | t }}</a>
+    </div>
+  {%- elsif search.performed -%}
+    <div class="wz-collection-toolbar">
+      <div class="wz-collection-toolbar__count">{{ 'wazen.search.results_count' | t: count: search.results_count }}</div>
+      {%- if search.sort_options.size > 0 -%}
+        <form method="get" id="WzSearchSort">
+          <input type="hidden" name="q" value="{{ terms }}">
+          <input type="hidden" name="type" value="product">
+          <label class="wz-collection-toolbar__sort">
+            <span>{{ 'wazen.collection.sort' | t }}</span>
+            <select name="sort_by" class="wz-select wz-select--sort" onchange="this.form.submit()">
+              {%- for option in search.sort_options -%}
+                <option value="{{ option.value }}" {% if option.value == sort_by %}selected{% endif %}>{{ option.name }}</option>
+              {%- endfor -%}
+            </select>
+          </label>
+        </form>
+      {%- endif -%}
+    </div>
+
+    {%- paginate search.results by section.settings.results_per_page -%}
+      <div class="wz-pgrid" style="margin-top:20px;">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {%- render 'wazen-product-card', product: item -%}
+          {%- else -%}
+            <a href="{{ item.url }}" class="wz-card wz-lift wz-search-page__other">
+              <div class="wz-search-page__other-kicker">{{ item.object_type | capitalize }}</div>
+              <div class="wz-search-page__other-title">{{ item.title }}</div>
+            </a>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="wz-pagination" aria-label="{{ 'general.pagination.label' | t }}">
+          {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}" class="wz-pill-btn">{{ 'general.pagination.previous' | t }}</a>{%- endif -%}
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}
+              <a href="{{ part.url }}" class="wz-pill-btn">{{ part.title }}</a>
+            {%- else -%}
+              <span class="wz-pill-btn is-active">{{ part.title }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if paginate.next -%}<a href="{{ paginate.next.url }}" class="wz-pill-btn">{{ 'general.pagination.next' | t }}</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:sections.main-search.name",
+  "settings": [
+    { "type": "range", "id": "results_per_page", "min": 8, "max": 36, "step": 4, "default": 24, "label": "Results per page" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,83 @@
+{%- comment -%}
+  Full-width search overlay: recent/popular searches before typing,
+  live predictive-search results (Dawn's predictive-search.js) once typing starts.
+{%- endcomment -%}
+<div id="wz-search-modal" class="wz-search-modal" hidden>
+  <div class="wz-search-modal__overlay" data-search-close></div>
+  <div class="wz-search-modal__panel">
+    <div class="wz-container wz-search-modal__inner">
+      <div class="wz-search-modal__bar">
+        {%- if settings.predictive_search_enabled -%}
+          <predictive-search class="wz-search-modal__form" data-loading-text="{{ 'accessibility.loading' | t }}">
+        {%- else -%}
+          <search-form class="wz-search-modal__form">
+        {%- endif -%}
+          <form action="{{ routes.search_url }}" method="get" role="search" class="search wz-search-modal__form-inner">
+            <span class="wz-search-modal__icon">{%- render 'wazen-icon', icon: 'search', size: 19 -%}</span>
+            <div class="field wz-search-modal__field">
+              <input
+                class="search__input field__input wz-search-modal__input"
+                id="wz-search-input"
+                type="search"
+                name="q"
+                value="{{ search.terms | escape }}"
+                placeholder="{{ 'wazen.header.search_placeholder' | t }}"
+                {%- if settings.predictive_search_enabled -%}
+                  role="combobox"
+                  aria-expanded="false"
+                  aria-owns="predictive-search-results"
+                  aria-controls="predictive-search-results"
+                  aria-haspopup="listbox"
+                  aria-autocomplete="list"
+                {%- endif -%}
+                autocorrect="off" autocomplete="off" autocapitalize="off" spellcheck="false"
+              >
+              <input type="hidden" name="options[prefix]" value="last">
+            </div>
+            <button type="button" class="wz-btn wz-btn--ghost wz-btn--sm" data-search-close>{{ 'wazen.general.esc' | t }}</button>
+            {%- if settings.predictive_search_enabled -%}
+              <div class="predictive-search wz-predictive" tabindex="-1" data-predictive-search>
+                {%- render 'loading-spinner', class: 'predictive-search__loading-state' -%}
+              </div>
+              <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+            {%- endif -%}
+          </form>
+        {%- if settings.predictive_search_enabled -%}
+          </predictive-search>
+        {%- else -%}
+          </search-form>
+        {%- endif -%}
+      </div>
+
+      <div class="wz-search-modal__panels" id="wz-search-empty-state">
+        <div class="wz-search-modal__col">
+          <div class="wz-search-modal__label">{{ 'wazen.search.recent' | t }}</div>
+          <div class="wz-search-modal__recent" id="wz-recent-searches">
+            <span class="wz-search-modal__muted">{{ 'wazen.search.no_recent' | t }}</span>
+          </div>
+          <div class="wz-search-modal__label wz-mt">{{ 'wazen.search.popular' | t }}</div>
+          <div class="wz-search-modal__chips">
+            {%- assign popular = 'wazen.search.popular_1,wazen.search.popular_2,wazen.search.popular_3,wazen.search.popular_4' | split: ',' -%}
+            {%- for key in popular -%}
+              <a href="{{ routes.search_url }}?q={{ key | t | url_encode }}" class="wz-chip">{{ key | t }}</a>
+            {%- endfor -%}
+          </div>
+          {%- if linklists.main-menu.links.size > 0 -%}
+            <div class="wz-search-modal__label wz-mt">{{ 'wazen.search.categories' | t }}</div>
+            <div class="wz-search-modal__recent">
+              {%- for link in linklists.main-menu.links limit: 5 -%}
+                <a href="{{ link.url }}">{{ link.title }}</a>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+        </div>
+        <div class="wz-search-modal__col wz-search-modal__col--wide">
+          <div class="wz-search-modal__label">{{ 'wazen.search.suggestions' | t }}</div>
+          <div class="wz-search-modal__suggestions">
+            <span class="wz-search-modal__muted">{{ 'wazen.search.start_typing' | t }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

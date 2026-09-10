@@ -1,0 +1,24 @@
+{%- comment -%} Fixed bottom tab bar shown on mobile only. {%- endcomment -%}
+<nav class="wz-tabbar wz-hide-desktop" aria-label="{{ 'wazen.nav.menu' | t }}">
+  <a href="{{ routes.root_url }}" class="wz-tabbar__item{% if request.page_type == 'index' %} is-active{% endif %}">
+    <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 11l8-6.5 8 6.5"/><path d="M6.5 10.5V20h11v-9.5"/></svg>
+    <span>{{ 'wazen.nav.home' | t }}</span>
+  </a>
+  <button type="button" class="wz-tabbar__item" id="wz-tabbar-categories" aria-controls="wz-mobile-drawer">
+    {%- render 'wazen-icon', icon: 'menu', size: 21 -%}
+    <span>{{ 'wazen.nav.categories' | t }}</span>
+  </button>
+  <a href="{{ pages.wishlist.url | default: '/pages/wishlist' }}" class="wz-tabbar__item">
+    {%- render 'wazen-icon', icon: 'heart', size: 21 -%}
+    <span>{{ 'wazen.nav.wishlist' | t }}</span>
+  </a>
+  <a href="{{ routes.cart_url }}" class="wz-tabbar__item">
+    {%- render 'wazen-icon', icon: 'cart', size: 21 -%}
+    <span>{{ 'wazen.nav.cart' | t }}</span>
+  </a>
+  <a href="{% if customer %}{{ routes.account_url }}{% else %}{{ routes.account_login_url }}{% endif %}" class="wz-tabbar__item">
+    {%- render 'wazen-icon', icon: 'account', size: 21 -%}
+    <span>{{ 'wazen.nav.account' | t }}</span>
+  </a>
+</nav>
+<div class="wz-tabbar-spacer wz-hide-desktop" aria-hidden="true"></div>

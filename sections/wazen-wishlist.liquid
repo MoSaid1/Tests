@@ -1,0 +1,36 @@
+{{ 'wazen-collection.css' | asset_url | stylesheet_tag }}
+{{ 'wazen-wishlist.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'wazen-wishlist-page.js' | asset_url }}" defer="defer"></script>
+
+<div class="wz-container wz-wishlist-page">
+  <h1 class="wz-collection-head__title">{{ 'wazen.wishlist.title' | t }}</h1>
+  <p class="wz-wishlist-page__sub" id="wz-wishlist-sub"></p>
+
+  <div id="wz-wishlist-list" class="wz-wishlist-list" hidden></div>
+
+  <div id="wz-wishlist-empty" class="wz-empty-state" hidden>
+    <div class="wz-empty-state__icon">{%- render 'wazen-icon', icon: 'heart', size: 24 -%}</div>
+    <div class="wz-empty-state__title">{{ 'wazen.wishlist.empty_title' | t }}</div>
+    <div class="wz-empty-state__text">{{ 'wazen.wishlist.empty_text' | t }}</div>
+    <a href="{{ routes.all_products_collection_url }}" class="wz-btn wz-btn--primary">{{ 'wazen.wishlist.start_shopping' | t }}</a>
+  </div>
+
+  <div id="wz-wishlist-loading" class="wz-wishlist-page__loading">{{ 'wazen.general.loading' | t }}</div>
+</div>
+
+<script type="application/json" id="wz-wishlist-strings">
+  {
+    "add": {{ 'products.product.add_to_cart' | t | json }},
+    "soldOut": {{ 'products.product.sold_out' | t | json }},
+    "remove": {{ 'wazen.wishlist.remove' | t | json }},
+    "moneyFormat": {{ shop.money_format | json }},
+    "savedCount": {{ 'wazen.wishlist.saved_count' | t: count: '{{ count }}' | json }}
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Wazen wishlist",
+  "settings": []
+}
+{% endschema %}

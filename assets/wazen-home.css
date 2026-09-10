@@ -1,0 +1,98 @@
+/* Hero ------------------------------------------------------------------ */
+.wz-hero {
+  position: relative;
+  margin-top: -180px;
+  padding-top: 180px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(180deg, #000 55%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(180deg, #000 55%, rgba(0, 0, 0, 0) 100%);
+}
+.wz-hero__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -1; }
+.wz-hero__inner { position: relative; width: 100%; padding-bottom: 48px; }
+.wz-hero__price-card {
+  display: inline-block; background: #fff; border-radius: var(--wz-radius-lg); padding: 16px 20px;
+  box-shadow: var(--wz-shadow-float); min-width: 280px;
+}
+.wz-hero__price-kicker { font-size: 11.5px; color: var(--wz-faint); font-weight: 600; }
+.wz-hero__price-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; margin-top: 6px; }
+.wz-hero__price-now { font-size: 22px; font-weight: 600; white-space: nowrap; }
+.wz-hero__price-old { font-size: 13px; color: var(--wz-line); text-decoration: line-through; }
+
+/* Category strip marquee -------------------------------------------------- */
+.wz-catstrip { position: relative; z-index: 5; margin-top: -180px; overflow: hidden; }
+.wz-catstrip__track { display: flex; gap: 16px; width: max-content; animation: wzMarquee linear infinite; }
+[dir='rtl'] .wz-catstrip__track { animation-name: wzMarqueeRtl; }
+.wz-catstrip:hover .wz-catstrip__track { animation-play-state: paused; }
+.wz-catstrip__card {
+  flex: none; background: #fff; border-radius: var(--wz-radius-2xl); box-shadow: var(--wz-shadow-float);
+  overflow: hidden; display: block; color: var(--wz-ink); aspect-ratio: 1 / 1;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.wz-catstrip__card:hover { transform: translateY(-6px); box-shadow: var(--wz-shadow-lift); }
+.wz-catstrip__img { width: 100%; height: 100%; object-fit: contain; display: block; background: #fff; }
+
+/* Section heading shared with wazen-theme.css .wz-section__head */
+
+/* Intent grid -------------------------------------------------------------- */
+.wz-intent-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 20px; margin-top: 32px;
+}
+.wz-intent-card {
+  border-radius: var(--wz-radius-lg); padding: 22px; min-height: 200px; display: flex; flex-direction: column;
+  color: #fff; text-decoration: none; background-size: cover; background-position: center;
+}
+.wz-intent-card__kicker { font-size: 11px; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; opacity: 0.75; }
+.wz-intent-card__name { font-size: 23px; font-weight: 600; letter-spacing: -0.02em; margin-top: auto; padding-top: 60px; line-height: 1.2; }
+.wz-intent-card__desc { font-size: 13.5px; opacity: 0.8; margin-top: 7px; }
+
+/* Shared product grid ------------------------------------------------------- */
+.wz-pgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 20px; margin-top: 24px; }
+
+/* Deals band ----------------------------------------------------------------- */
+.wz-deals-wrap { margin-top: 72px; }
+.wz-deals { background: var(--wz-navy); border-radius: var(--wz-radius-2xl); padding: clamp(32px, 5vw, 56px) clamp(18px, 3.5vw, 40px); }
+.wz-deals__head { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 24px; color: #fff; }
+.wz-deals__title { font-size: clamp(24px, 3.8vw, 34px); font-weight: 600; letter-spacing: -0.03em; margin: 18px 0 0; }
+.wz-deals__sub { color: #a9bacb; margin: 8px 0 0; font-size: 15.5px; }
+.wz-countdown { display: flex; gap: 10px; font-variant-numeric: tabular-nums; }
+.wz-countdown__cell { background: var(--wz-navy-2); border-radius: var(--wz-radius-pill); padding: 10px 14px; text-align: center; min-width: 62px; }
+.wz-countdown__cell span { font-size: 22px; font-weight: 600; color: #fff; display: block; }
+.wz-countdown__cell small { font-size: 11px; color: #a9bacb; letter-spacing: 0.06em; }
+.wz-deals .wz-pgrid { margin-top: 34px; }
+
+/* Brands ---------------------------------------------------------------------- */
+.wz-brand-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr)); gap: 12px; margin-top: 32px; }
+.wz-brand-tile {
+  height: 88px; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: var(--wz-radius-md);
+  box-shadow: var(--wz-shadow-card); font-size: 15px; font-weight: 600; letter-spacing: 0.01em; color: var(--wz-muted); text-decoration: none;
+}
+.wz-brand-tile:hover { color: var(--wz-blue); }
+
+/* Trust cards ------------------------------------------------------------------- */
+.wz-trust-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 20px; }
+.wz-trust-card { background: #fff; border-radius: var(--wz-radius-lg); box-shadow: var(--wz-shadow-card); padding: 28px; text-align: center; }
+.wz-trust-card__icon { margin: 0 auto; width: 52px; height: 52px; border-radius: 999px; background: var(--wz-blue); display: flex; align-items: center; justify-content: center; color: #fff; }
+.wz-trust-card__title { font-size: 17px; font-weight: 600; margin-top: 18px; letter-spacing: -0.015em; }
+.wz-trust-card__text { font-size: 14px; color: var(--wz-muted); margin-top: 6px; }
+
+/* Newsletter ---------------------------------------------------------------------- */
+.wz-newsletter-wrap { margin-top: 72px; }
+.wz-newsletter {
+  background: #fff; border-radius: var(--wz-radius-xl); box-shadow: var(--wz-shadow-card);
+  padding: clamp(32px, 5vw, 56px) clamp(20px, 4vw, 48px); display: flex; flex-direction: column; align-items: center; text-align: center; gap: 28px;
+}
+.wz-newsletter__title { font-size: clamp(23px, 3.6vw, 32px); font-weight: 600; letter-spacing: -0.03em; margin: 0; }
+.wz-newsletter__sub { color: var(--wz-muted); margin: 10px 0 0; font-size: 16px; }
+.wz-newsletter__form { width: 100%; display: flex; flex-direction: column; align-items: center; }
+.wz-newsletter__field-row { display: flex; gap: 10px; background: var(--wz-surface); padding: 6px; border-radius: var(--wz-radius-pill); width: min(100%, 420px); }
+.wz-newsletter__input { flex: 1; min-width: 0; height: 46px; padding: 0 20px; border: none; border-radius: var(--wz-radius-pill); font-size: 15px; background: transparent; font-family: inherit; }
+.wz-newsletter__input:focus { outline: 2px solid var(--wz-blue); }
+.wz-newsletter__msg { font-size: 13.5px; margin-top: 12px; }
+.wz-newsletter__msg--ok { color: var(--wz-green); }
+.wz-newsletter__msg--err { color: var(--wz-red); }
+
+@media screen and (max-width: 749px) {
+  .wz-deals__head { text-align: center; }
+}

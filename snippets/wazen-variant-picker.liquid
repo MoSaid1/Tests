@@ -1,0 +1,28 @@
+{%- comment -%}
+  Simplified variant picker for the Wazen PDP: always renders pill/button
+  style options (no swatches), reusing Dawn's variant-selects web component
+  and product-variant-options snippet so AJAX variant switching still works.
+  Usage: {% render 'wazen-variant-picker', product: product, product_form_id: product_form_id %}
+{%- endcomment -%}
+{%- unless product.has_only_default_variant -%}
+  <variant-selects
+    id="variant-selects-{{ section.id }}"
+    data-section="{{ section.id }}"
+    data-product-handle="{{ product.handle }}"
+    data-product-title="{{ product.title | escape }}"
+    data-product-id="{{ product.id }}"
+    data-currency-code="{{ cart.currency.iso_code }}"
+    class="wz-variant-selects"
+  >
+    {%- for option in product.options_with_values -%}
+      <fieldset class="js product-form__input product-form__input--pill wz-variant-group">
+        <legend class="form__label wz-variant-group__label">{{ option.name }}</legend>
+        {% render 'product-variant-options', product: product, option: option, block: block, picker_type: 'button' %}
+      </fieldset>
+    {%- endfor -%}
+
+    <script type="application/json" data-selected-variant>
+      {{ product.selected_or_first_available_variant | json }}
+    </script>
+  </variant-selects>
+{%- endunless -%}

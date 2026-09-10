@@ -1,0 +1,134 @@
+{{ 'wazen-blog.css' | asset_url | stylesheet_tag }}
+
+{%- assign wz_word_count = article.content | strip_html | split: ' ' | size -%}
+{%- assign wz_read_min = wz_word_count | divided_by: 200 | at_least: 1 -%}
+
+<div class="wz-article">
+  <div class="wz-container wz-breadcrumbs-row">
+    <div class="wz-breadcrumbs">
+      <a href="{{ routes.root_url }}">{{ 'wazen.nav.home' | t }}</a><span class="wz-breadcrumbs__sep">/</span>
+      <a href="{{ blog.url }}">{{ blog.title }}</a><span class="wz-breadcrumbs__sep">/</span>
+      <span class="wz-breadcrumbs__current">{{ article.title }}</span>
+    </div>
+  </div>
+
+  <div class="wz-article__head">
+    <div class="wz-article__kicker">{{ article.tags.first | default: blog.title }}</div>
+    <h1 class="wz-article__title">{{ article.title }}</h1>
+    <div class="wz-article__meta">
+      <span class="wz-article__author">{{ article.author }}</span><span class="wz-breadcrumbs__sep">|</span>
+      <span>{{ article.published_at | date: '%d %b %Y' }}</span><span class="wz-breadcrumbs__sep">|</span>
+      <span>{{ wz_read_min }} {{ 'wazen.blog.min_read' | t }}</span>
+    </div>
+  </div>
+
+  {%- if article.image -%}
+    <div class="wz-article__hero">
+      {{ article.image | image_url: width: 1600 | image_tag: alt: article.title, widths: '750,1100,1600', sizes: '100vw' }}
+    </div>
+  {%- endif -%}
+
+  <div class="wz-article__body wz-pdp__panel--prose">
+    {{ article.content }}
+  </div>
+
+  {%- if section.settings.show_share -%}
+    <div class="wz-container wz-article__share-wrap">
+      <div class="wz-article__share">
+        <span>{{ 'wazen.blog.share' | t }}</span>
+        <button type="button" class="wz-btn wz-btn--ghost wz-btn--sm" data-copy-link="{{ article.url | prepend: request.origin }}">{{ 'general.share.copy_to_clipboard' | t }}</button>
+      </div>
+    </div>
+  {%- endif -%}
+
+  {%- if blog.comments_enabled? -%}
+    <div class="wz-container wz-article__comments">
+      <h2>{{ 'blogs.article.comments' | t: count: article.comments_count }}</h2>
+      {%- if article.comments_count > 0 -%}
+        <div class="wz-article__comment-list">
+          {%- paginate article.comments by 10 -%}
+            {%- for comment in article.comments -%}
+              <div class="wz-article__comment">
+                <div class="wz-article__comment-author">{{ comment.author }}</div>
+                <div class="wz-article__comment-date">{{ comment.created_at | date: '%d %b %Y' }}</div>
+                <p>{{ comment.content }}</p>
+              </div>
+            {%- endfor -%}
+          {%- endpaginate -%}
+        </div>
+      {%- endif -%}
+      {%- form 'new_comment', article -%}
+        {%- if form.posted_successfully? -%}
+          <p class="wz-newsletter__msg wz-newsletter__msg--ok">
+            {%- if blog.moderated? -%}{{ 'blogs.article.success_moderated' | t }}{%- else -%}{{ 'blogs.article.success' | t }}{%- endif -%}
+          </p>
+        {%- endif -%}
+        {%- if form.errors -%}
+          <div class="wz-newsletter__msg wz-newsletter__msg--err">
+            {%- for field in form.errors -%}
+              <p>{{ form.errors.messages[field] }}</p>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+        <div class="wz-comment-form">
+          <label class="wz-field"><span class="wz-field__label">{{ 'blogs.article.name' | t }}</span>
+            <input type="text" name="comment[author]" value="{{ form.author }}" class="wz-input" required>
+          </label>
+          <label class="wz-field"><span class="wz-field__label">{{ 'blogs.article.email' | t }}</span>
+            <input type="email" name="comment[email]" value="{{ form.email }}" class="wz-input" required>
+          </label>
+          <label class="wz-field" style="grid-column:1/-1;"><span class="wz-field__label">{{ 'blogs.article.message' | t }}</span>
+            <textarea name="comment[body]" class="wz-textarea" rows="5" required>{{ form.body }}</textarea>
+          </label>
+        </div>
+        <button type="submit" class="wz-btn wz-btn--primary">{{ 'blogs.article.post' | t }}</button>
+      {%- endform -%}
+    </div>
+  {%- endif -%}
+
+  {%- assign related_articles = blog.articles | where_not: 'id', article.id -%}
+  {%- if related_articles.size > 0 -%}
+    <div class="wz-container wz-article__related">
+      <h2>{{ 'wazen.blog.related' | t }}</h2>
+      <div class="wz-blog__grid wz-blog__grid--related">
+        {%- for related in related_articles limit: 3 -%}
+          <a href="{{ related.url }}" class="wz-blog__card wz-card wz-lift">
+            <div class="wz-blog__card-media">
+              {%- if related.image -%}
+                {{ related.image | image_url: width: 500 | image_tag: alt: related.title, widths: '250,400,500' }}
+              {%- else -%}
+                <div class="wz-placeholder-media" style="height:100%;"></div>
+              {%- endif -%}
+            </div>
+            <div class="wz-blog__card-body">
+              <div class="wz-blog__card-cat">{{ related.tags.first | default: blog.title }}</div>
+              <div class="wz-blog__card-title">{{ related.title }}</div>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  document.querySelectorAll('[data-copy-link]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      navigator.clipboard && navigator.clipboard.writeText(btn.getAttribute('data-copy-link'));
+      var original = btn.textContent;
+      btn.textContent = '{{ "general.share.success_message" | t }}';
+      setTimeout(function () {
+        btn.textContent = original;
+      }, 1800);
+    });
+  });
+</script>
+
+{% schema %}
+{
+  "name": "t:sections.main-article.name",
+  "settings": [
+    { "type": "checkbox", "id": "show_share", "label": "Show share button", "default": true }
+  ]
+}
+{% endschema %}

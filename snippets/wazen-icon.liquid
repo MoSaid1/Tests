@@ -1,0 +1,57 @@
+{%- comment -%}
+  Renders a Wazen UI icon.
+  Usage: {% render 'wazen-icon', icon: 'heart' %}
+  Accepts: icon, size (default per-icon)
+{%- endcomment -%}
+{%- case icon -%}
+  {%- when 'menu' -%}
+    <svg width="{{ size | default: 20 }}" height="{{ size | default: 20 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  {%- when 'close' -%}
+    <svg width="{{ size | default: 18 }}" height="{{ size | default: 18 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  {%- when 'search' -%}
+    <svg width="{{ size | default: 17 }}" height="{{ size | default: 17 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5"/></svg>
+  {%- when 'heart' -%}
+    <svg width="{{ size | default: 21 }}" height="{{ size | default: 21 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 20s-7-4.4-7-9.3A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.7C19 15.6 12 20 12 20z"/></svg>
+  {%- when 'heart-fill' -%}
+    <svg width="{{ size | default: 21 }}" height="{{ size | default: 21 }}" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 20s-7-4.4-7-9.3A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.7C19 15.6 12 20 12 20z"/></svg>
+  {%- when 'account' -%}
+    <svg width="{{ size | default: 21 }}" height="{{ size | default: 21 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c1.2-3.6 4-5.2 7.5-5.2S18.3 16.4 19.5 20"/></svg>
+  {%- when 'cart' -%}
+    <svg width="{{ size | default: 19 }}" height="{{ size | default: 19 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M5 7h14l-1.2 11.2a2 2 0 0 1-2 1.8H8.2a2 2 0 0 1-2-1.8z"/><path d="M9 7V5.6A3 3 0 0 1 15 5.6V7"/></svg>
+  {%- when 'chevron-down' -%}
+    <svg width="{{ size | default: 10 }}" height="{{ size | default: 10 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg>
+  {%- when 'chevron-end' -%}
+    <svg width="{{ size | default: 16 }}" height="{{ size | default: 16 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="wz-flip" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+  {%- when 'arrow-end' -%}
+    <svg width="{{ size | default: 14 }}" height="{{ size | default: 14 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="wz-flip" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>
+  {%- when 'arrow-start' -%}
+    <svg width="{{ size | default: 14 }}" height="{{ size | default: 14 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" class="wz-flip" aria-hidden="true"><path d="M19 12H6M11 6l-6 6 6 6"/></svg>
+  {%- when 'minus' -%}
+    <svg width="{{ size | default: 15 }}" height="{{ size | default: 15 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14"/></svg>
+  {%- when 'plus' -%}
+    <svg width="{{ size | default: 15 }}" height="{{ size | default: 15 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+  {%- when 'filter' -%}
+    <svg width="{{ size | default: 18 }}" height="{{ size | default: 18 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+  {%- when 'grid' -%}
+    <svg width="{{ size | default: 14 }}" height="{{ size | default: 14 }}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+  {%- when 'list' -%}
+    <svg width="{{ size | default: 14 }}" height="{{ size | default: 14 }}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="3" y="4" width="18" height="4"/><rect x="3" y="10" width="18" height="4"/><rect x="3" y="16" width="18" height="4"/></svg>
+  {%- when 'zoom' -%}
+    <svg width="{{ size | default: 14 }}" height="{{ size | default: 14 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4.5-4.5M11 8v6M8 11h6"/></svg>
+  {%- when 'truck' -%}
+    <svg width="{{ size | default: 24 }}" height="{{ size | default: 24 }}" viewBox="0 0 24 24" fill="rgba(255,255,255,0.28)" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M2 8h11v9H2z"/><path d="M13 11h5l3 3v3h-8z"/><circle cx="6.5" cy="18.5" r="1.8"/><circle cx="17" cy="18.5" r="1.8"/></svg>
+  {%- when 'card' -%}
+    <svg width="{{ size | default: 24 }}" height="{{ size | default: 24 }}" viewBox="0 0 24 24" fill="rgba(255,255,255,0.28)" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg>
+  {%- when 'shield' -%}
+    <svg width="{{ size | default: 24 }}" height="{{ size | default: 24 }}" viewBox="0 0 24 24" fill="rgba(255,255,255,0.28)" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></svg>
+  {%- when 'headset' -%}
+    <svg width="{{ size | default: 24 }}" height="{{ size | default: 24 }}" viewBox="0 0 24 24" fill="rgba(255,255,255,0.28)" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="2.5" y="13" width="4" height="6" rx="1.6"/><rect x="17.5" y="13" width="4" height="6" rx="1.6"/></svg>
+  {%- when 'lock' -%}
+    <svg width="{{ size | default: 13 }}" height="{{ size | default: 13 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+  {%- when 'check' -%}
+    <svg width="{{ size | default: 16 }}" height="{{ size | default: 16 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+  {%- when 'star' -%}
+    <svg width="{{ size | default: 13 }}" height="{{ size | default: 13 }}" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 7-6.3-3.9L5.7 21l1.7-7L2 9.2l7.1-.6z"/></svg>
+  {%- when 'pin' -%}
+    <svg width="{{ size | default: 18 }}" height="{{ size | default: 18 }}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 21s7-6.7 7-12a7 7 0 1 0-14 0c0 5.3 7 12 7 12z"/><circle cx="12" cy="9" r="2.4"/></svg>
+{%- endcase -%}

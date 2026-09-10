@@ -1,0 +1,22 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "gallery_layout": "thumbnail",
+        "media_size": "medium",
+        "media_fit": "contain",
+        "mobile_thumbnails": "show",
+        "hide_variants": false,
+        "enable_sticky_info": true,
+        "constrain_to_viewport": true,
+        "enable_video_looping": false,
+        "image_zoom": "lightbox",
+        "color_scheme": "scheme-2",
+        "show_installments": true,
+        "installment_months": 12
+      }
+    }
+  },
+  "order": ["main"]
+}

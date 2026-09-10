@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "heading": "Wazen guides",
+        "subheading": "Buying guides, comparisons and maintenance advice written by the people who install these appliances every day.",
+        "articles_per_page": 12
+      }
+    }
+  },
+  "order": ["main"]
+}

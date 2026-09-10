@@ -1,0 +1,28 @@
+.wz-wishlist-page { padding-top: 22px; padding-bottom: 80px; }
+.wz-wishlist-page__sub { color: var(--wz-muted); margin: 8px 0 0; font-size: 15px; }
+.wz-wishlist-page__loading { text-align: center; padding: 40px 0; color: var(--wz-muted); font-size: 14px; }
+.wz-wishlist-list { background: #fff; border-radius: var(--wz-radius-lg); box-shadow: var(--wz-shadow-card); overflow: hidden; margin-top: 26px; }
+.wz-wishlist-row {
+  display: grid; grid-template-columns: 80px minmax(0, 1fr) auto auto; gap: 22px; padding: 20px 22px;
+  border-bottom: 1px solid var(--wz-border-2); align-items: center;
+}
+.wz-wishlist-row:last-child { border-bottom: none; }
+.wz-wishlist-row__media {
+  aspect-ratio: 1 / 1; background-color: var(--wz-surface-2); background-size: cover; background-position: center;
+  border-radius: var(--wz-radius-md); display: block;
+}
+.wz-wishlist-row__brand { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--wz-blue); }
+.wz-wishlist-row__title { font-size: 16px; font-weight: 500; margin-top: 5px; line-height: 1.35; color: var(--wz-ink); text-decoration: none; display: block; }
+.wz-wishlist-row__price { display: flex; align-items: center; gap: 10px; margin-top: 9px; flex-wrap: wrap; }
+.wz-wishlist-row__price-now { font-size: 19px; font-weight: 600; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.wz-wishlist-row__price-old { font-size: 13px; color: var(--wz-line); text-decoration: line-through; }
+.wz-wishlist-row__off { font-size: 12px; font-weight: 700; color: var(--wz-orange); }
+.wz-wishlist-row__stock { font-size: 13px; font-weight: 600; color: var(--wz-green); white-space: nowrap; }
+.wz-wishlist-row__stock.is-out { color: var(--wz-red); }
+.wz-wishlist-row__actions { display: flex; gap: 10px; }
+
+@media screen and (max-width: 640px) {
+  .wz-wishlist-row { grid-template-columns: 64px 1fr; }
+  .wz-wishlist-row__stock, .wz-wishlist-row__actions { grid-column: 1 / -1; }
+  .wz-wishlist-row__actions { justify-content: flex-end; }
+}
