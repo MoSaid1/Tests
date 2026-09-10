@@ -620,6 +620,24 @@
     ]
   },
   {
+    "name": "Wazen product card",
+    "settings": [
+      {
+        "type": "select",
+        "id": "wazen_card_style",
+        "options": [
+          { "value": "v1", "label": "Style 1 — Classic" },
+          { "value": "v2", "label": "Style 2 — Minimal" },
+          { "value": "v3", "label": "Style 3 — Bold" },
+          { "value": "v4", "label": "Style 4 — Compact" }
+        ],
+        "default": "v1",
+        "label": "Card style",
+        "info": "Applies to product cards across the homepage, collection, search, and deals sections."
+      }
+    ]
+  },
+  {
     "name": "t:settings_schema.collection_cards.name",
     "settings": [
       {

@@ -7,6 +7,7 @@
 {%- endcomment -%}
 {%- liquid
   assign card_variant = card_variant | default: 'default'
+  assign card_style = settings.wazen_card_style | default: 'v1'
   assign show_rating = show_rating | default: true
   assign variant = product.selected_or_first_available_variant
   assign compare_at = variant.compare_at_price
@@ -25,7 +26,7 @@
   assign rating_count = product.metafields.reviews.rating_count.value
   assign rating_rounded = rating | round
 -%}
-<div class="wz-pcard wz-pcard--{{ card_variant }} wz-card wz-lift{% if is_sold_out %} wz-pcard--soldout{% endif %}" data-product-card>
+<div class="wz-pcard wz-pcard--{{ card_variant }} wz-pcard--{{ card_style }} wz-card wz-lift{% if is_sold_out %} wz-pcard--soldout{% endif %}" data-product-card>
   <a href="{{ product.url }}" class="wz-pcard__media" tabindex="-1">
     {%- if product.featured_image -%}
       {{

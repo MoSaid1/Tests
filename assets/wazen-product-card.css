@@ -92,3 +92,69 @@
 .wz-pcard__add .loading__spinner { display: none; width: 16px; height: 16px; margin-inline-start: 6px; }
 .wz-pcard__add.loading .loading__spinner { display: inline-flex; }
 .wz-pcard__add.loading span { opacity: 0.6; }
+
+/* ================================================================
+   Card style variants (Theme settings → Wazen product card → Style)
+   Style 1 (v1, classic) is the base styling above — no overrides needed.
+   ================================================================ */
+
+/* Style 2 — Minimal: flat, quiet, whitespace-led -------------------------- */
+.wz-pcard--v2 {
+  border-color: var(--wz-border-3);
+  box-shadow: none;
+}
+.wz-pcard--v2.wz-lift:hover { transform: none; box-shadow: none; border-color: var(--wz-line); }
+.wz-pcard--v2 .wz-pcard__img { transition-duration: 250ms; }
+.wz-pcard--v2:hover .wz-pcard__img { transform: none; }
+.wz-pcard--v2 .wz-pcard__wish {
+  background: transparent; box-shadow: none; opacity: 0; transition: opacity 150ms ease, color 150ms ease;
+}
+.wz-pcard--v2:hover .wz-pcard__wish, .wz-pcard--v2 .wz-pcard__wish.is-active { opacity: 1; }
+.wz-pcard--v2 .wz-pcard__wish:hover { transform: none; box-shadow: none; }
+.wz-pcard--v2 .wz-pcard__brand { color: var(--wz-muted); font-weight: 500; }
+.wz-pcard--v2 .wz-pcard__price-row { border-top: none; padding-top: 10px; }
+.wz-pcard--v2 .wz-pcard__price-now { font-size: 18px; }
+.wz-pcard--v2 .wz-pcard__add {
+  background: transparent; color: var(--wz-ink); border: 1px solid var(--wz-line);
+}
+.wz-pcard--v2 .wz-pcard__add:not([disabled]):hover {
+  background: var(--wz-ink); color: #fff; border-color: var(--wz-ink); box-shadow: none; transform: none;
+}
+.wz-pcard--v2.wz-pcard--deal .wz-pcard__add { background: transparent; color: var(--wz-orange-dark); border-color: var(--wz-orange-dark); }
+.wz-pcard--v2.wz-pcard--deal .wz-pcard__add:not([disabled]):hover { background: var(--wz-orange-dark); color: #fff; }
+
+/* Style 3 — Bold: high-contrast, commerce-forward -------------------------- */
+.wz-pcard--v3 { border-color: transparent; }
+.wz-pcard--v3.wz-lift:hover { transform: translateY(-6px); box-shadow: var(--wz-shadow-lift); }
+.wz-pcard--v3 .wz-pcard__badges { top: 0; inset-inline-start: 0; }
+.wz-pcard--v3 .wz-pcard__badge { border-radius: 0 0 var(--wz-radius-md) 0; padding: 8px 14px; font-size: 12.5px; box-shadow: none; }
+[dir='rtl'] .wz-pcard--v3 .wz-pcard__badge { border-radius: 0 0 0 var(--wz-radius-md); }
+.wz-pcard--v3 .wz-pcard__brand {
+  display: inline-block; background: var(--wz-blue-tint); color: var(--wz-blue); padding: 3px 10px;
+  border-radius: var(--wz-radius-pill); letter-spacing: 0.04em;
+}
+.wz-pcard--v3 .wz-pcard__title { font-weight: 600; }
+.wz-pcard--v3 .wz-pcard__price-row { border-top: none; padding-top: 12px; }
+.wz-pcard--v3 .wz-pcard__price {
+  background: var(--wz-orange-tint); padding: 6px 12px; border-radius: var(--wz-radius-md);
+}
+.wz-pcard--v3 .wz-pcard__price-now { color: var(--wz-orange-dark); font-size: 20px; }
+.wz-pcard--v3 .wz-pcard__add { background: var(--wz-orange); color: #fff; }
+.wz-pcard--v3 .wz-pcard__add:not([disabled]):hover { background: var(--wz-orange-dark); color: #fff; box-shadow: 0 8px 18px -8px rgba(180, 95, 9, 0.5); }
+.wz-pcard--v3.wz-pcard--deal .wz-pcard__price { background: rgba(255, 255, 255, 0.1); }
+.wz-pcard--v3.wz-pcard--deal .wz-pcard__price-now { color: #fff; }
+
+/* Style 4 — Compact: dense catalog rows -------------------------------------- */
+.wz-pcard--v4.wz-card { border-radius: var(--wz-radius-sm); }
+.wz-pcard--v4 .wz-pcard__media { aspect-ratio: 4 / 3; }
+.wz-pcard--v4 .wz-pcard__body { padding: 12px 14px 14px; }
+.wz-pcard--v4 .wz-pcard__brand { font-size: 10px; letter-spacing: 0.07em; }
+.wz-pcard--v4 .wz-pcard__title { font-size: 13px; margin-top: 5px; min-height: 36px; }
+.wz-pcard--v4 .wz-pcard__rating { margin-top: 6px; font-size: 11.5px; }
+.wz-pcard--v4 .wz-pcard__stars { font-size: 11.5px; }
+.wz-pcard--v4 .wz-pcard__price-row { padding-top: 10px; }
+.wz-pcard--v4 .wz-pcard__price-now { font-size: 16.5px; }
+.wz-pcard--v4 .wz-pcard__price-old { font-size: 11.5px; }
+.wz-pcard--v4 .wz-pcard__form { margin-top: 10px; }
+.wz-pcard--v4 .wz-pcard__add { height: 38px; font-size: 12.5px; }
+.wz-pcard--v4 .wz-pcard__wish { width: 30px; height: 30px; top: 10px; inset-inline-end: 10px; }

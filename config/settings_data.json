@@ -190,7 +190,8 @@
           "color_scheme": "scheme-1"
         }
       }
-    }
+    },
+    "wazen_card_style": "v1"
   },
   "presets": {
     "Wazen": {
