@@ -81,6 +81,15 @@
       </div>
     </div>
 
+    {%- liquid
+      if variant == null
+        assign add_label = 'products.product.unavailable' | t
+      elsif is_sold_out
+        assign add_label = 'products.product.sold_out' | t
+      else
+        assign add_label = 'products.product.add_to_cart' | t
+      endif
+    -%}
     <product-form class="wz-pcard__form">
       <div class="product-form__error-message-wrapper" role="alert" hidden>
         <span class="product-form__error-message"></span>
@@ -91,20 +100,13 @@
           type="submit"
           name="add"
           class="wz-btn wz-btn--block {% if card_variant == 'deal' %}wz-btn--primary{% else %}wz-btn--outline{% endif %} wz-pcard__add"
+          aria-label="{{ add_label }}"
           {% if is_sold_out or variant == null %}disabled{% endif %}
         >
           {%- unless is_sold_out or variant == null -%}
             {%- render 'wazen-icon', icon: 'cart', size: 15 -%}
           {%- endunless -%}
-          <span>
-            {%- if variant == null -%}
-              {{ 'products.product.unavailable' | t }}
-            {%- elsif is_sold_out -%}
-              {{ 'products.product.sold_out' | t }}
-            {%- else -%}
-              {{ 'products.product.add_to_cart' | t }}
-            {%- endif -%}
-          </span>
+          <span>{{ add_label }}</span>
           {%- render 'loading-spinner' -%}
         </button>
       {%- endform -%}

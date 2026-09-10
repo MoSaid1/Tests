@@ -98,63 +98,91 @@
    Style 1 (v1, classic) is the base styling above — no overrides needed.
    ================================================================ */
 
-/* Style 2 — Minimal: flat, quiet, whitespace-led -------------------------- */
-.wz-pcard--v2 {
+/* Style 2 — Row: horizontal layout, image beside the info ------------------ */
+.wz-pcard--v2.wz-card {
+  flex-direction: row;
+  align-items: stretch;
   border-color: var(--wz-border-3);
   box-shadow: none;
 }
-.wz-pcard--v2.wz-lift:hover { transform: none; box-shadow: none; border-color: var(--wz-line); }
-.wz-pcard--v2 .wz-pcard__img { transition-duration: 250ms; }
+.wz-pcard--v2.wz-lift:hover { transform: none; box-shadow: var(--wz-shadow-card); border-color: var(--wz-line); }
+.wz-pcard--v2 .wz-pcard__media { width: 38%; flex: none; aspect-ratio: auto; }
 .wz-pcard--v2:hover .wz-pcard__img { transform: none; }
-.wz-pcard--v2 .wz-pcard__wish {
-  background: transparent; box-shadow: none; opacity: 0; transition: opacity 150ms ease, color 150ms ease;
-}
-.wz-pcard--v2:hover .wz-pcard__wish, .wz-pcard--v2 .wz-pcard__wish.is-active { opacity: 1; }
-.wz-pcard--v2 .wz-pcard__wish:hover { transform: none; box-shadow: none; }
+.wz-pcard--v2 .wz-pcard__wish { top: 10px; inset-inline-end: 10px; width: 32px; height: 32px; }
+.wz-pcard--v2 .wz-pcard__body { padding: 16px 18px; justify-content: center; }
 .wz-pcard--v2 .wz-pcard__brand { color: var(--wz-muted); font-weight: 500; }
-.wz-pcard--v2 .wz-pcard__price-row { border-top: none; padding-top: 10px; }
+.wz-pcard--v2 .wz-pcard__title { min-height: 0; margin-top: 6px; }
+.wz-pcard--v2 .wz-pcard__rating { margin-top: 8px; }
+.wz-pcard--v2 .wz-pcard__price-row { margin-top: 12px; border-top: none; padding-top: 0; }
 .wz-pcard--v2 .wz-pcard__price-now { font-size: 18px; }
+.wz-pcard--v2 .wz-pcard__form { margin-top: 12px; }
 .wz-pcard--v2 .wz-pcard__add {
-  background: transparent; color: var(--wz-ink); border: 1px solid var(--wz-line);
+  height: 40px; background: transparent; color: var(--wz-ink); border: 1px solid var(--wz-line);
 }
 .wz-pcard--v2 .wz-pcard__add:not([disabled]):hover {
   background: var(--wz-ink); color: #fff; border-color: var(--wz-ink); box-shadow: none; transform: none;
 }
 .wz-pcard--v2.wz-pcard--deal .wz-pcard__add { background: transparent; color: var(--wz-orange-dark); border-color: var(--wz-orange-dark); }
 .wz-pcard--v2.wz-pcard--deal .wz-pcard__add:not([disabled]):hover { background: var(--wz-orange-dark); color: #fff; }
+@media screen and (max-width: 480px) {
+  .wz-pcard--v2.wz-card { flex-direction: column; }
+  .wz-pcard--v2 .wz-pcard__media { width: 100%; aspect-ratio: 1 / 1; }
+}
 
-/* Style 3 — Bold: high-contrast, commerce-forward -------------------------- */
-.wz-pcard--v3 { border-color: transparent; }
+/* Style 3 — Poster: full-bleed photo with an overlaid scrim -------------------- */
+.wz-pcard--v3.wz-card {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  border-color: transparent;
+  color: #fff;
+}
 .wz-pcard--v3.wz-lift:hover { transform: translateY(-6px); box-shadow: var(--wz-shadow-lift); }
-.wz-pcard--v3 .wz-pcard__badges { top: 0; inset-inline-start: 0; }
-.wz-pcard--v3 .wz-pcard__badge { border-radius: 0 0 var(--wz-radius-md) 0; padding: 8px 14px; font-size: 12.5px; box-shadow: none; }
-[dir='rtl'] .wz-pcard--v3 .wz-pcard__badge { border-radius: 0 0 0 var(--wz-radius-md); }
-.wz-pcard--v3 .wz-pcard__brand {
-  display: inline-block; background: var(--wz-blue-tint); color: var(--wz-blue); padding: 3px 10px;
-  border-radius: var(--wz-radius-pill); letter-spacing: 0.04em;
+.wz-pcard--v3 .wz-pcard__media { position: absolute; inset: 0; aspect-ratio: auto; height: 100%; }
+.wz-pcard--v3 .wz-pcard__media::after {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(10, 15, 20, 0) 38%, rgba(10, 15, 20, 0.88) 100%);
 }
-.wz-pcard--v3 .wz-pcard__title { font-weight: 600; }
-.wz-pcard--v3 .wz-pcard__price-row { border-top: none; padding-top: 12px; }
-.wz-pcard--v3 .wz-pcard__price {
-  background: var(--wz-orange-tint); padding: 6px 12px; border-radius: var(--wz-radius-md);
+.wz-pcard--v3 .wz-pcard__badges { z-index: 2; }
+.wz-pcard--v3 .wz-pcard__badge { box-shadow: none; }
+.wz-pcard--v3 .wz-pcard__wish { background: rgba(255, 255, 255, 0.18); color: #fff; box-shadow: none; backdrop-filter: blur(3px); }
+.wz-pcard--v3 .wz-pcard__wish:hover { color: var(--wz-orange); background: rgba(255, 255, 255, 0.3); }
+.wz-pcard--v3 .wz-pcard__body {
+  position: relative; z-index: 2; margin-top: auto; justify-content: flex-end;
+  padding: 20px; background: transparent;
 }
-.wz-pcard--v3 .wz-pcard__price-now { color: var(--wz-orange-dark); font-size: 20px; }
-.wz-pcard--v3 .wz-pcard__add { background: var(--wz-orange); color: #fff; }
-.wz-pcard--v3 .wz-pcard__add:not([disabled]):hover { background: var(--wz-orange-dark); color: #fff; box-shadow: 0 8px 18px -8px rgba(180, 95, 9, 0.5); }
-.wz-pcard--v3.wz-pcard--deal .wz-pcard__price { background: rgba(255, 255, 255, 0.1); }
-.wz-pcard--v3.wz-pcard--deal .wz-pcard__price-now { color: #fff; }
+.wz-pcard--v3 .wz-pcard__brand { color: var(--wz-orange); }
+.wz-pcard--v3 .wz-pcard__title { color: #fff; font-weight: 600; }
+.wz-pcard--v3:hover .wz-pcard__title { color: #fff; }
+.wz-pcard--v3 .wz-pcard__rating { color: rgba(255, 255, 255, 0.8); }
+.wz-pcard--v3 .wz-pcard__rating-count { color: rgba(255, 255, 255, 0.8); }
+.wz-pcard--v3 .wz-pcard__stars { color: rgba(255, 255, 255, 0.3); }
+.wz-pcard--v3 .wz-pcard__price-row { border-top: none; padding-top: 0; margin-top: 14px; }
+.wz-pcard--v3 .wz-pcard__price-now { color: #fff; font-size: 20px; }
+.wz-pcard--v3 .wz-pcard__price-old { color: rgba(255, 255, 255, 0.62); }
+.wz-pcard--v3 .wz-pcard__add { background: #fff; color: var(--wz-ink); }
+.wz-pcard--v3 .wz-pcard__add:not([disabled]):hover { background: var(--wz-orange); color: #fff; box-shadow: none; }
+.wz-pcard--v3.wz-pcard--deal .wz-pcard__add { background: var(--wz-orange); color: #fff; }
+.wz-pcard--v3.wz-pcard--deal .wz-pcard__add:not([disabled]):hover { background: var(--wz-orange-dark); }
 
-/* Style 4 — Compact: dense catalog rows -------------------------------------- */
-.wz-pcard--v4.wz-card { border-radius: var(--wz-radius-sm); }
-.wz-pcard--v4 .wz-pcard__media { aspect-ratio: 4 / 3; }
-.wz-pcard--v4 .wz-pcard__body { padding: 12px 14px 14px; }
+/* Style 4 — Compact: inset framed image + floating round cart button ----------- */
+.wz-pcard--v4.wz-card { border-radius: var(--wz-radius-md); box-shadow: none; border-color: var(--wz-border-3); }
+.wz-pcard--v4.wz-lift:hover { transform: none; box-shadow: var(--wz-shadow-card); }
+.wz-pcard--v4 .wz-pcard__media {
+  margin: 10px 10px 0; width: calc(100% - 20px); aspect-ratio: 1 / 1;
+  border-radius: var(--wz-radius-sm); overflow: hidden;
+}
+.wz-pcard--v4 .wz-pcard__wish { top: 20px; inset-inline-end: 20px; width: 28px; height: 28px; }
+.wz-pcard--v4 .wz-pcard__body { padding: 12px 14px 64px; position: relative; }
 .wz-pcard--v4 .wz-pcard__brand { font-size: 10px; letter-spacing: 0.07em; }
 .wz-pcard--v4 .wz-pcard__title { font-size: 13px; margin-top: 5px; min-height: 36px; }
 .wz-pcard--v4 .wz-pcard__rating { margin-top: 6px; font-size: 11.5px; }
 .wz-pcard--v4 .wz-pcard__stars { font-size: 11.5px; }
-.wz-pcard--v4 .wz-pcard__price-row { padding-top: 10px; }
-.wz-pcard--v4 .wz-pcard__price-now { font-size: 16.5px; }
+.wz-pcard--v4 .wz-pcard__price-row { border-top: none; padding-top: 0; }
+.wz-pcard--v4 .wz-pcard__price-now { font-size: 17px; }
 .wz-pcard--v4 .wz-pcard__price-old { font-size: 11.5px; }
-.wz-pcard--v4 .wz-pcard__form { margin-top: 10px; }
-.wz-pcard--v4 .wz-pcard__add { height: 38px; font-size: 12.5px; }
-.wz-pcard--v4 .wz-pcard__wish { width: 30px; height: 30px; top: 10px; inset-inline-end: 10px; }
+.wz-pcard--v4 .wz-pcard__form { position: absolute; bottom: 14px; inset-inline-end: 14px; margin-top: 0; width: auto; display: inline-block; }
+.wz-pcard--v4 .wz-pcard__form-inner { width: auto; display: inline-block; }
+.wz-pcard--v4 .wz-pcard__add {
+  width: 44px; height: 44px; padding: 0; border-radius: 50%; flex: none; gap: 0;
+}
+.wz-pcard--v4 .wz-pcard__add span { display: none; }

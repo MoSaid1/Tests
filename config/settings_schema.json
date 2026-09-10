@@ -626,10 +626,10 @@
         "type": "select",
         "id": "wazen_card_style",
         "options": [
-          { "value": "v1", "label": "Style 1 — Classic" },
-          { "value": "v2", "label": "Style 2 — Minimal" },
-          { "value": "v3", "label": "Style 3 — Bold" },
-          { "value": "v4", "label": "Style 4 — Compact" }
+          { "value": "v1", "label": "Style 1 — Classic (vertical card)" },
+          { "value": "v2", "label": "Style 2 — Row (horizontal, image beside info)" },
+          { "value": "v3", "label": "Style 3 — Poster (full-bleed photo overlay)" },
+          { "value": "v4", "label": "Style 4 — Compact (framed image, round cart button)" }
         ],
         "default": "v1",
         "label": "Card style",
