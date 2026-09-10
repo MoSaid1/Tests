@@ -89,6 +89,12 @@
       else
         assign add_label = 'products.product.add_to_cart' | t
       endif
+      assign add_icon = 'cart'
+      assign add_icon_size = 15
+      if card_style == 'v4'
+        assign add_icon = 'plus'
+        assign add_icon_size = 19
+      endif
     -%}
     <product-form class="wz-pcard__form">
       <div class="product-form__error-message-wrapper" role="alert" hidden>
@@ -104,7 +110,7 @@
           {% if is_sold_out or variant == null %}disabled{% endif %}
         >
           {%- unless is_sold_out or variant == null -%}
-            {%- render 'wazen-icon', icon: 'cart', size: 15 -%}
+            {%- render 'wazen-icon', icon: add_icon, size: add_icon_size -%}
           {%- endunless -%}
           <span>{{ add_label }}</span>
           {%- render 'loading-spinner' -%}
