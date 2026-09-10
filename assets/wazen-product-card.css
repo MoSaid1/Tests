@@ -164,19 +164,26 @@
 .wz-pcard--v3.wz-pcard--deal .wz-pcard__add { background: var(--wz-orange); color: #fff; }
 .wz-pcard--v3.wz-pcard--deal .wz-pcard__add:not([disabled]):hover { background: var(--wz-orange-dark); }
 
-/* Style 4 — Compact: flush image + floating round cart button ----------------- */
+/* Style 4 — Compact: flush image + round cart button beside the price --------- */
 .wz-pcard--v4.wz-card { border-radius: var(--wz-radius-md); box-shadow: none; border: none; }
 .wz-pcard--v4.wz-lift:hover { transform: none; box-shadow: none; }
-.wz-pcard--v4 .wz-pcard__body { padding: 12px 14px 64px; position: relative; }
-.wz-pcard--v4 .wz-pcard__brand { font-size: 10px; letter-spacing: 0.07em; }
-.wz-pcard--v4 .wz-pcard__title { font-size: 13px; margin-top: 5px; min-height: 36px; }
-.wz-pcard--v4 .wz-pcard__rating { margin-top: 6px; font-size: 11.5px; }
+.wz-pcard--v4 .wz-pcard__body {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto auto auto 1fr auto;
+  grid-template-areas: 'brand brand' 'title title' 'rating rating' '.     .' 'price add';
+  column-gap: 10px;
+  padding: 12px 14px 14px;
+}
+.wz-pcard--v4 .wz-pcard__brand { grid-area: brand; font-size: 10px; letter-spacing: 0.07em; }
+.wz-pcard--v4 .wz-pcard__title { grid-area: title; font-size: 13px; margin-top: 5px; min-height: 36px; }
+.wz-pcard--v4 .wz-pcard__rating { grid-area: rating; margin-top: 6px; font-size: 11.5px; }
 .wz-pcard--v4 .wz-pcard__stars { font-size: 11.5px; }
-.wz-pcard--v4 .wz-pcard__price-row { border-top: none; padding-top: 0; }
+.wz-pcard--v4 .wz-pcard__price-row { grid-area: price; border-top: none; padding-top: 0; margin-top: 0; align-self: end; }
 .wz-pcard--v4 .wz-pcard__price { flex-direction: column; align-items: flex-start; gap: 1px; }
 .wz-pcard--v4 .wz-pcard__price-now { font-size: 17px; }
 .wz-pcard--v4 .wz-pcard__price-old { font-size: 11.5px; }
-.wz-pcard--v4 .wz-pcard__form { position: absolute; bottom: 14px; inset-inline-end: 14px; margin-top: 0; width: auto; display: inline-block; }
+.wz-pcard--v4 .wz-pcard__form { grid-area: add; align-self: end; justify-self: end; margin-top: 0; width: auto; display: inline-block; }
 .wz-pcard--v4 .wz-pcard__form-inner { width: auto; display: inline-block; }
 .wz-pcard--v4 .wz-pcard__add {
   width: 44px; height: 44px; padding: 0; border-radius: 50%; flex: none; gap: 0;
