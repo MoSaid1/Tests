@@ -180,3 +180,66 @@
 .wz-quote__text { font-size: clamp(20px, 3vw, 28px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.5; margin-top: -20px; }
 .wz-quote__cite { margin-top: 20px; font-size: 14px; color: var(--wz-muted); }
 .wz-quote__cite strong { color: var(--wz-ink); }
+
+/* 17. Slim announcement banner ------------------------------------------------- */
+.wz-announce { display: flex; align-items: center; justify-content: center; gap: 12px; background: var(--wz-blue-tint); color: var(--wz-blue); border-radius: var(--wz-radius-pill); padding: 14px 24px; font-size: 14px; font-weight: 600; text-align: center; flex-wrap: wrap; }
+.wz-announce__icon { flex: none; display: flex; }
+.wz-announce .wz-btn { height: 34px; padding: 0 16px; font-size: 13px; }
+
+/* 18. Social links row ----------------------------------------------------------- */
+.wz-social-row { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin-top: 32px; }
+.wz-social-link { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 88px; text-decoration: none; color: var(--wz-ink); }
+.wz-social-link__icon { width: 56px; height: 56px; border-radius: 50%; background: #fff; box-shadow: var(--wz-shadow-card); display: flex; align-items: center; justify-content: center; transition: transform 180ms ease, box-shadow 180ms ease; color: var(--wz-ink); }
+.wz-social-link:hover .wz-social-link__icon { transform: translateY(-4px); box-shadow: var(--wz-shadow-card-hover); color: var(--wz-blue); }
+.wz-social-link__label { font-size: 12.5px; font-weight: 600; }
+
+/* 19. Inline FAQ accordion (native details/summary, no JS) ------------------------ */
+.wz-faq-inline { max-width: 760px; margin: 32px auto 0; }
+.wz-faq-inline__item { border-bottom: 1px solid var(--wz-border-2); }
+.wz-faq-inline__item summary { cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 4px; font-size: 15.5px; font-weight: 600; }
+.wz-faq-inline__item summary::-webkit-details-marker { display: none; }
+.wz-faq-inline__icon { flex: none; transition: transform 200ms ease; color: var(--wz-muted); }
+.wz-faq-inline__item[open] .wz-faq-inline__icon { transform: rotate(45deg); }
+.wz-faq-inline__answer { padding: 0 4px 20px; color: var(--wz-muted); font-size: 14.5px; line-height: 1.7; }
+
+/* 20. Before / after comparison ---------------------------------------------------- */
+.wz-ba { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; border-radius: var(--wz-radius-xl); overflow: hidden; margin-top: 8px; }
+.wz-ba__pane { position: relative; aspect-ratio: 1 / 1; background: var(--wz-surface-2); }
+.wz-ba__pane img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wz-ba__tag { position: absolute; top: 14px; inset-inline-start: 14px; background: rgba(16, 20, 24, 0.72); color: #fff; font-size: 12px; font-weight: 700; padding: 5px 12px; border-radius: 999px; letter-spacing: 0.05em; text-transform: uppercase; }
+@media screen and (max-width: 640px) {
+  .wz-ba { grid-template-columns: 1fr; }
+}
+
+/* 21. Spec highlight (image + big callouts) ------------------------------------------ */
+.wz-spec { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.wz-spec__media { border-radius: var(--wz-radius-xl); overflow: hidden; aspect-ratio: 1 / 1; background: var(--wz-surface-2); }
+.wz-spec__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wz-spec__list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px 20px; }
+.wz-spec__item__num { font-size: 28px; font-weight: 800; color: var(--wz-blue); letter-spacing: -0.02em; }
+.wz-spec__item__label { font-size: 13px; color: var(--wz-muted); margin-top: 4px; }
+@media screen and (max-width: 749px) {
+  .wz-spec { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* 22. Blog highlight (auto-pulled articles) -------------------------------------------- */
+.wz-blog-hl { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 24px; margin-top: 36px; }
+.wz-blog-hl__card { display: block; text-decoration: none; color: var(--wz-ink); }
+.wz-blog-hl__media { aspect-ratio: 16 / 10; border-radius: var(--wz-radius-lg); overflow: hidden; background: var(--wz-surface-2); }
+.wz-blog-hl__media img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 400ms ease; }
+.wz-blog-hl__card:hover .wz-blog-hl__media img { transform: scale(1.05); }
+.wz-blog-hl__date { font-size: 12px; color: var(--wz-faint); margin-top: 14px; }
+.wz-blog-hl__title { font-size: 16.5px; font-weight: 600; margin-top: 6px; letter-spacing: -0.015em; line-height: 1.4; }
+
+/* 23. App download banner ---------------------------------------------------------------- */
+.wz-app { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; background: var(--wz-ink); border-radius: var(--wz-radius-2xl); padding: clamp(32px, 5vw, 56px); color: #fff; }
+.wz-app__media { border-radius: var(--wz-radius-lg); overflow: hidden; aspect-ratio: 9 / 16; max-height: 420px; background: var(--wz-surface-2); justify-self: center; width: 100%; max-width: 240px; }
+.wz-app__media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wz-app__title { font-size: clamp(24px, 3.6vw, 34px); font-weight: 600; letter-spacing: -0.03em; margin: 0; }
+.wz-app__text { color: #b7c0c9; margin-top: 12px; font-size: 15.5px; line-height: 1.7; }
+.wz-app__badges { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
+.wz-app__badge { display: inline-flex; align-items: center; gap: 10px; background: #fff; color: var(--wz-ink); padding: 10px 18px; border-radius: var(--wz-radius-md); text-decoration: none; font-weight: 600; font-size: 13.5px; }
+@media screen and (max-width: 749px) {
+  .wz-app { grid-template-columns: 1fr; }
+  .wz-app__media { order: -1; }
+}

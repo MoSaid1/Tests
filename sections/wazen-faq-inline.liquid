@@ -1,0 +1,50 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+<section class="wz-section color-{{ section.settings.color_scheme }}">
+  <div class="wz-section__head">
+    <h2>{{ section.settings.heading }}</h2>
+    {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+  </div>
+  <div class="wz-faq-inline">
+    {%- for block in section.blocks -%}
+      <details class="wz-faq-inline__item" {{ block.shopify_attributes }}>
+        <summary>
+          <span>{{ block.settings.question }}</span>
+          <span class="wz-faq-inline__icon">{%- render 'wazen-icon', icon: 'plus', size: 16 -%}</span>
+        </summary>
+        <div class="wz-faq-inline__answer">{{ block.settings.answer }}</div>
+      </details>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wazen FAQ accordion",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Frequently asked questions" },
+    { "type": "text", "id": "subheading", "label": "Subheading" }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "Do you offer installment plans?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Yes, we work with all major Egyptian banks to offer 0% interest installments.</p>" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wazen FAQ accordion",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "Do you offer installment plans?", "answer": "<p>Yes, we work with all major Egyptian banks to offer 0% interest installments.</p>" } },
+        { "type": "faq", "settings": { "question": "How long does delivery take?", "answer": "<p>Most orders arrive within 2-5 business days depending on your governorate.</p>" } },
+        { "type": "faq", "settings": { "question": "What's your return policy?", "answer": "<p>You can return unused items in original packaging within 14 days.</p>" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
