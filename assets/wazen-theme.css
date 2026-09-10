@@ -4,8 +4,8 @@
    (header, footer, home, collection, product, cart, account, blog, etc). */
 
 :root {
-  --font-body-family: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  --font-heading-family: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-body-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading-family: 'Cairo', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono-family: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --wz-blue: #0657ab;

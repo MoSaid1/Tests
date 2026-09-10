@@ -22,9 +22,7 @@
 
 /* Category strip marquee -------------------------------------------------- */
 .wz-catstrip { position: relative; z-index: 5; margin-top: -180px; overflow: hidden; }
-.wz-catstrip__track { display: flex; gap: 16px; width: max-content; animation: wzMarquee linear infinite; }
-[dir='rtl'] .wz-catstrip__track { animation-name: wzMarqueeRtl; }
-.wz-catstrip:hover .wz-catstrip__track { animation-play-state: paused; }
+.wz-catstrip__track { display: flex; gap: 16px; width: max-content; will-change: transform; }
 .wz-catstrip__card {
   flex: none; background: #fff; border-radius: var(--wz-radius-2xl); box-shadow: var(--wz-shadow-float);
   overflow: hidden; display: block; color: var(--wz-ink); aspect-ratio: 1 / 1;
@@ -52,9 +50,7 @@
 
 /* Featured products: single moving row on computer -------------------------- */
 .wz-featured-marquee { display: none; overflow: hidden; margin-top: 24px; }
-.wz-featured-marquee__track { display: flex; gap: 20px; width: max-content; animation: wzMarquee linear infinite; }
-[dir='rtl'] .wz-featured-marquee__track { animation-name: wzMarqueeRtl; }
-.wz-featured-marquee:hover .wz-featured-marquee__track { animation-play-state: paused; }
+.wz-featured-marquee__track { display: flex; gap: 20px; width: max-content; will-change: transform; }
 .wz-featured-marquee__card { flex: none; }
 .wz-featured-marquee__card .wz-pcard { height: 100%; }
 @media screen and (min-width: 990px) {

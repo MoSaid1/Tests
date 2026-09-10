@@ -1,4 +1,7 @@
 {{ 'wazen-home.css' | asset_url | stylesheet_tag }}
+{%- if section.settings.enable_marquee -%}
+  <script src="{{ 'wazen-marquee.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 
 {%- style -%}
   #shopify-section-{{ section.id }} .wz-pgrid--featured {
@@ -11,7 +14,6 @@
   }
   {%- if section.settings.enable_marquee -%}
     #shopify-section-{{ section.id }} .wz-featured-marquee__card { width: {{ section.settings.marquee_card_width }}px; }
-    #shopify-section-{{ section.id }} .wz-featured-marquee__track { animation-duration: {{ section.settings.marquee_speed }}s; }
   {%- endif -%}
 {%- endstyle -%}
 
@@ -45,7 +47,7 @@
 
   {%- if section.settings.enable_marquee and shown > 0 -%}
     <div class="wz-featured-marquee">
-      <div class="wz-featured-marquee__track" data-marquee>
+      <div class="wz-featured-marquee__track" data-marquee data-marquee-interval="{{ section.settings.marquee_speed }}">
         {%- for i in (1..2) -%}
           {%- for product in source limit: section.settings.product_limit -%}
             <div class="wz-featured-marquee__card" aria-hidden="{% if i == 2 %}true{% else %}false{% endif %}">
@@ -79,9 +81,9 @@
         { "value": "2", "label": "2 columns" }
       ]
     },
-    { "type": "checkbox", "id": "enable_marquee", "label": "Move as a single row on computer", "info": "Replaces the grid with one continuously scrolling row (products enter one side, exit the other) on computer screens. Mobile keeps the grid above.", "default": false },
+    { "type": "checkbox", "id": "enable_marquee", "label": "Move as a single row on computer", "info": "Replaces the grid with one row on computer screens where one product steps out and the next steps in every few seconds. Mobile keeps the grid above.", "default": false },
     { "type": "range", "id": "marquee_card_width", "min": 220, "max": 340, "step": 10, "default": 280, "label": "Row card width (computer)" },
-    { "type": "range", "id": "marquee_speed", "min": 15, "max": 60, "step": 5, "default": 30, "label": "Row speed (seconds per loop)" }
+    { "type": "range", "id": "marquee_speed", "min": 1.5, "max": 6, "step": 0.5, "default": 2.8, "label": "Seconds between each product change" }
   ],
   "presets": [{ "name": "Wazen featured products" }]
 }

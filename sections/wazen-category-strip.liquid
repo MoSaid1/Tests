@@ -1,12 +1,12 @@
 {{ 'wazen-home.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'wazen-marquee.js' | asset_url }}" defer="defer"></script>
 
 {%- style -%}
   #shopify-section-{{ section.id }} .wz-catstrip__card { width: {{ section.settings.card_size }}px; }
-  #shopify-section-{{ section.id }} .wz-catstrip__track { animation-duration: {{ section.settings.speed }}s; }
 {%- endstyle -%}
 
 <section class="wz-catstrip color-{{ section.settings.color_scheme }}">
-  <div class="wz-catstrip__track" data-marquee>
+  <div class="wz-catstrip__track" data-marquee data-marquee-interval="{{ section.settings.speed }}">
     {%- for i in (1..2) -%}
       {%- for block in section.blocks -%}
         <a
@@ -36,7 +36,7 @@
   "settings": [
     { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
     { "type": "range", "id": "card_size", "min": 160, "max": 300, "step": 10, "default": 240, "label": "Card size (px)" },
-    { "type": "range", "id": "speed", "min": 20, "max": 90, "step": 5, "default": 40, "label": "Scroll speed (seconds per loop)" }
+    { "type": "range", "id": "speed", "min": 1.5, "max": 6, "step": 0.5, "default": 2.8, "label": "Seconds between each card change" }
   ],
   "blocks": [
     {
