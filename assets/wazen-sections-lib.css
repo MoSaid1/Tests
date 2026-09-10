@@ -1,0 +1,95 @@
+/* Wazen sections library — reusable general-purpose marketing/content
+   sections. Each block below is namespaced to one section's classes;
+   all draw on the shared design tokens in wazen-theme.css. */
+
+/* 1. Split banner (image + text, two-up) ------------------------------- */
+.wz-bsplit { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+.wz-bsplit__media { order: 1; border-radius: var(--wz-radius-xl); overflow: hidden; aspect-ratio: 4 / 3; background: var(--wz-surface-2); }
+.wz-bsplit__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wz-bsplit__content { order: 2; }
+.wz-bsplit--rev .wz-bsplit__media { order: 2; }
+.wz-bsplit--rev .wz-bsplit__content { order: 1; }
+.wz-bsplit__kicker { font-size: 12px; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--wz-blue); }
+.wz-bsplit__title { font-size: clamp(26px, 4vw, 40px); font-weight: 600; letter-spacing: -0.03em; margin: 10px 0 0; }
+.wz-bsplit__text { color: var(--wz-muted); font-size: 16px; line-height: 1.7; margin-top: 14px; max-width: 480px; }
+.wz-bsplit .wz-btn { margin-top: 26px; }
+@media screen and (max-width: 749px) {
+  .wz-bsplit { grid-template-columns: 1fr; gap: 28px; }
+  .wz-bsplit__media, .wz-bsplit--rev .wz-bsplit__media { order: 1; }
+  .wz-bsplit__content, .wz-bsplit--rev .wz-bsplit__content { order: 2; }
+}
+
+/* 2. Feature grid (icon cards) ------------------------------------------ */
+.wz-feat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 24px; margin-top: 36px; }
+.wz-feat-card { background: #fff; border-radius: var(--wz-radius-lg); box-shadow: var(--wz-shadow-card); padding: 32px 26px; transition: transform 200ms ease, box-shadow 200ms ease; }
+.wz-feat-card:hover { transform: translateY(-4px); box-shadow: var(--wz-shadow-card-hover); }
+.wz-feat-card__icon { width: 56px; height: 56px; border-radius: var(--wz-radius-md); background: var(--wz-blue-tint); color: var(--wz-blue); display: flex; align-items: center; justify-content: center; }
+.wz-feat-card__title { font-size: 18px; font-weight: 600; margin-top: 20px; letter-spacing: -0.015em; }
+.wz-feat-card__text { font-size: 14.5px; color: var(--wz-muted); margin-top: 8px; line-height: 1.6; }
+
+/* 3. Stats counter row --------------------------------------------------- */
+.wz-stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); gap: 20px; margin-top: 36px; text-align: center; }
+.wz-stat { padding: 28px 12px; }
+.wz-stat + .wz-stat { border-inline-start: 1px solid var(--wz-border-3); }
+.wz-stat__num { font-size: clamp(32px, 5vw, 48px); font-weight: 800; color: var(--wz-blue); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.wz-stat__label { font-size: 13.5px; color: var(--wz-muted); margin-top: 6px; font-weight: 500; }
+@media screen and (max-width: 749px) {
+  .wz-stat + .wz-stat { border-inline-start: none; }
+}
+
+/* 4. Testimonial cards ---------------------------------------------------- */
+.wz-testi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: 24px; margin-top: 36px; }
+.wz-testi-card { background: #fff; border-radius: var(--wz-radius-lg); box-shadow: var(--wz-shadow-card); padding: 28px; display: flex; flex-direction: column; }
+.wz-testi-card__stars { color: var(--wz-orange); font-size: 14px; letter-spacing: 2px; }
+.wz-testi-card__quote { font-size: 15px; line-height: 1.7; color: var(--wz-body); margin-top: 14px; flex: 1; }
+.wz-testi-card__person { display: flex; align-items: center; gap: 12px; margin-top: 20px; }
+.wz-testi-card__avatar { width: 42px; height: 42px; border-radius: 50%; object-fit: cover; background: var(--wz-surface); flex: none; }
+.wz-testi-card__avatar-fallback { width: 42px; height: 42px; border-radius: 50%; background: var(--wz-blue-tint); color: var(--wz-blue); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; flex: none; }
+.wz-testi-card__name { font-size: 14px; font-weight: 600; }
+.wz-testi-card__role { font-size: 12px; color: var(--wz-faint); }
+
+/* 5. Alternating content rows ---------------------------------------------- */
+.wz-crow { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+.wz-crow + .wz-crow { margin-top: 64px; }
+.wz-crow__media { border-radius: var(--wz-radius-xl); overflow: hidden; aspect-ratio: 4 / 3; background: var(--wz-surface-2); }
+.wz-crow__img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wz-crow--rev .wz-crow__media { order: 2; }
+.wz-crow--rev .wz-crow__content { order: 1; }
+.wz-crow__eyebrow { font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--wz-orange); }
+.wz-crow__title { font-size: clamp(22px, 3.4vw, 30px); font-weight: 600; letter-spacing: -0.025em; margin: 8px 0 0; }
+.wz-crow__text { color: var(--wz-muted); font-size: 15.5px; line-height: 1.75; margin-top: 12px; }
+.wz-crow .wz-btn { margin-top: 22px; }
+@media screen and (max-width: 749px) {
+  .wz-crow { grid-template-columns: 1fr; gap: 24px; }
+  .wz-crow--rev .wz-crow__media, .wz-crow--rev .wz-crow__content { order: initial; }
+}
+
+/* 6. Process timeline ------------------------------------------------------- */
+.wz-timeline { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr)); gap: 28px; margin-top: 40px; }
+.wz-timeline__step { position: relative; }
+.wz-timeline__num { width: 40px; height: 40px; border-radius: 50%; background: var(--wz-ink); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; position: relative; z-index: 1; }
+.wz-timeline__title { font-size: 16px; font-weight: 600; margin-top: 16px; }
+.wz-timeline__text { font-size: 13.5px; color: var(--wz-muted); margin-top: 6px; line-height: 1.6; }
+@media screen and (min-width: 750px) {
+  .wz-timeline__step:not(:last-child)::after {
+    content: ''; position: absolute; top: 19px; inset-inline-start: calc(50% + 32px); width: calc(100% - 40px); height: 2px;
+    background: repeating-linear-gradient(to right, var(--wz-line) 0 6px, transparent 6px 12px);
+  }
+}
+
+/* 7. CTA banner ------------------------------------------------------------- */
+.wz-ctaband { background: var(--wz-navy); border-radius: var(--wz-radius-2xl); padding: clamp(40px, 6vw, 72px) clamp(20px, 4vw, 56px); text-align: center; color: #fff; }
+.wz-ctaband__title { font-size: clamp(26px, 4.2vw, 42px); font-weight: 600; letter-spacing: -0.03em; margin: 0; }
+.wz-ctaband__text { color: #a9bacb; font-size: 16px; margin: 14px auto 0; max-width: 520px; }
+.wz-ctaband .wz-btn { margin-top: 28px; }
+
+/* 8. Logo marquee ------------------------------------------------------------- */
+.wz-logomarquee { overflow: hidden; margin-top: 8px; }
+.wz-logomarquee__track { display: flex; align-items: center; gap: 56px; width: max-content; }
+.wz-logomarquee__logo { flex: none; height: 32px; display: flex; align-items: center; filter: grayscale(1); opacity: 0.55; transition: opacity 150ms ease, filter 150ms ease; }
+.wz-logomarquee__logo:hover { filter: grayscale(0); opacity: 1; }
+.wz-logomarquee__logo img { height: 100%; width: auto; display: block; }
+.wz-logomarquee:hover .wz-logomarquee__track { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) {
+  .wz-logomarquee__track { animation: none !important; }
+}

@@ -1,0 +1,62 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+<section class="wz-section color-{{ section.settings.color_scheme }}">
+  <div class="wz-section__head">
+    <h2>{{ section.settings.heading }}</h2>
+    {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+  </div>
+  <div class="wz-feat-grid">
+    {%- for block in section.blocks -%}
+      <div class="wz-feat-card" {{ block.shopify_attributes }}>
+        <div class="wz-feat-card__icon">{%- render 'wazen-icon', icon: block.settings.icon, size: 24 -%}</div>
+        <div class="wz-feat-card__title">{{ block.settings.title }}</div>
+        <div class="wz-feat-card__text">{{ block.settings.text }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wazen feature grid",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Why shop with Wazen" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "The details that make the difference." }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "settings": [
+        {
+          "type": "select", "id": "icon", "label": "Icon", "default": "shield",
+          "options": [
+            { "value": "shield", "label": "Shield" },
+            { "value": "truck", "label": "Delivery" },
+            { "value": "card", "label": "Payment" },
+            { "value": "headset", "label": "Support" },
+            { "value": "check", "label": "Check" },
+            { "value": "star", "label": "Star" },
+            { "value": "lock", "label": "Lock" },
+            { "value": "zoom", "label": "Zoom" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Genuine warranty" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Every product ships with an official manufacturer warranty." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wazen feature grid",
+      "blocks": [
+        { "type": "feature", "settings": { "icon": "shield", "title": "Genuine warranty", "text": "Every product ships with an official manufacturer warranty." } },
+        { "type": "feature", "settings": { "icon": "truck", "title": "Nationwide delivery", "text": "Fast, tracked delivery to every governorate." } },
+        { "type": "feature", "settings": { "icon": "card", "title": "Flexible payment", "text": "Installment plans available on every major bank." } },
+        { "type": "feature", "settings": { "icon": "headset", "title": "Real support", "text": "A team that actually picks up the phone." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

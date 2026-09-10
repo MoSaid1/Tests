@@ -1,0 +1,64 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  {%- assign wz_step_count = section.blocks.size -%}
+  {%- if wz_step_count > 0 -%}
+    {%- assign wz_duration = wz_step_count | times: section.settings.speed -%}
+    #shopify-section-{{ section.id }} .wz-logomarquee__track {
+      animation: {% if request.locale.text_direction == 'rtl' %}wzMarqueeRtl{% else %}wzMarquee{% endif %} {{ wz_duration }}s linear infinite;
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+<section class="wz-section color-{{ section.settings.color_scheme }}">
+  {%- if section.settings.heading != blank -%}
+    <div class="wz-section__head">
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+  {%- endif -%}
+  <div class="wz-logomarquee">
+    <div class="wz-logomarquee__track">
+      {%- for i in (1..2) -%}
+        {%- for block in section.blocks -%}
+          <div class="wz-logomarquee__logo" {{ block.shopify_attributes }} aria-hidden="{% if i == 2 %}true{% else %}false{% endif %}">
+            {%- if block.settings.logo != blank -%}
+              {{ block.settings.logo | image_url: width: 200 | image_tag: alt: block.settings.name }}
+            {%- else -%}
+              <span>{{ block.settings.name }}</span>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wazen logo marquee",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Trusted brands we carry" },
+    { "type": "range", "id": "speed", "min": 2, "max": 10, "step": 0.5, "default": 4, "label": "Seconds per logo" }
+  ],
+  "blocks": [
+    {
+      "type": "logo",
+      "name": "Logo",
+      "settings": [
+        { "type": "image_picker", "id": "logo", "label": "Logo" },
+        { "type": "text", "id": "name", "label": "Brand name (fallback if no logo)", "default": "Brand" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wazen logo marquee",
+      "blocks": [
+        { "type": "logo" }, { "type": "logo" }, { "type": "logo" },
+        { "type": "logo" }, { "type": "logo" }, { "type": "logo" }
+      ]
+    }
+  ]
+}
+{% endschema %}

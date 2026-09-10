@@ -1,0 +1,49 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+<section class="wz-section color-{{ section.settings.color_scheme }}">
+  <div class="wz-section__head">
+    <h2>{{ section.settings.heading }}</h2>
+    {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+  </div>
+  <div class="wz-timeline">
+    {%- for block in section.blocks -%}
+      <div class="wz-timeline__step" {{ block.shopify_attributes }}>
+        <div class="wz-timeline__num">{{ forloop.index }}</div>
+        <div class="wz-timeline__title">{{ block.settings.title }}</div>
+        <div class="wz-timeline__text">{{ block.settings.text }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wazen process steps",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "How it works" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "From order to install, in four steps." }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Choose your product" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Browse and compare with real specs and reviews." }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wazen process steps",
+      "blocks": [
+        { "type": "step", "settings": { "title": "Choose your product", "text": "Browse and compare with real specs and reviews." } },
+        { "type": "step", "settings": { "title": "Pick a payment plan", "text": "Pay in full or in installments with your bank." } },
+        { "type": "step", "settings": { "title": "We deliver", "text": "Tracked delivery to your door, nationwide." } },
+        { "type": "step", "settings": { "title": "We install", "text": "Our technicians set it up and test it with you." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

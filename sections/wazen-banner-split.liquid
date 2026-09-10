@@ -1,0 +1,38 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+<section class="wz-section color-{{ section.settings.color_scheme }}">
+  <div class="wz-bsplit{% if section.settings.image_position == 'right' %} wz-bsplit--rev{% endif %}">
+    <div class="wz-bsplit__media">
+      {%- if section.settings.image != blank -%}
+        {{ section.settings.image | image_url: width: 1200 | image_tag: class: 'wz-bsplit__img', widths: '600,900,1200', sizes: '(min-width: 990px) 50vw, 100vw', loading: 'lazy', alt: section.settings.image.alt | default: section.settings.heading }}
+      {%- else -%}
+        <div class="wz-bsplit__img wz-placeholder-media">{{ 'wazen.media.image' | t }}</div>
+      {%- endif -%}
+    </div>
+    <div class="wz-bsplit__content">
+      {%- if section.settings.kicker != blank -%}<div class="wz-bsplit__kicker">{{ section.settings.kicker }}</div>{%- endif -%}
+      <h2 class="wz-bsplit__title">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<div class="wz-bsplit__text">{{ section.settings.text }}</div>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: '#' }}" class="wz-btn wz-btn--primary">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wazen split banner",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "select", "id": "image_position", "label": "Image position (computer)", "default": "left", "options": [ { "value": "left", "label": "Left" }, { "value": "right", "label": "Right" } ] },
+    { "type": "text", "id": "kicker", "label": "Kicker" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Built for the way you live" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>A short paragraph introducing this collection, brand, or promise.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop now" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Wazen split banner" }]
+}
+{% endschema %}

@@ -34,7 +34,9 @@
       "campaign_image": "صورة الحملة",
       "product_image": "صورة المنتج",
       "article_image": "صورة المقال",
-      "showroom_photo": "صورة المعرض"
+      "showroom_photo": "صورة المعرض",
+      "image": "صورة",
+      "logo": "شعار"
     },
     "search": {
       "recent": "عمليات بحث سابقة",

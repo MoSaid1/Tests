@@ -1,0 +1,63 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+<section class="wz-section color-{{ section.settings.color_scheme }}">
+  <div class="wz-section__head">
+    <h2>{{ section.settings.heading }}</h2>
+    {%- if section.settings.subheading != blank -%}<p>{{ section.settings.subheading }}</p>{%- endif -%}
+  </div>
+  <div class="wz-testi-grid">
+    {%- for block in section.blocks -%}
+      <div class="wz-testi-card" {{ block.shopify_attributes }}>
+        <div class="wz-testi-card__stars" aria-hidden="true">
+          {%- for i in (1..5) -%}{% if i <= block.settings.rating %}★{% else %}☆{% endif %}{%- endfor -%}
+        </div>
+        <div class="wz-testi-card__quote">&ldquo;{{ block.settings.quote }}&rdquo;</div>
+        <div class="wz-testi-card__person">
+          {%- if block.settings.avatar != blank -%}
+            {{ block.settings.avatar | image_url: width: 84 | image_tag: class: 'wz-testi-card__avatar', alt: block.settings.name }}
+          {%- else -%}
+            <div class="wz-testi-card__avatar-fallback">{{ block.settings.name | slice: 0, 1 }}</div>
+          {%- endif -%}
+          <div>
+            <div class="wz-testi-card__name">{{ block.settings.name }}</div>
+            {%- if block.settings.role != blank -%}<div class="wz-testi-card__role">{{ block.settings.role }}</div>{%- endif -%}
+          </div>
+        </div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wazen testimonials",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What our customers say" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Real reviews from real homes." }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "range", "id": "rating", "label": "Rating", "min": 1, "max": 5, "step": 1, "default": 5 },
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "Delivery was faster than promised and the installation team was excellent." },
+        { "type": "image_picker", "id": "avatar", "label": "Photo (optional)" },
+        { "type": "text", "id": "name", "label": "Name", "default": "Mona Ahmed" },
+        { "type": "text", "id": "role", "label": "Role / location", "default": "Cairo" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wazen testimonials",
+      "blocks": [
+        { "type": "testimonial", "settings": { "rating": 5, "quote": "Delivery was faster than promised and the installation team was excellent.", "name": "Mona Ahmed", "role": "Cairo" } },
+        { "type": "testimonial", "settings": { "rating": 5, "quote": "Great prices and the warranty support actually works when you need it.", "name": "Khaled Nasser", "role": "Giza" } },
+        { "type": "testimonial", "settings": { "rating": 4, "quote": "Wide selection and the staff helped me pick the right size fridge.", "name": "Sara Ibrahim", "role": "Alexandria" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -34,7 +34,9 @@
       "campaign_image": "campaign image",
       "product_image": "product image",
       "article_image": "article image",
-      "showroom_photo": "showroom photograph"
+      "showroom_photo": "showroom photograph",
+      "image": "image",
+      "logo": "logo"
     },
     "search": {
       "recent": "Recent",

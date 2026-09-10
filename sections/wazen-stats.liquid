@@ -1,0 +1,48 @@
+{{ 'wazen-sections-lib.css' | asset_url | stylesheet_tag }}
+
+<section class="wz-section color-{{ section.settings.color_scheme }}">
+  {%- if section.settings.heading != blank -%}
+    <div class="wz-section__head">
+      <h2>{{ section.settings.heading }}</h2>
+    </div>
+  {%- endif -%}
+  <div class="wz-stats-row">
+    {%- for block in section.blocks -%}
+      <div class="wz-stat" {{ block.shopify_attributes }}>
+        <div class="wz-stat__num">{{ block.settings.number }}</div>
+        <div class="wz-stat__label">{{ block.settings.label }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Wazen stats",
+  "settings": [
+    { "type": "color_scheme", "id": "color_scheme", "label": "t:sections.all.colors.label", "default": "scheme-1" },
+    { "type": "text", "id": "heading", "label": "Heading" }
+  ],
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat",
+      "settings": [
+        { "type": "text", "id": "number", "label": "Number", "default": "15+" },
+        { "type": "text", "id": "label", "label": "Label", "default": "Years in business" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wazen stats",
+      "blocks": [
+        { "type": "stat", "settings": { "number": "15+", "label": "Years in business" } },
+        { "type": "stat", "settings": { "number": "40+", "label": "Branches nationwide" } },
+        { "type": "stat", "settings": { "number": "250K+", "label": "Happy customers" } },
+        { "type": "stat", "settings": { "number": "98%", "label": "On-time delivery" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
